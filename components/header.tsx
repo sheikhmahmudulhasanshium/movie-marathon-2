@@ -8,14 +8,14 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/t
 const Header = () => {
   const navItems = [
     { href: '/', icon: <div className="bg-logo bg-cover scale-150 w-16 h-16" />, label: 'Root' },
-    { href: '/home', icon: <HomeIcon className="text-cyan-950 scale-150" />, label: 'Home' },
-    { href: '/movies', icon: <ClapperboardIcon className="text-cyan-950 scale-150" />, label: 'Movies' },
-    { href: '/tv-shows', icon: <TvMinimalIcon className="text-cyan-950 scale-150" />, label: 'TV Shows' },
-    { href: '/top-imdb', icon: <TrophyIcon className="text-cyan-950 scale-150" />, label: 'Top IMDB' },
+    { href: '/home', icon: <HomeIcon className="text-cyan-950 dark:text-cyan-800 scale-150" />, label: 'Home' },
+    { href: '/movies', icon: <ClapperboardIcon className="text-cyan-950 dark:text-cyan-800 scale-150" />, label: 'Movies' },
+    { href: '/tv-shows', icon: <TvMinimalIcon className="text-cyan-950 dark:text-cyan-800 scale-150" />, label: 'TV Shows' },
+    { href: '/top-imdb', icon: <TrophyIcon className="text-cyan-950 dark:text-cyan-800 scale-150" />, label: 'Top IMDB' },
   ];
 
   return (
-    <header className="flex py-6 justify-between items-center px-7 shadow-lg gap-2">
+    <header className="flex py-6 justify-between items-center pr-12 pl-8 shadow-lg gap-2 dark:bg-primary-foreground bg-primary-foreground">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>

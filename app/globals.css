@@ -71,3 +71,11 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+::-webkit-scrollbar-thumb{
+  background-image: linear-gradient(to right bottom, #00ffff, #96aaec);
+}
+::-webkit-scrollbar{
+  width:10px;
+  height:0px;  
+}

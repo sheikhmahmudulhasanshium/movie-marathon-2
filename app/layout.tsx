@@ -22,7 +22,7 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
         <title>{params.title}</title>
         <meta name="description" content={params.description} />
       </head>
-      <body>
+      <body className="flex bg-primary-foreground dark:bg-primary-foreground">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
         </ThemeProvider>

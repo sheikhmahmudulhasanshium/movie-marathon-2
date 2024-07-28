@@ -19,7 +19,7 @@ const Sidebar = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon">
-          <Menu className="h-[2.2rem] w-[2.2rem] text-primary dark:text-white text-cyan-950" />
+          <Menu className="h-[2.2rem] w-[2.2rem] text-primary dark:text-cyan-900 text-cyan-950" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
