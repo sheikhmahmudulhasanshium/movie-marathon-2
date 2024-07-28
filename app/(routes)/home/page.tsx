@@ -5,7 +5,7 @@ import Modal from "@/components/modals/basic-page-modal";
 
 const HomePage = () => {
     return ( 
-    <RootLayout title="Movie Marathon 2" description="This is the better version of previous App">
+    <RootLayout params={{ title: "Homepage", description: "This is the better version of previous App" }}>
       
       <main className="">
         <Modal
