@@ -1,5 +1,6 @@
 "use client";
 
+import useSearch from "@/hooks/use-search";
 import { BanIcon, SearchIcon, TextSearchIcon, UserSearchIcon } from "lucide-react";
 import { useState, ChangeEvent, useEffect } from "react";
 
@@ -35,7 +36,7 @@ const Searchbar = () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [filteredData]);
-
+    const searchResult=useSearch(searchKey)
     return (
         <div className="w-10/12 sm:w-10/12 md:w-10 lg:w-10/12 text-2xl flex flex-col items-center justify-center relative">
             {/** Searchbar */}

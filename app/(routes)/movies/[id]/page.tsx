@@ -5,10 +5,10 @@ import Header from "@/components/header";
 import Modal from "@/components/modals/basic-page-modal";
 import { useOrigin } from "@/hooks/use-origin";
 import { LoaderPinwheelIcon } from "lucide-react";
-import Body from "./components/body";
+import Body from "../components/body";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
 
-const HomePage = () => {
+const Movie = () => {
   const origin = useOrigin();
 
   if (!origin) {
@@ -20,14 +20,14 @@ const HomePage = () => {
   }
 
     return ( 
-    <RootLayout params={{ title: "Homepage", description: "This is the better version of previous App" }}>
+    <RootLayout params={{ title: "Title | Movie", description: "There will be individual movie" }}>
       
       <main className="">
         <Modal
           header={<Header />}
           footer={<Footer/>}
         >
-          <CustomBreadCrumb params={{link:"/home/"}}/>
+          <CustomBreadCrumb params={{link:"/movies/[id]/"}}/>
           <Body/>
         </Modal>
       </main>
@@ -35,4 +35,4 @@ const HomePage = () => {
      );
 }
  
-export default HomePage;
+export default Movie;
