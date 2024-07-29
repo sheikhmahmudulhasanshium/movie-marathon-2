@@ -3,7 +3,7 @@ import { PopcornIcon } from 'lucide-react';
 
 const Slide = () => {
   return (
-    <Card className='w-full bg-gradient-to-r from-blue-50 to-cyan-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
+    <Card className='w-8/12 bg-gradient-to-r from-blue-50 to-cyan-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
       <CardHeader>
         <CardTitle className='text-xl font-bold text-cyan-950 flex items-center'>
           Welcome To Movie Marathon

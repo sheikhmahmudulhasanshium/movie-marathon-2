@@ -3,7 +3,7 @@ import { TvIcon } from 'lucide-react';
 
 const Slide2 = () => {
   return (
-    <Card className='w-full bg-gradient-to-r from-purple-50 to-pink-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
+    <Card className='w-8/12 bg-gradient-to-r from-purple-50 to-pink-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
       <CardHeader>
         <CardTitle className='text-xl font-bold text-pink-950 flex items-center'>
           Welcome To Movie Marathon

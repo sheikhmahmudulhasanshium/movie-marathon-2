@@ -2,12 +2,12 @@ import Link from "next/link";
 
 const Footer = () => {
     return ( 
-        <div className="flex flex-col justify-between items-center  pt-24 pb-4 dark:bg-primary-foreground bg-primary-foreground bg-opacity-25 dark:bg-opacity-5  shadow-muted-foreground my-12">
+        <div className="flex flex-col justify-between items-center  pt-24  dark:bg-primary-foreground bg-primary-foreground bg-opacity-25 dark:bg-opacity-5  ">
             
-            <div className="text-sm sm:text-sm md:text-base lg:text-lg flex  justify-between items-center gap-12 mx-16">
-                <div className="bg-cover bg-logo-2 w-56 h-36 scale-150 p-12 justify-center items-center flex"/>
+            <div className="text-sm sm:text-sm md:text-base lg:text-lg grid grid-cols-12  justify-between items-center gap-12 mx-16">
+                <div className="col-span-5 bg-cover bg-logo-2 w-56 h-36 scale-150  justify-center items-center flex"/>
                 
-                <p className="text-justify">  
+                <p className="text-justify col-span-6">  
                     Movie Marathon is the ultimate app for movie enthusiasts who love to binge-watch their favorite films and TV shows. Whether you&apos;re planning a cozy night in or an epic weekend of non-stop entertainment, Movie Marathon helps you organize and enhance your viewing experience. With a vast library of movies and TV series across various genres, personalized recommendations, and seamless streaming options, you can easily discover new favorites and revisit classics.
                 </p>
                 
@@ -20,7 +20,7 @@ const Footer = () => {
                     <div className="hover:underline hover:opacity-85"><Link href="/contact">Contact</Link></div>
                 
                 </div>
-                <p className="text-base pt-8">&copy; 2024 Movie Marathon. All rights reserved.</p>
+                <div className="mb-1"><p className="text-base pt-8 ">&copy; 2024 Movie Marathon. All rights reserved.</p></div>
 
         </div>
      );

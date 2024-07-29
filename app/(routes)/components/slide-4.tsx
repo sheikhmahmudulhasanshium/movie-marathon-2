@@ -3,7 +3,7 @@ import { StarIcon, ShieldCheckIcon, XCircleIcon, DollarSignIcon } from 'lucide-r
 
 const Slide4 = () => {
   return (
-    <Card className='w-full bg-gradient-to-r from-green-50 to-yellow-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
+    <Card className='w-8/12 bg-gradient-to-r from-green-50 to-yellow-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
       <CardHeader>
         <CardTitle className='text-xl font-bold text-yellow-950 flex items-center'>
           Welcome To Movie Marathon

@@ -15,7 +15,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="flex py-6 justify-between items-center pr-12 pl-8 shadow-lg gap-2 dark:bg-primary-foreground bg-primary-foreground">
+    <header className="flex py-6 justify-between items-center pr-12 pl-12 shadow-lg gap-2 dark:bg-primary-foreground bg-primary-foreground shadow-muted-foreground">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>

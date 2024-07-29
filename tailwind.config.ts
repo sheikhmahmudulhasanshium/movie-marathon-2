@@ -25,6 +25,8 @@ const config = {
       backgroundImage: {
         "logo": "url('../public/logo-2-transparent.png')",
         "logo-2": "url('../public/logo-transparent.png')",
+        "sample-poster": "url('../public/sample-poster.jpg')",
+        
       },
       colors: {
         border: "hsl(var(--border))",
