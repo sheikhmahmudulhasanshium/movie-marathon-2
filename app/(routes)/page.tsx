@@ -1,18 +1,13 @@
-"use client";
-import { useOrigin } from '@/hooks/use-origin';
-import { LoaderPinwheelIcon } from 'lucide-react';
-import Header from '@/components/header';
-import Modal from '@/components/modals/basic-page-modal';
-import Footer from '@/components/footer';
-import RootLayout from '../layout';
-import Slide from './components/slide-1';
-import Slide2 from './components/slide-2';
-import Slide3 from './components/slide-3';
-import Slide4 from './components/slide-4';
-import Slide5 from './components/slide-5';
-
-import FullSite from '@/components/full-site';
-import Slide6 from './components/slide-6';
+"use client"
+import RootLayout from "@/app/layout";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
+import Modal from "@/components/modals/basic-page-modal";
+import { useOrigin } from "@/hooks/use-origin";
+import { LoaderPinwheelIcon } from "lucide-react";
+import CustomBreadCrumb from "@/components/custom-bread-crumb";
+import FullSite from "@/components/full-site";
+import SlideShow from "./components/slide-show";
 
 const HomePage = () => {
   const origin = useOrigin();
@@ -25,23 +20,23 @@ const HomePage = () => {
     );
   }
 
-  return (
-    <RootLayout params={{ title: "Movie Marathon 2", description: "This is the better version of previous App" }}>
-      <main className="flex">
-        <Modal header={<Header />} footer={<Footer />}>
-          <div className='mx-8 my-14 flex flex-col justify-center items-center'>
-            <Slide />
-            <Slide2 />
-            <Slide3 />
-            <Slide4 />
-            <Slide5 />
-            <Slide6/>
-            <FullSite />
+    return ( 
+    <RootLayout params={{ title: "Welcome To Movie Marathon", description: "This is the better version of previous App" }}>
+      
+      <main className="">
+        <Modal
+          header={<Header />}
+          footer={<Footer/>}
+        >
+          <CustomBreadCrumb params={{link:"/"}}/>
+          <div className="flex-col flex ">
+              <SlideShow/>
+              <FullSite/>
           </div>
         </Modal>
       </main>
     </RootLayout>
-  );
-};
-
+     );
+}
+ 
 export default HomePage;

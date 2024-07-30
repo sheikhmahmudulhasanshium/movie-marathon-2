@@ -1,12 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
 import src from '../../../public/movie-marathon-2.jpeg'
-const Slide = () => {
+const Slide1 = () => {
   return (
-    <Card className='w-8/12 bg-gradient-to-r from-blue-50 to-cyan-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
+    <Card className='w-full  p-4 rounded-lg shadow-lg mx-8 flex flex-col h-full animate-in'>
       <CardHeader>
         <CardTitle className='text-4xl font-bold text-cyan-950 text-center'>
-          <p>Welcome</p> <p className='text-3xl'>To</p>
+        <p>✨ Introducing ✨</p>
         </CardTitle>
       </CardHeader>
       
@@ -23,4 +23,4 @@ const Slide = () => {
   );
 }
 
-export default Slide;
+export default Slide1;

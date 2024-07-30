@@ -3,9 +3,11 @@ import Image from 'next/image';
 import src from '../../../public/movie-marathon-5.jpeg'
 const Slide5 = () => {
   return (
-    <Card className='w-8/12 bg-gradient-to-r from-blue-50 to-cyan-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
+    <Card className='w-full  p-4 rounded-lg shadow-lg mx-8 flex flex-col animate-in'>
       <CardHeader>
         <CardTitle className='text-4xl font-bold text-cyan-950 text-center'>
+        <p>🚫 No Ads 🚫</p>
+
         </CardTitle>
       </CardHeader>
       
