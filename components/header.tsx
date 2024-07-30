@@ -1,6 +1,6 @@
 import { ClapperboardIcon, HomeIcon, TrophyIcon, TvMinimalIcon } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-import Sidebar from "./sidebar";
+import Sidebar from "./side-bar";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";

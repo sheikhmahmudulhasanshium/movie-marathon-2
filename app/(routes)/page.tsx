@@ -9,7 +9,10 @@ import Slide from './components/slide-1';
 import Slide2 from './components/slide-2';
 import Slide3 from './components/slide-3';
 import Slide4 from './components/slide-4';
+import Slide5 from './components/slide-5';
+
 import FullSite from '@/components/full-site';
+import Slide6 from './components/slide-6';
 
 const HomePage = () => {
   const origin = useOrigin();
@@ -31,6 +34,8 @@ const HomePage = () => {
             <Slide2 />
             <Slide3 />
             <Slide4 />
+            <Slide5 />
+            <Slide6/>
             <FullSite />
           </div>
         </Modal>

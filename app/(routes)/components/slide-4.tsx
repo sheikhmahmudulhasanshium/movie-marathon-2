@@ -1,32 +1,22 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { StarIcon, ShieldCheckIcon, XCircleIcon, DollarSignIcon } from 'lucide-react';
-
+import Image from 'next/image';
+import src from '../../../public/movie-marathon-4.jpeg'
 const Slide4 = () => {
   return (
-    <Card className='w-8/12 bg-gradient-to-r from-green-50 to-yellow-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
+    <Card className='w-8/12 bg-gradient-to-r from-blue-50 to-cyan-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
       <CardHeader>
-        <CardTitle className='text-xl font-bold text-yellow-950 flex items-center'>
-          Welcome To Movie Marathon
+        <CardTitle className='text-4xl font-bold text-cyan-950 text-center'>
         </CardTitle>
       </CardHeader>
-      <CardDescription className='mt-4 text-gray-700 text-sm'>
-        - Your Ultimate Binge-Watching Companion!
-      </CardDescription>
+      
       <CardContent className='mt-6 text-base text-gray-800 text-justify'>
-        <div className='mt-6 flex flex-col items-center space-y-4'>
-          <div className='flex items-center'>
-            <ShieldCheckIcon className='scale-125 text-green-600 mr-2' />
-            <p>No Sign-In Required</p>
-          </div>
-          <div className='flex items-center'>
-            <XCircleIcon className='scale-125 text-red-600 mr-2' />
-            <p>No Ads</p>
-          </div>
-          <div className='flex items-center'>
-            <DollarSignIcon className='scale-125 text-blue-600 mr-2' />
-            <p>No Payment Required</p>
-          </div>
+        <div className='justify-center items-center flex my-5'>
+          <Image src={src} alt='sample-1' width='400' height='400'/>
         </div>
+        <CardDescription className='my-4 text-gray-700 text-sm text-end'>
+        - Your Ultimate Binge-Watching Companion!
+        </CardDescription>
+        <p>Enjoy top-rated Movies and TV shows free.</p>
       </CardContent>
     </Card>
   );

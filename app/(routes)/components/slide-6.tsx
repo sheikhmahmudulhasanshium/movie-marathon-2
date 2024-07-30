@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
-import src from '../../../public/movie-marathon-3.jpeg'
-const Slide3 = () => {
+import src from '../../../public/movie-marathon-6.jpeg'
+const Slide6 = () => {
   return (
     <Card className='w-8/12 bg-gradient-to-r from-blue-50 to-cyan-100 p-4 rounded-lg shadow-lg mx-8 flex flex-col'>
       <CardHeader>
@@ -16,10 +16,10 @@ const Slide3 = () => {
         <CardDescription className='my-4 text-gray-700 text-sm text-end'>
         - Your Ultimate Binge-Watching Companion!
         </CardDescription>
-        <p>Enjoy top-rated movies and TV shows curated just for you.</p>
+        <p>Enjoy top-rated Movies and TV shows without Sign-in.</p>
       </CardContent>
     </Card>
   );
 }
 
-export default Slide3;
+export default Slide6;
