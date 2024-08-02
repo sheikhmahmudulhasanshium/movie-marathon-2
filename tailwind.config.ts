@@ -26,6 +26,8 @@ const config = {
         "logo": "url('../public/logo-2-transparent.png')",
         "logo-2": "url('../public/logo-transparent.png')",
         "sample-poster": "url('../public/sample-poster.jpg')",
+        "imdb": "url('../public/imdb.svg')",
+        "imdb-dark": "url('../public/imdb-dark.svg')",
         
       },
       colors: {

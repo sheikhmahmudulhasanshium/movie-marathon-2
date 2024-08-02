@@ -53,7 +53,7 @@ const SlideShow: React.FC = () => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setCurrentPage((prevPage) => (prevPage < totalPages ? prevPage + 1 : 1));
-        }, 2000);
+        }, 4000);
 
         return () => clearInterval(intervalId); // Cleanup interval on component unmount
     }, [totalPages]);

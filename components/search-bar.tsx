@@ -61,7 +61,7 @@ const Searchbar = () => {
         };
     }, [filteredResults]);
 
-    if (searchKey.length > 3 && loading) return <p>Loading...</p>;
+    if (searchKey.length > 0 && loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
@@ -86,7 +86,7 @@ const Searchbar = () => {
                 <>
                     <p>Showing Results</p>
                     <div className="flex flex-col bg-cyan-900 w-full overflow-y-scroll max-h-64 rounded-lg shadow-lg z-50 absolute top-full mt-2">
-                        {filteredResults.length > 0 ? (
+                        {filteredResults.length > 5 ? (
                             filteredResults.map((item, index) => {
                                 const imgSrc = 'profile_path' in item && item.profile_path
                                     ? `https://media.themoviedb.org/t/p/w185${item.profile_path}`
