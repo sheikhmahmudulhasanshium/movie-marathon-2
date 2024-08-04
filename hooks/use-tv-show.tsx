@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import useMovieCertifications from './use-certification'; // Adjust path accordingly
 import useMovieLanguages from './use-language'; // Adjust path accordingly
-import { Movie, Genre, ExternalIds, CastMember, CrewMember, Keywords } from '@/components/type';
+import { TVShow, Genre, ExternalIds, CastMember, CrewMember, Keywords, ProductionCountry, Season, Images, AlternativeTitles } from '@/components/type';
 
-const useMovie = (id: string) => {
-    const [movie, setMovie] = useState<Movie | null>(null);
+const useSeries = (id: string) => {
+    const [series, setSeries] = useState<TVShow | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const { certifications, loading: certLoading, error: certError } = useMovieCertifications();
@@ -14,13 +14,13 @@ const useMovie = (id: string) => {
     useEffect(() => {
         if (!id) {
             setLoading(false);
-            setError('No movie ID provided');
+            setError('No series ID provided');
             return;
         }
 
         const fetchGenres = async (): Promise<Genre[]> => {
             try {
-                const response = await axios.get('https://api.themoviedb.org/3/genre/movie/list', {
+                const response = await axios.get('https://api.themoviedb.org/3/genre/tv/list', {
                     params: {
                         api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY,
                         language: 'en-US',
@@ -34,15 +34,15 @@ const useMovie = (id: string) => {
             }
         };
 
-        const fetchMovieDetails = async () => {
+        const fetchSeriesDetails = async () => {
             try {
                 setLoading(true);
 
-                // Fetch movie details
-                const response = await axios.get(`https://api.themoviedb.org/3/movie/${id}`, {
+                // Fetch series details
+                const response = await axios.get(`https://api.themoviedb.org/3/tv/${id}`, {
                     params: {
                         api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY,
-                        append_to_response: 'credits,production_companies,production_countries,images,keywords,release_dates,external_ids,alternative_titles,',
+                        append_to_response: 'credits,production_companies,production_countries,images,keywords,external_ids,alternative_titles,certification',
                     },
                 });
 
@@ -60,8 +60,6 @@ const useMovie = (id: string) => {
                 // Map original language to formatted language name
                 const originalLanguage = languageMap[response.data.original_language] || response.data.original_language;
 
-                console.log('Original Language:', originalLanguage);
-
                 // Function to format date as "31 July 2024"
                 const formatDate = (dateString: string): string => {
                     const date = new Date(dateString);
@@ -70,20 +68,21 @@ const useMovie = (id: string) => {
                 };
 
                 // Map genre IDs to genre names
-                const movieGenres = response.data.genres.map((genre: { id: number }) => {
+                const seriesGenres = response.data.genres.map((genre: { id: number }) => {
                     const genreData = genres.find((g) => g.id === genre.id);
                     return genreData ? genreData : { id: genre.id, name: 'Unknown' };
                 });
 
                 // Extract certification based on production countries
-                const productionCountries = response.data.production_countries.map((country: { iso_3166_1: string }) => country.iso_3166_1);
+                const productionCountries: ProductionCountry[] = response.data.production_countries;
+                const productionCountryCodes = productionCountries.map((country) => country.iso_3166_1);
 
                 let certification: string = 'Not Rated';
 
                 if (certifications) {
-                    productionCountries.forEach((countryCode: string) => {
+                    productionCountryCodes.forEach((countryCode: string) => {
                         const countryCertifications = certifications[countryCode] || [];
-                        const releaseDates = response.data.release_dates.results.find((release: any) => release.iso_3166_1 === countryCode);
+                        const releaseDates = response.data.release_dates?.results?.find((release: any) => release.iso_3166_1 === countryCode);
 
                         if (releaseDates) {
                             const releaseCertification = releaseDates.release_dates.find((relDate: any) => relDate.certification);
@@ -95,42 +94,45 @@ const useMovie = (id: string) => {
                 }
 
                 // Calculate runtime in hours and minutes
-                const runtime = response.data.runtime;
-                const runtimeFormatted = runtime
-                    ? `${Math.floor(runtime / 60)}h ${runtime % 60}m`
+                const episodeRunTime = response.data.episode_run_time;
+                const runtimeFormatted = episodeRunTime.length > 0
+                    ? `${Math.floor(episodeRunTime[0] / 60)}h ${episodeRunTime[0] % 60}m`
                     : 'Runtime not available';
 
-                // Construct movie data object
-                const movieData: Movie = {
+                // Construct series data object
+                const seriesData: TVShow = {
                     id: response.data.id,
-                    title: response.data.title,
+                    name: response.data.name,
+                    original_name: response.data.original_name,
                     original_language: originalLanguage,
                     poster_path: response.data.poster_path,
-                    status: response.data.status,
-                    certification: certification,
-                    vote_average: response.data.vote_average,
+                    backdrop_path: response.data.backdrop_path,
                     overview: response.data.overview,
-                    formatted_release_date: formatDate(response.data.release_date),
-                    revenue: response.data.revenue,
-                    budget: response.data.budget,
-                    genres: movieGenres,
-                    keywords: response.data.keywords as Keywords,
+                    status: response.data.status,
+                    first_air_date: formatDate(response.data.first_air_date),
+                    last_air_date: formatDate(response.data.last_air_date),
+                    vote_average: response.data.vote_average,
+                    genres: seriesGenres,
+                    production_companies: response.data.production_companies,
+                    production_countries: productionCountries,
+                    external_ids: response.data.external_ids as ExternalIds,
                     cast: response.data.credits.cast as CastMember[],
                     crew: response.data.credits.crew as CrewMember[],
-                    external_ids: response.data.external_ids as ExternalIds,
-                    release_date: response.data.release_date,
-                    backdrop_path: response.data.backdrop_path,
-                    production_companies: response.data.production_companies,
-                    production_countries: response.data.production_countries,
-                    images: response.data.images,
-                    alternative_titles: response.data.alternative_titles || { titles: [] },
+                    keywords: response.data.keywords as Keywords,
+                    seasons: response.data.seasons as Season[],
+                    number_of_episodes: response.data.number_of_episodes,
+                    number_of_seasons: response.data.number_of_seasons,
+                    homepage: response.data.homepage,
+                    certification: certification,
                     runtime: runtimeFormatted,
+                    images: response.data.images as Images,
+                    alternative_titles: response.data.alternative_titles as AlternativeTitles,
                 };
 
-                setMovie(movieData);
+                setSeries(seriesData);
             } catch (err) {
                 if (axios.isAxiosError(err)) {
-                    setError(`Error fetching movie details: ${err.message}`);
+                    setError(`Error fetching series details: ${err.message}`);
                 } else {
                     setError('An unknown error occurred');
                 }
@@ -139,13 +141,13 @@ const useMovie = (id: string) => {
             }
         };
 
-        // Wait for languages and certifications to load before fetching movie details
+        // Wait for languages and certifications to load before fetching series details
         if (!langLoading && !certLoading) {
-            fetchMovieDetails();
+            fetchSeriesDetails();
         }
     }, [id, certifications, languages, certLoading, langLoading, languageMap]);
 
-    return { movie, loading, error };
+    return { series, loading, error };
 };
 
-export default useMovie;
+export default useSeries;

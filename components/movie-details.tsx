@@ -1,18 +1,18 @@
-import { Movie } from '@/components/type';
+import { Movie, TVShow } from '@/components/type';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter } from '@/components/ui/card';
 import { RadialChart } from '@/components/ui/radial-chart';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { InstagramLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
-import { Calendar, Clock, Facebook, VideoIcon, Youtube } from 'lucide-react';
+import { AvatarIcon, InstagramLogoIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
+import { Calendar, ChevronLeft, ChevronRight, Clock, Facebook, VideoIcon, Youtube } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface MovieDetailsProps {
+interface DetailsProps {
     movie: Movie | null;
 }
 
-const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
+const Details: React.FC<DetailsProps> = ({ movie }) => {
     if (!movie) {
         return <p>No movie details available.</p>;
     }
@@ -34,6 +34,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
                             <p className='font-bold'>Status:</p>
                             <p>{movie.status}</p>
                         </div>
+                        
                         <div className='text-xl flex flex-col items-center pt-2 gap-2'>
                             <p className='font-bold'>Duration:</p>
                             <p className='flex items-center gap-1.5'><Clock/>{movie.runtime}</p>
@@ -121,7 +122,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
                     <div className='w-8/12 flex flex-col justify-start items-start'>
                         <p className='text-2xl pb-4 font-bold'>{movie.title}</p>
                         <div className='flex'>
-                            <Button variant='outline'  className='flex items-center gap-3 text-start text-lg font-bold mb-4'>
+                            <Button variant='outline'  className='flex items-center gap-3 text-start text-lg font-bold mb-4' >
                                 <VideoIcon/>
                                 <p className=''>Trailer</p>
                             </Button>
@@ -203,11 +204,17 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
 
                         <div className='flex flex-col pt-2 gap-2 text-lg w-full'>
                             <p className='font-bold'>Cast: </p>
-                            <div className='flex overflow-x-auto gap-2'>
+                            <div className='flex overflow-x-auto gap-2  '>
                                 {movie.cast.length > 0 ? (
+                                  <> 
+                                    <div className='z-20 absolute  left-80 lg:left-[36rem] items-center flex -bottom-[20rem] w-12  justify-center text-cyan-950'><ChevronLeft className='w-12 h-12 animate-pulse'/></div>
+ 
+                                    {
+                                    
                                     movie.cast.map((profile) => (
-                                        <Card key={profile.id} className='hover:opacity-75 w-36 bg-accent'>
-                                            <Link href={`/persons/${profile.id}`} className='flex flex-col justify-center items-center'>
+                                        
+                                        <Card key={profile.id} className='hover:opacity-75 w-36 bg-accent '>
+                                            <Link href={`/persons/${profile.id}`} className='flex flex-col justify-center items-center  relative'>
                                                 <CardContent>
                                                     {profile.profile_path ? (
                                                         <Image
@@ -219,8 +226,8 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
                                                             className='rounded-full'
                                                         />
                                                     ) : (
-                                                        <div className='w-16 h-16 bg-black text-white rounded-full flex items-center justify-center text-sm'>
-                                                            No Image
+                                                        <div className='pt-4'>
+                                                            <AvatarIcon className='w-16 h-16  bg-slate-400 text-white rounded-full flex items-center justify-center text-sm'/>
                                                         </div>
                                                     )}
                                                 </CardContent>
@@ -228,7 +235,12 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
                                                 <CardFooter><p className='text-base'>({profile.name})</p></CardFooter>
                                             </Link>
                                         </Card>
-                                    ))
+                                        
+                                    ))}
+                                    <div className='z-20 absolute  sm:-right-0 lg:right-4 items-center flex -bottom-[20rem] w-12  justify-center text-cyan-950'><ChevronRight className='w-12 h-12 animate-pulse'/></div>
+
+
+                                </>
                                 ) : 'No cast available'}
                             </div>
                         </div>
@@ -237,9 +249,14 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
                             <p className='font-bold'>Crew: </p>
                             <div className='flex overflow-x-auto gap-2'>
                                 {movie.crew.length > 0 ? (
+                                   <> 
+                                   <div className='z-30 absolute  left-80 lg:left-[36rem] items-center flex -bottom-[40rem] w-12  justify-center text-cyan-950'><ChevronLeft className='w-12 h-12 animate-pulse'/></div>
+
+                                   {
+                                 
                                     movie.crew.map((profile) => (
                                         <Card key={profile.id} className='hover:opacity-75 w-36 bg-accent'>
-                                            <Link href={`/persons/${profile.id}`} className='flex flex-col justify-center items-center'>
+                                            <Link href={`/persons/${profile.id}`} className='flex flex-col justify-center items-center relative'>
                                                 <CardContent>
                                                     {profile.profile_path ? (
                                                         <Image
@@ -251,17 +268,22 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
                                                             className='rounded-full'
                                                         />
                                                     ) : (
-                                                        <div className='w-16 h-16 bg-black text-white rounded-full flex items-center justify-center text-sm'>
-                                                            No Image
+                                                        <div className='pt-4'>
+                                                            <AvatarIcon className='w-16 h-16  bg-slate-400 text-white rounded-full flex items-center justify-center text-sm'/>
                                                         </div>
                                                     )}
                                                 </CardContent>
                                                 <CardDescription><p>{profile.job}</p></CardDescription>
                                                 <CardFooter><p className='text-base'>({profile.name})</p></CardFooter>
                                             </Link>
-                                        </Card>
-                                    ))
-                                ) : 'No crew available'}
+                                            </Card>
+                                        
+                                    ))}
+                                    <div className='z-30 absolute  sm:-right-0  lg:right-4 items-center flex -bottom-[40rem] w-12  justify-center text-cyan-950'><ChevronRight className='w-12 h-12 animate-pulse'/></div>
+
+
+                                </>
+                                ) : 'No cast available'}
                             </div>
                         </div>
                         {(movie.alternative_titles.titles.length>0)&&
@@ -290,4 +312,4 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
     );
 };
 
-export default MovieDetails;
+export default Details;

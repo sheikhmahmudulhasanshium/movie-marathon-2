@@ -17,7 +17,7 @@ export interface KnownForMovies {
   vote_count: number;
 }
 
-// Define the main Person interface
+// Define the main Persons interface
 export interface Persons {
   adult: boolean;
   gender: number;
@@ -126,10 +126,13 @@ export interface ExternalIds {
 
 // Define the Keywords interface
 export interface Keywords {
-  keywords: {
-    id: number;
-    name: string;
-  }[];
+  keywords: Keyword[];
+}
+
+// Define the Keyword interface
+export interface Keyword {
+  id: number;
+  name: string;
 }
 
 // Define the Certification interface
@@ -141,9 +144,10 @@ export interface Certification {
 
 export interface CertificationsResponse {
   certifications: {
-      [key: string]: Certification[];
+    [key: string]: Certification[];
   };
 }
+
 // Define the Language interface
 export interface Language {
   english_name: string; // English name of the language
@@ -159,14 +163,16 @@ export interface LanguagesResponse {
 // Define the LanguageMap type for the formatted names
 export type LanguageMap = { [key: string]: string };
 
-
 // Define the AlternativeTitles interface
 export interface AlternativeTitles {
-  titles: {
-    iso_3166_1: string;
-    title: string;
-    type: string;
-  }[];
+  titles: AlternativeTitle[];
+}
+
+// Define the AlternativeTitle interface
+export interface AlternativeTitle {
+  iso_3166_1: string;
+  title: string;
+  type: string;
 }
 
 // Define the Movie interface
@@ -188,12 +194,75 @@ export interface Movie {
   cast: CastMember[];
   crew: CrewMember[];
   production_companies: ProductionCompany[];
-  production_countries: { iso_3166_1: string; name: string }[];
-  images: { backdrops: { file_path: string; }[]; posters: { file_path: string; }[]; };
+  production_countries: ProductionCountry[];
+  images: Images;
   keywords: Keywords;
-  recommendations: { Movie: any }; // Adapt as needed
-  videos: { results: { key: string; name: string; site: string; }[]; };
   alternative_titles: AlternativeTitles;
   external_ids?: ExternalIds;
   formatted_release_date: string;
+}
+
+// Define the TVShow interface
+export interface TVShow {
+  id: number;
+  name: string;
+  original_name: string;
+  original_language: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  overview: string;
+  status: string;
+  first_air_date: string;
+  last_air_date: string;
+  vote_average: number;
+  genres: Genre[];
+  production_companies: ProductionCompany[];
+  production_countries: ProductionCountry[];
+  external_ids: ExternalIds;
+  cast: CastMember[];
+  crew: CrewMember[];
+  keywords: Keywords;
+  seasons: Season[];
+  number_of_episodes: number;
+  number_of_seasons: number;
+  homepage: string;
+  certification: string;
+  runtime: string;
+  images: Images;
+  alternative_titles: AlternativeTitles;
+}
+
+// Define the ProductionCountry interface
+export interface ProductionCountry {
+  iso_3166_1: string;
+  name: string;
+}
+
+// Define the Season interface
+export interface Season {
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string | null;
+  season_number: number;
+  vote_average: number;
+}
+
+// Define the Images interface
+export interface Images {
+  backdrops: Image[];
+  posters: Image[];
+}
+
+// Define the Image interface
+export interface Image {
+  aspect_ratio: number;
+  file_path: string;
+  height: number;
+  iso_639_1: string | null;
+  vote_average: number;
+  vote_count: number;
+  width: number;
 }

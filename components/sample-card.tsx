@@ -1,33 +1,60 @@
+import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import {  CalendarIcon, ClockIcon } from "lucide-react";
+import { CalendarIcon, ClockIcon } from "lucide-react";
+import Link from 'next/link';
 
-const SampleCard:React.FC<{serial:number}> = (serial) => {
-    return ( 
-        <Card className="flex-col justify-center items-center relative bg-accent ">
-        <CardHeader className="absolute  top-2 right-4 ">
-            <CardTitle className="text-yellow-600 border border-primary-foreground p-1 rounded-lg text-base bg-opacity-5 bg-white">PG-13</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-2 justify-center items-center">
-            <div className="bg-cover bg-sample-poster size-100 h-80 w-56  rounded-sm "/>
-        </CardContent>
-        <CardDescription className="text-center">
-            <p className="">SN {serial.serial} Title of the movie/series</p>
-        </CardDescription>
-        <CardFooter className=" items-center  text-sm justify-center">
-            <div className="flex gap-1.5 pt-2">
-                <>
-                    <CalendarIcon className="w-4 h-4 "/>
-                    <p>01-Aug-2024</p>
-                </>
-                <>
-                    <ClockIcon className="w-4 h-4"/>
-                    <p>120 min</p>
-                </>
-            </div>
-        </CardFooter>
-
-    </Card>       
-     );
+interface SampleCardProps {
+    id: number;
+    title: string;
+    posterPath: string;
+    certification: string;
+    releaseDate: string;
+    runtime: string;
+    media_type: string;
 }
- 
+
+const SampleCard: React.FC<SampleCardProps> = ({ id, title, posterPath, certification, releaseDate, runtime, media_type }) => {
+    // Truncate title if it's longer than 10 characters
+    const truncatedTitle = title.length > 15 ? `${title.slice(0, 15)}...` : title;
+
+    // Define URL based on media type
+    const url_media_type = media_type !== 'N/A' ? (media_type === 'movie' ? 'movies' : 'tv-shows') : '';
+
+    return (
+        <Card className="relative flex flex-col justify-between bg-secondary dark:bg-secondary rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105">
+            <Link href={`/${url_media_type}/${id}`} className='flex flex-col h-full'>
+                <CardHeader className="absolute top-2 left-2 bg-opacity-60 bg-black rounded-full p-1">
+                    <CardTitle className="text-yellow-400 text-xs font-bold">
+                        {certification}
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="flex-grow pt-12">
+                    <div
+                        className="bg-cover bg-center h-52 w-full rounded-t-lg"
+                        style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w500${posterPath})` }}
+                    />
+                </CardContent>
+                <CardDescription className="text-center mt-2 px-3 py-1 bg-gray-700 text-white">
+                    <p>{truncatedTitle}</p>
+                </CardDescription>
+                <CardFooter className="flex flex-col items-center text-xs text-gray-300 bg-gray-800 py-2">
+                    <div className="flex gap-3">
+                        <div className="flex items-center gap-1">
+                            <CalendarIcon className="w-4 h-4" />
+                            <p>{releaseDate}</p>
+                        </div>
+                        <div className="flex items-center gap-1">
+                            <ClockIcon className="w-4 h-4" />
+                            <p>{runtime}</p>
+                        </div>
+                    </div>
+                    <div className="mt-2 px-2 py-1 rounded-lg bg-gray-600 text-center">
+                        {media_type.toLocaleUpperCase()}
+                    </div>
+                </CardFooter>
+            </Link>
+        </Card>
+    );
+};
+
 export default SampleCard;

@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TVShows, TVShowsResponse } from '@/components/type';
+import { Movies, MoviesResponse, TVShows, TVShowsResponse } from '@/components/type';
 
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-
 const BASE_URL = 'https://api.themoviedb.org/3/search/tv';
 
 const useTVShows = (searchKey: string) => {
