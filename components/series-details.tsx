@@ -118,7 +118,14 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                         <div className='flex'>
                             <p className='text-justify'>{series.overview}</p>
                         </div>
-
+                        <div className='flex pt-2 gap-2 text-lg'>
+                            <p className='font-bold'>Total Seasons:</p>
+                            <p>{series.number_of_seasons}</p>
+                        </div>
+                        <div className='flex pt-2 gap-2 text-lg'>
+                            <p className='font-bold'>Total Episodes:</p>
+                            <p>{series.number_of_episodes}</p>
+                        </div>
                         {/* Visit Section */}
                         <div className='flex my-4 w-full gap-2 items-center'>
                             <p className='font-bold text-lg'>Websites:</p>

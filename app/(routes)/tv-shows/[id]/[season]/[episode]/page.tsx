@@ -7,13 +7,13 @@ import Header from "@/components/header";
 import Modal from "@/components/modals/basic-page-modal";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
 import Searchbar from '@/components/search-bar';
-import Recommendations from '../../../../components/recommendations';
 import Loading from '@/components/loading';
-import Trailers from '../../../../components/trailer';
 import Details from '@/components/series-details';
-import EpisodeSelector from '../../../../components/episode-selector';
+import EpisodeSelector from '@/components/episode-selector';
+import Trailers from '@/components/trailer';
+import Recommendations from '@/components/recommendations';
 
-const TvShow: React.FC = () => {
+const Episode :React.FC = () => {
     const params = useParams();
     const id = Array.isArray(params.id) ? params.id[0] : params.id; // Ensure id is a string
 
@@ -39,7 +39,7 @@ const TvShow: React.FC = () => {
                     header={<Header />}
                     footer={<Footer />}
                 >
-                    <CustomBreadCrumb params={{ link: `/tv-shows/${id}/` }} />
+                    <CustomBreadCrumb params={{ link: `` }} />
                     {series && (
                         <div className='justify-center items-center flex flex-col'>
                             <Searchbar />
@@ -55,4 +55,4 @@ const TvShow: React.FC = () => {
     );
 }
 
-export default TvShow;
+export default Episode;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import useSearch from '@/hooks/use-search';
 import { BanIcon, SearchIcon, TextSearchIcon, UserSearchIcon } from 'lucide-react';
@@ -15,6 +15,7 @@ const Searchbar = () => {
     const [isClient, setIsClient] = useState<boolean>(false);
 
     const router = useRouter();
+    const resultRefs = useRef<(HTMLDivElement | null)[]>([]);
 
     useEffect(() => {
         setIsClient(true);
@@ -48,9 +49,27 @@ const Searchbar = () => {
             if (filteredResults.length === 0) return;
 
             if (e.key === 'ArrowDown') {
-                setSelectedIndex((prevIndex) => (prevIndex + 1) % filteredResults.length);
+                setSelectedIndex((prevIndex) => {
+                    const newIndex = (prevIndex + 1) % filteredResults.length;
+                    if (resultRefs.current[newIndex]) {
+                        resultRefs.current[newIndex]?.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'nearest'
+                        });
+                    }
+                    return newIndex;
+                });
             } else if (e.key === 'ArrowUp') {
-                setSelectedIndex((prevIndex) => (prevIndex - 1 + filteredResults.length) % filteredResults.length);
+                setSelectedIndex((prevIndex) => {
+                    const newIndex = (prevIndex - 1 + filteredResults.length) % filteredResults.length;
+                    if (resultRefs.current[newIndex]) {
+                        resultRefs.current[newIndex]?.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'nearest'
+                        });
+                    }
+                    return newIndex;
+                });
             }
         };
 
@@ -60,9 +79,6 @@ const Searchbar = () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [filteredResults]);
-
-    if (searchKey.length > 0 && loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
 
     return (
         <div className="text-2xl flex flex-col items-center justify-center relative">
@@ -82,71 +98,76 @@ const Searchbar = () => {
                     )}
                 </button>
             </div>
-            {searchKey.length > 3 && (
-                <>
-                    <p>Showing Results</p>
-                    <div className="flex flex-col bg-cyan-900 w-full overflow-y-scroll max-h-64 rounded-lg shadow-lg z-50 absolute top-full mt-2">
-                        {filteredResults.length > 5 ? (
-                            filteredResults.map((item, index) => {
-                                const imgSrc = 'profile_path' in item && item.profile_path
-                                    ? `https://media.themoviedb.org/t/p/w185${item.profile_path}`
-                                    : 'backdrop_path' in item && item.backdrop_path
-                                    ? `https://media.themoviedb.org/t/p/w185${item.backdrop_path}`
-                                    : 'poster_path' in item && item.poster_path
-                                    ? `https://media.themoviedb.org/t/p/w185${item.poster_path}`
-                                    : '/sample-poster.jpg';
 
-                                const linkHref = isMovieResult(item)
-                                    ? `/movies/${item.id}`
-                                    : isTVShowResult(item)
-                                    ? `/tv-shows/${item.id}`
-                                    : isPersonResult(item)
-                                    ? `/persons/${item.id}`
-                                    : '/';
-                                    //console.log(linkHref);
+            {searchKey.length > 0 && loading && <p>Loading...</p>}
+            {error && <p>Error: {error}</p>}
 
-                                return (
-                                    <div key={index}>
-                                        <Link href={linkHref}>
-                                            <div className={`flex justify-between items-center text-lg p-2 gap-4 font-bold border-b-2 border-slate-400 hover:bg-cyan-800 transition-all duration-200 ${selectedIndex === index ? 'bg-cyan-800' : ''}`}>
-                                                <Image
-                                                    src={imgSrc}
-                                                    alt={isMovieResult(item) ? item.title : isTVShowResult(item) ? item.name : isPersonResult(item) ? item.name : 'Unknown'}
-                                                    width={48}
-                                                    height={48}
-                                                    quality={50}
-                                                    className="w-12 h-12 rounded-lg"
-                                                />
-                                                <p className="flex-grow text-white">
-                                                    {isMovieResult(item) ? item.title : isTVShowResult(item) || isPersonResult(item) ? item.name : 'Unknown'}
-                                                </p>
-                                                {isMovieResult(item) ? (
-                                                    <button className="text-primary-foreground text-white">
-                                                        <TextSearchIcon />
-                                                    </button>
-                                                ) : isTVShowResult(item) || isPersonResult(item) ? (
-                                                    <button className="text-primary-foreground text-white">
-                                                        <UserSearchIcon />
-                                                    </button>
-                                                ) : null}
-                                            </div>
-                                        </Link>
-                                    </div>
-                                );
-                            })
-                        ) : (
-                            <div className="flex justify-between items-center text-lg p-2 gap-4 font-bold border-b-2 border-slate-400 hover:bg-cyan-800 transition-all duration-200" onClick={() => setSearchKey("")}>
-                                <div className="text-red-500 w-12 h-12 items-center flex justify-center">
-                                    <BanIcon />
+            {searchKey.length > 2 && (
+                <div className="flex flex-col bg-cyan-900 w-full overflow-y-scroll max-h-64 rounded-lg shadow-lg z-50 mt-2">
+                    {filteredResults.length > 0 ? (
+                        filteredResults.map((item, index) => {
+                            const imgSrc = 'profile_path' in item && item.profile_path
+                                ? `https://media.themoviedb.org/t/p/w185${item.profile_path}`
+                                : 'backdrop_path' in item && item.backdrop_path
+                                ? `https://media.themoviedb.org/t/p/w185${item.backdrop_path}`
+                                : 'poster_path' in item && item.poster_path
+                                ? `https://media.themoviedb.org/t/p/w185${item.poster_path}`
+                                : '/sample-poster.jpg';
+
+                            const linkHref = isMovieResult(item)
+                                ? `/movies/${item.id}`
+                                : isTVShowResult(item)
+                                ? `/tv-shows/${item.id}`
+                                : isPersonResult(item)
+                                ? `/persons/${item.id}`
+                                : '/';
+
+                            return (
+                                <div
+                                    key={index}
+                                    ref={el => {
+                                        resultRefs.current[index] = el;
+                                    }}
+                                >
+                                    <Link href={linkHref}>
+                                        <div className={`flex justify-between items-center text-lg p-2 gap-4 font-bold border-b-2 border-slate-400 hover:bg-cyan-800 transition-all duration-200 ${selectedIndex === index ? 'bg-cyan-800' : ''}`}>
+                                            <Image
+                                                src={imgSrc}
+                                                alt={isMovieResult(item) ? item.title : isTVShowResult(item) ? item.name : isPersonResult(item) ? item.name : 'Unknown'}
+                                                width={48}
+                                                height={48}
+                                                quality={50}
+                                                className="w-12 h-12 rounded-lg"
+                                            />
+                                            <p className="flex-grow text-white">
+                                                {isMovieResult(item) ? item.title : isTVShowResult(item) || isPersonResult(item) ? item.name : 'Unknown'}
+                                            </p>
+                                            {isMovieResult(item) ? (
+                                                <button className="text-primary-foreground text-white">
+                                                    <TextSearchIcon />
+                                                </button>
+                                            ) : isTVShowResult(item) || isPersonResult(item) ? (
+                                                <button className="text-primary-foreground text-white">
+                                                    <UserSearchIcon />
+                                                </button>
+                                            ) : null}
+                                        </div>
+                                    </Link>
                                 </div>
-                                <p className="flex-grow text-white">No Results Found !!!</p>
-                                <button className="text-primary-foreground text-white">
-                                    <ResetIcon />
-                                </button>
+                            );
+                        })
+                    ) : (
+                        <div className="flex justify-between items-center text-lg p-2 gap-4 font-bold border-b-2 border-slate-400 hover:bg-cyan-800 transition-all duration-200">
+                            <div className="text-red-500 w-12 h-12 items-center flex justify-center">
+                                <BanIcon />
                             </div>
-                        )}
-                    </div>
-                </>
+                            <p className="flex-grow text-white">No Results Found !!!</p>
+                            <button className="text-primary-foreground text-white">
+                                <ResetIcon />
+                            </button>
+                        </div>
+                    )}
+                </div>
             )}
         </div>
     );
