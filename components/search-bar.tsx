@@ -9,6 +9,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Cross2Icon, ResetIcon } from '@radix-ui/react-icons';
 
+// Utility function to format  string
+const formatText = (text: string) => {
+    return text
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with dashes
+        .replace(/(^-|-$)+/g, '');  // Remove leading and trailing dashes
+};
+
 const Searchbar = () => {
     const [searchKey, setSearchKey] = useState<string>("");
     const [selectedIndex, setSelectedIndex] = useState<number>(-1);
@@ -115,11 +123,11 @@ const Searchbar = () => {
                                 : '/sample-poster.jpg';
 
                             const linkHref = isMovieResult(item)
-                                ? `/movies/${item.id}`
+                                ? `/movies/${item.id}-${formatText(item.title)}`
                                 : isTVShowResult(item)
-                                ? `/tv-shows/${item.id}`
+                                ? `/tv-shows/${item.id}-${formatText(item.name)}`
                                 : isPersonResult(item)
-                                ? `/persons/${item.id}`
+                                ? `/persons/${item.id}-${formatText(item.name)}`
                                 : '/';
 
                             return (

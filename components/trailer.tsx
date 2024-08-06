@@ -4,7 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import React, { useState } from "react";
 
 interface TrailerProps {
-  tmdbID: number;
+  tmdbID: string|number;
   media_type: string;
 }
 
@@ -25,7 +25,7 @@ const Trailers: React.FC<TrailerProps> = ({ tmdbID, media_type }) => {
   const renderSlide = (videoIndex: number) => {
     const video = videos[videoIndex];
     const videoUrl = video.site === "YouTube" ? `https://www.youtube.com/embed/${video.key}` : "";
-
+    console.log(videoUrl)
     return (
       <div className="flex justify-center items-center shadow-xl shadow-accent-foreground p-4  rounded-lg w-10/12 ">
         <div className="relative w-full h-0" style={{ paddingBottom: '56.25%' }}> {/* 16:9 Aspect Ratio */}

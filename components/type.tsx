@@ -277,6 +277,39 @@ export interface Episode {
   still_path: string | null;
   vote_average: number;
   vote_count: number;
+  production_code?: string;
+  runtime: number;
+  crew: CrewMember[];
+  guest_stars: GuestStar[];
+ 
+}
+
+export interface CrewMember {
+  department: string;
+  job: string;
+  credit_id: string;
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
+}
+
+export interface GuestStar {
+  character: string;
+  credit_id: string;
+  order: number;
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string | null;
 }
 
 export interface SeasonEpisodes {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SeasonEpisodes, TVShow } from "@/components/type";
+import { SeasonEpisodes, TVShow, Episode } from "@/components/type"; // Import Episode type
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import useEpisodes from "@/hooks/use-episodes-list";
 import { List, Play } from "lucide-react";
@@ -34,6 +34,14 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({ series }) => {
         return title.length > 20 ? title.slice(0, 17) + "..." : title;
     };
 
+    // Utility function to format a string into a URL-friendly format
+    const formatText = (text: string) => {
+        return text
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with dashes
+            .replace(/(^-|-$)+/g, '');  // Remove leading and trailing dashes
+    };
+
     return (
         <div className="flex flex-col w-full my-6 py-6 px-6 bg-cyan-950 text-white">
             {episodes.length > 0 && (
@@ -56,15 +64,18 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({ series }) => {
 
                     <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {filteredEpisodes.length > 0 ? (
-                            filteredEpisodes.map((episode) => (
+                            filteredEpisodes.map((episode: Episode) => ( // Explicitly type 'episode'
                                 <Button
                                     key={episode.id}
                                     variant='outline'
                                     className="w-full text-left flex items-center justify-between p-3 transition-all duration-300 hover:bg-cyan-800 hover:text-white"
                                 >
-                                    <Link href={`/tv-shows/${series.id}/Season-${selectedSeason}/Episode-${episode.episode_number}`} className="flex items-center w-full text-cyan-700 hover:text-white">
+                                    <Link 
+                                        href={`/tv-shows/${series.id}-${formatText(series.name)}/${formatText(`${series.id} ${selectedSeason} ${episode.episode_number}`)}`}
+                                        className="flex items-center w-full text-cyan-700 hover:text-white"
+                                    >
                                         <Play className="h-4 w-4 mr-2" />
-                                        <p className="flex-1 text-sm md:text-base truncate ">
+                                        <p className="flex-1 text-sm md:text-base truncate">
                                             Episode {episode.episode_number}: {trimTitle(episode.name)}
                                         </p>
                                     </Link>

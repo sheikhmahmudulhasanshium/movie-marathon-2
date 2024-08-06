@@ -7,21 +7,21 @@ import Header from "@/components/header";
 import Modal from "@/components/modals/basic-page-modal";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
 import Searchbar from '@/components/search-bar';
+import Recommendations from '../../../../components/recommendations';
 import Loading from '@/components/loading';
+import Trailers from '../../../../components/trailer';
 import Details from '@/components/series-details';
-import EpisodeSelector from '@/components/episode-selector';
-import Trailers from '@/components/trailer';
-import Recommendations from '@/components/recommendations';
+import EpisodeSelector from '../../../../components/episode-selector';
 
-const Episode :React.FC = () => {
+const TvShow: React.FC = () => {
     const params = useParams();
-    const id = Array.isArray(params.id) ? params.id[0] : params.id; // Ensure id is a string
+    const id = Array.isArray(params.seriesId) ? params.seriesId[0] : params.seriesId; // Ensure id is a string
 
     // Fetch movie data
     const { series, loading, error } = useTvShow(id || '');
 
     if (!id) {
-        return <p>No movie ID provided.</p>; // Handle missing ID case
+        return <p>No series ID provided.</p>; // Handle missing ID case
     }
 
     if (loading) {
@@ -39,7 +39,7 @@ const Episode :React.FC = () => {
                     header={<Header />}
                     footer={<Footer />}
                 >
-                    <CustomBreadCrumb params={{ link: `` }} />
+                    <CustomBreadCrumb params={{ link: `/tv-shows/${id}/`,name:`/tv-show/${series?.name}` }} />
                     {series && (
                         <div className='justify-center items-center flex flex-col'>
                             <Searchbar />
@@ -55,4 +55,4 @@ const Episode :React.FC = () => {
     );
 }
 
-export default Episode;
+export default TvShow;
