@@ -27,7 +27,7 @@ const Persons = () => {
           header={<Header />}
           footer={<Footer/>}
         >
-          <CustomBreadCrumb params={{link:"/persons/"}}/>
+          <CustomBreadCrumb params={{link:"/persons/",name:"/Person"}}/>
           <Body/>
         </Modal>
       </main>
