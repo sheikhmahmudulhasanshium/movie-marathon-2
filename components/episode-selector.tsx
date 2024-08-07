@@ -43,11 +43,11 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({ series }) => {
     };
 
     return (
-        <div className="flex flex-col w-full my-6 py-6 px-6 bg-cyan-950 text-white">
+        <div className="flex flex-col w-full my-6 py-6 px-6 bg-cyan-950 text-white min-h-[20rem]">
             {episodes.length > 0 && (
                 <>
                     <Select onValueChange={handleSeasonChange}>
-                        <SelectTrigger className="w-4/12 sm:w-4/12 md:w-4/12 lg:w-2/12 text-lg flex font-semibold justify-start gap-2">
+                        <SelectTrigger className="w-4/12 sm:w-4/12 md:w-4/12 lg:w-2/12 text-lg flex font-semibold justify-start gap-2 ">
                             <List className="justify-start" />
                             <SelectValue placeholder="Select Season" />
                         </SelectTrigger>

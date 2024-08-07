@@ -28,7 +28,7 @@ const HomePage = () => {
           header={<Header />}
           footer={<Footer/>}
         >
-          <CustomBreadCrumb params={{link:"/"}}/>
+          <CustomBreadCrumb params={{link:"/",name:"/Welcome"}}/>
           <div className="flex-col flex ">
               <SlideShow/>
               <FullSite/>

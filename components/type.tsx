@@ -316,3 +316,9 @@ export interface SeasonEpisodes {
   season_number: number;
   episodes: Episode[];
 }
+
+// Type Guards
+export const isMovieResult = (item: CombinedSearchResult): item is Movies => 'title' in item && 'id' in item;
+export const isTVShowResult = (item: CombinedSearchResult): item is TVShows => 'name' in item && 'id' in item && 'first_air_date' in item;
+export const isPersonResult = (item: CombinedSearchResult): item is Persons => 'name' in item && 'id' in item && 'known_for' in item;
+export const isOMDBResult = (item: CombinedSearchResult): item is Movies => 'title' in item && 'id' in item && !('name' in item); // Adjust if needed

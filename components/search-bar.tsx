@@ -9,49 +9,43 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Cross2Icon, ResetIcon } from '@radix-ui/react-icons';
 
-// Utility function to format  string
-const formatText = (text: string) => {
-    return text
+// Utility function to format string
+const formatText = (text: string) => 
+    text
         .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric characters with dashes
-        .replace(/(^-|-$)+/g, '');  // Remove leading and trailing dashes
-};
+        .replace(/[^a-z0-9]+/g, '-')  // Replace non-alphanumeric characters with dashes
+        .replace(/(^-|-$)+/g, '');     // Remove leading and trailing dashes
 
 const Searchbar = () => {
     const [searchKey, setSearchKey] = useState<string>("");
     const [selectedIndex, setSelectedIndex] = useState<number>(-1);
-    const [isClient, setIsClient] = useState<boolean>(false);
-
-    const router = useRouter();
     const resultRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const router = useRouter();
 
-    useEffect(() => {
-        setIsClient(true);
-    }, []);
-
+    // Fetch search results using the custom hook
     const { data: searchResults, loading, error } = useSearch(searchKey);
 
-    const formattedSearchKey = searchKey.toLowerCase();
-
+    // Update search key and reset selection index
     const updateSearchKey = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchKey(e.target.value);
         setSelectedIndex(-1);
     };
 
+    // Type guards
     const isMovieResult = (item: CombinedSearchResult): item is Movies => 'title' in item;
     const isTVShowResult = (item: CombinedSearchResult): item is TVShows => 'name' in item && 'first_air_date' in item;
     const isPersonResult = (item: CombinedSearchResult): item is Persons => 'name' in item && 'known_for' in item;
 
+    // Filter results based on searchKey
     const filteredResults = searchResults.filter((item: CombinedSearchResult) => {
-        if (isMovieResult(item)) {
-            return item.title.toLowerCase().includes(formattedSearchKey);
-        }
-        if (isTVShowResult(item) || isPersonResult(item)) {
-            return item.name.toLowerCase().includes(formattedSearchKey);
-        }
+        const searchString = searchKey.toLowerCase();
+        if (isMovieResult(item)) return item.title.toLowerCase().includes(searchString);
+        if (isTVShowResult(item)) return item.name.toLowerCase().includes(searchString);
+        if (isPersonResult(item)) return item.name.toLowerCase().includes(searchString);
         return false;
     });
 
+    // Handle keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (filteredResults.length === 0) return;
@@ -59,34 +53,34 @@ const Searchbar = () => {
             if (e.key === 'ArrowDown') {
                 setSelectedIndex((prevIndex) => {
                     const newIndex = (prevIndex + 1) % filteredResults.length;
-                    if (resultRefs.current[newIndex]) {
-                        resultRefs.current[newIndex]?.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'nearest'
-                        });
-                    }
+                    resultRefs.current[newIndex]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     return newIndex;
                 });
             } else if (e.key === 'ArrowUp') {
                 setSelectedIndex((prevIndex) => {
                     const newIndex = (prevIndex - 1 + filteredResults.length) % filteredResults.length;
-                    if (resultRefs.current[newIndex]) {
-                        resultRefs.current[newIndex]?.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'nearest'
-                        });
-                    }
+                    resultRefs.current[newIndex]?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     return newIndex;
                 });
             }
         };
 
         window.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
+        return () => window.removeEventListener('keydown', handleKeyDown);
     }, [filteredResults]);
+
+    // Determine image source based on item type
+    const getImageSrc = (item: CombinedSearchResult) => {
+        if ('profile_path' in item && item.profile_path) {
+            return `https://media.themoviedb.org/t/p/w185${item.profile_path}`;
+        } else if ('backdrop_path' in item && item.backdrop_path) {
+            return `https://media.themoviedb.org/t/p/w185${item.backdrop_path}`;
+        } else if ('poster_path' in item && item.poster_path) {
+            return `https://media.themoviedb.org/t/p/w185${item.poster_path}`;
+        } else {
+            return '/sample-poster.jpg';
+        }
+    };
 
     return (
         <div className="text-2xl flex flex-col items-center justify-center relative">
@@ -99,7 +93,7 @@ const Searchbar = () => {
                     className="border-0 hover:border-0 py-4 pl-4 col-span-10 rounded-l-xl"
                 />
                 <button type="button" className="col-span-2 flex justify-center items-center text-primary-foreground dark:text-secondary-foreground gap-4">
-                    {searchKey.length > 1 ? (
+                    {searchKey.length > 0 ? (
                         <Cross2Icon className="text-3xl scale-150" onClick={() => setSearchKey("")} />
                     ) : (
                         <SearchIcon className="text-3xl scale-150" />
@@ -108,33 +102,25 @@ const Searchbar = () => {
             </div>
 
             {searchKey.length > 0 && loading && <p>Loading...</p>}
-            {error && <p>Error: {error}</p>}
 
             {searchKey.length > 2 && (
                 <div className="flex flex-col bg-cyan-900 w-full overflow-y-scroll max-h-64 rounded-lg shadow-lg z-50 mt-2">
                     {filteredResults.length > 0 ? (
                         filteredResults.map((item, index) => {
-                            const imgSrc = 'profile_path' in item && item.profile_path
-                                ? `https://media.themoviedb.org/t/p/w185${item.profile_path}`
-                                : 'backdrop_path' in item && item.backdrop_path
-                                ? `https://media.themoviedb.org/t/p/w185${item.backdrop_path}`
-                                : 'poster_path' in item && item.poster_path
-                                ? `https://media.themoviedb.org/t/p/w185${item.poster_path}`
-                                : '/sample-poster.jpg';
-
-                            const linkHref = isMovieResult(item)
-                                ? `/movies/${item.id}-${formatText(item.title)}`
-                                : isTVShowResult(item)
-                                ? `/tv-shows/${item.id}-${formatText(item.name)}`
-                                : isPersonResult(item)
-                                ? `/persons/${item.id}-${formatText(item.name)}`
-                                : '/';
+                            const imgSrc = getImageSrc(item);
+                            const linkHref = isMovieResult(item) ? 
+                                `/movies/${item.id}-${formatText(item.title)}` :
+                                isTVShowResult(item) ? 
+                                `/tv-shows/${item.id}-${formatText(item.name)}` :
+                                isPersonResult(item) ? 
+                                `/persons/${item.id}-${formatText(item.name)}` :
+                                '/';
 
                             return (
                                 <div
                                     key={index}
                                     ref={el => {
-                                        resultRefs.current[index] = el;
+                                        if (el) resultRefs.current[index] = el;
                                     }}
                                 >
                                     <Link href={linkHref}>

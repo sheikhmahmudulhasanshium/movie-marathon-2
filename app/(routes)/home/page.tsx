@@ -27,7 +27,7 @@ const HomePage = () => {
           header={<Header />}
           footer={<Footer/>}
         >
-          <CustomBreadCrumb params={{link:"/home/"}}/>
+          <CustomBreadCrumb params={{link:"/home/",name:"/Home/"}}/>
           <Body/>
         </Modal>
       </main>
