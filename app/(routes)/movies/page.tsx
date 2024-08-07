@@ -25,7 +25,7 @@ const Movies = () => {
           header={<Header />}
           footer={<Footer/>}
         >
-          <CustomBreadCrumb params={{link:"/movies/"}}/>
+          <CustomBreadCrumb params={{link:"/movies/",name:'/Movie'}}/>
           <Body/>
         </Modal>
       </main>

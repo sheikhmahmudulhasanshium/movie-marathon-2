@@ -25,7 +25,7 @@ const TVShows = () => {
           header={<Header />}
           footer={<Footer/>}
         >
-          <CustomBreadCrumb params={{link:"/tv-shows/"}}/>
+          <CustomBreadCrumb params={{link:"/tv-shows/",name:"TV"}}/>
           <Body/>
         </Modal>
       </main>
