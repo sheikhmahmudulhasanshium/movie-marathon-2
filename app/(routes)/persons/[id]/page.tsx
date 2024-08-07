@@ -30,7 +30,7 @@ const Person = () => {
           header={<Header />}
           footer={<Footer/>}
         >
-          <CustomBreadCrumb params={{link:`/persons/${tmdbID}`}}/>
+          <CustomBreadCrumb params={{link:`/persons/${tmdbID}`,name:`/Person/Person-Name`}}/>
           <Body/>
         </Modal>
       </main>
