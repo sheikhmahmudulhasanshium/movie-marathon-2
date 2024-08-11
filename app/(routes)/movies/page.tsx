@@ -7,6 +7,7 @@ import { useOrigin } from "@/hooks/use-origin";
 import Body from "./components/body";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
 import Loading from "@/components/loading";
+import Navbar from "./components/nav-bar";
 
 const Movies = () => {
   const origin = useOrigin();
@@ -25,6 +26,7 @@ const Movies = () => {
           header={<Header />}
           footer={<Footer/>}
         >
+          <Navbar/>
           <CustomBreadCrumb params={{link:"/movies/",name:'/Movie'}}/>
           <Body/>
         </Modal>

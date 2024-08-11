@@ -2,33 +2,44 @@ import { useState, useEffect } from 'react';
 import useMovies from './use-movies';
 import useTVShows from './use-tv-shows';
 import usePersons from './use-persons';
-import useOMDB from './use-omdb';
 import { CombinedSearchResult } from '@/components/type';
+
+// Utility function to decode URL-encoded strings
+const decodeSearchKey = (key: string) => {
+  return decodeURIComponent(key); // Decode URL-encoded strings
+};
 
 const useSearch = (searchKey: string) => {
   const [combinedData, setCombinedData] = useState<CombinedSearchResult[]>([]);
-  const { data: moviesData, loading: moviesLoading, error: moviesError } = useMovies(searchKey);
-  const { data: tvData, loading: tvLoading, error: tvError } = useTVShows(searchKey);
-  const { data: personsData, loading: personsLoading, error: personsError } = usePersons(searchKey);
-  const { data: omdbData, loading: omdbLoading, error: omdbError } = useOMDB(searchKey);
 
-  const isLoading = moviesLoading || tvLoading || personsLoading || omdbLoading;
-  const error = moviesError || tvError || personsError || omdbError;
+  // Decode the searchKey
+  const formattedSearchKey = decodeSearchKey(searchKey);
+
+  const { data: moviesData, loading: moviesLoading, error: moviesError } = useMovies(formattedSearchKey);
+  const { data: tvData, loading: tvLoading, error: tvError } = useTVShows(formattedSearchKey);
+  const { data: personsData, loading: personsLoading, error: personsError } = usePersons(formattedSearchKey);
+
+  const isLoading = moviesLoading || tvLoading || personsLoading;
+  const error = moviesError || tvError || personsError;
 
   useEffect(() => {
-    if (searchKey) {
+    console.log("Formatted Search Key:", formattedSearchKey);
+    console.log("Movies Data:", moviesData);
+    console.log("TV Shows Data:", tvData);
+    console.log("Persons Data:", personsData);
+
+    if (formattedSearchKey) {
       const combinedResults: CombinedSearchResult[] = [
         ...moviesData,
         ...tvData,
-        ...personsData,
-        ...omdbData,
+        ...personsData
       ];
+
       setCombinedData(combinedResults);
     } else {
       setCombinedData([]);
     }
-  }, [searchKey, moviesData, tvData, personsData, omdbData]);
-  console.log(omdbData)
+  }, [formattedSearchKey, moviesData, tvData, personsData]);
 
   return { data: combinedData, loading: isLoading, error };
 };

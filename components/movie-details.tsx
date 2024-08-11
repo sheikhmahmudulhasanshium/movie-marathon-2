@@ -16,7 +16,12 @@ const Details: React.FC<DetailsProps> = ({ movie }) => {
     if (!movie) {
         return <p>No movie details available.</p>;
     }
-
+    function onClickTrailerButton(){
+        const element = document.getElementById("trailer-button");
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
     return (
         <div className="flex justify-center my-4 py-8 items-center px-4 shadow-xl bg-accent w-full overflow-hidden">
             <div className='flex flex-col max-w-2xl lg:max-w-4xl w-full px-4'>
@@ -122,7 +127,7 @@ const Details: React.FC<DetailsProps> = ({ movie }) => {
                     <div className='w-8/12 flex flex-col justify-start items-start'>
                         <p className='text-2xl pb-4 font-bold'>{movie.title}</p>
                         <div className='flex'>
-                            <Button variant='outline'  className='flex items-center gap-3 text-start text-lg font-bold mb-4' >
+                            <Button variant='outline'  className='flex items-center gap-3 text-start text-lg font-bold mb-4' onClick={()=>onClickTrailerButton()}>
                                 <VideoIcon/>
                                 <p className=''>Trailer</p>
                             </Button>

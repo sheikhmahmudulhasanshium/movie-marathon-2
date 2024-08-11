@@ -1,8 +1,26 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useSearch = (searchKey: string) => {
-  const [data, setData] = useState<any[]>([]);
+interface OmdbSearchItem {
+  Title: string;
+  Year: string;
+  imdbID: string;
+  Type: 'movie' | 'series';
+  Poster: string;
+}
+
+interface OmdbResponse {
+  Search: OmdbSearchItem[];
+  totalResults: string;
+  Response: string;
+  Error?: string;
+}
+
+const useOMDB = (searchKey: string) => {
+  const [data, setData] = useState<{ movies: any[]; tvShows: any[] }>({
+    movies: [],
+    tvShows: [],
+  });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -12,7 +30,7 @@ const useSearch = (searchKey: string) => {
   useEffect(() => {
     const fetchData = async () => {
       if (searchKey.length <= 5) {
-        setData([]);
+        setData({ movies: [], tvShows: [] });
         return;
       }
 
@@ -21,7 +39,7 @@ const useSearch = (searchKey: string) => {
 
       try {
         // Step 1: Search OMDB API
-        const omdbResponse = await axios.get('https://www.omdbapi.com/', {
+        const omdbResponse = await axios.get<OmdbResponse>('https://www.omdbapi.com/', {
           params: {
             apikey: OMDB_API_KEY,
             s: searchKey,
@@ -32,11 +50,14 @@ const useSearch = (searchKey: string) => {
           throw new Error(omdbResponse.data.Error);
         }
 
-        const imdbIds = omdbResponse.data.Search.map((item: any) => item.imdbID);
+        const imdbIds = omdbResponse.data.Search.map((item: OmdbSearchItem) => ({
+          imdbID: item.imdbID,
+          type: item.Type,
+        }));
 
         // Step 2: Fetch details from TMDB for each IMDb ID
-        const tmdbRequests = imdbIds.map((id: string) =>
-          axios.get(`https://api.themoviedb.org/3/find/${id}`, {
+        const tmdbRequests = imdbIds.map(({ imdbID }) =>
+          axios.get(`https://api.themoviedb.org/3/find/${imdbID}`, {
             params: {
               api_key: TMDB_API_KEY,
               external_source: 'imdb_id',
@@ -45,9 +66,27 @@ const useSearch = (searchKey: string) => {
         );
 
         const tmdbResponses = await Promise.all(tmdbRequests);
-        const detailedResults = tmdbResponses.map((response: any) => response.data);
 
-        setData(detailedResults);
+        // Step 3: Sort results into movies and TV shows, and filter out items without an 'id'
+        const movies = tmdbResponses
+          .flatMap((response: any, index: number) => {
+            const { movie_results } = response.data;
+            const { type } = imdbIds[index];
+
+            return type === 'movie' ? movie_results : [];
+          })
+          .filter((item: any) => item.id); // Filter out items without 'id'
+
+        const tvShows = tmdbResponses
+          .flatMap((response: any, index: number) => {
+            const { tv_results } = response.data;
+            const { type } = imdbIds[index];
+
+            return type === 'series' ? tv_results : [];
+          })
+          .filter((item: any) => item.id); // Filter out items without 'id'
+
+        setData({ movies, tvShows });
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -60,9 +99,9 @@ const useSearch = (searchKey: string) => {
     };
 
     fetchData();
-  }, [searchKey, OMDB_API_KEY, TMDB_API_KEY]); // Added OMDB_API_KEY and TMDB_API_KEY to the dependency array
+  }, [searchKey, OMDB_API_KEY, TMDB_API_KEY]);
 
   return { data, loading, error };
 };
 
-export default useSearch;
+export default useOMDB;
