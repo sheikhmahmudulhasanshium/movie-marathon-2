@@ -38,7 +38,7 @@ const Movie: React.FC = () => {
                     header={<Header />}
                     footer={<Footer />}
                 >
-                    <CustomBreadCrumb params={{ link: `/movies/${id}/`,name:`/movie/${movie?.title}` }} />
+                    <CustomBreadCrumb params={{ link: `/movies/${id}/`,name:`/Movie/${movie?.title}` }} />
                     {movie && (
                         <div className='justify-center items-center flex flex-col'>
                             <Searchbar />

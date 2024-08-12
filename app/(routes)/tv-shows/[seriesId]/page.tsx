@@ -39,11 +39,11 @@ const TvShow: React.FC = () => {
                     header={<Header />}
                     footer={<Footer />}
                 >
-                    <CustomBreadCrumb params={{ link: `/tv-shows/${id}/`,name:`/tv-show/${series?.name}` }} />
+                    <CustomBreadCrumb params={{ link: `/tv-shows/${id}/`,name:`/TV/${series?.name}` }} />
                     {series && (
                         <div className='justify-center items-center flex flex-col'>
                             <Searchbar />
-                            <EpisodeSelector series={series}/>
+                            <EpisodeSelector series={series} default_season={1} default_episode={1}/>
                             <Details series={series} />
                             <Trailers tmdbID={series.id} media_type="tv"/>
                             <Recommendations tmdbID={series.id} media_type="tv" />

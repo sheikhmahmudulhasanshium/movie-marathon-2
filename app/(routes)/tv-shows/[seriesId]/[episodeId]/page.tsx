@@ -62,7 +62,7 @@ const Episode: React.FC = () => {
                     {episode && (
                         <div className='justify-center items-center flex flex-col'>
                             <Searchbar />
-                            <EpisodeSelector series={series}/>
+                            <EpisodeSelector series={series} default_season={parseInt(season_number)} default_episode={parseInt(episode_number)}/>
                             {/* Ensure the Details component is imported and defined */}
                             {/*<Details series={series} />*/}
                             <Trailers tmdbID={combinedId}  media_type="tv" />

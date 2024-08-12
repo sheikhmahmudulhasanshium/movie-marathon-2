@@ -198,12 +198,10 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                             <div className='flex overflow-x-auto gap-2'>
                                 {series.cast.length > 0 ? (
                                     <>
-                                        <div className='z-20 absolute left-80 lg:left-[36rem] items-center flex -bottom-[20rem] w-12 justify-center text-cyan-950'>
-                                            <ChevronLeft className='w-12 h-12 animate-pulse' />
-                                        </div>
+                                        
                                         {series.cast.map((profile) => (
                                             <Card key={profile.id} className='hover:opacity-75 w-36 bg-accent'>
-                                                <Link href={`/persons/${profile.id}`} className='flex flex-col justify-center items-center relative'>
+                                                <Link href={`/persons/${profile.id}`} className='flex flex-col justify-center items-center '>
                                                     <CardContent>
                                                         {profile.profile_path ? (
                                                             <Image
@@ -225,9 +223,7 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                                                 </Link>
                                             </Card>
                                         ))}
-                                        <div className='z-20 absolute sm:-right-0 lg:right-4 items-center flex -bottom-[20rem] w-12 justify-center text-cyan-950'>
-                                            <ChevronRight className='w-12 h-12 animate-pulse' />
-                                        </div>
+                                        
                                     </>
                                 ) : 'No cast available'}
                             </div>
@@ -238,12 +234,9 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                             <div className='flex overflow-x-auto gap-2'>
                                 {series.crew.length > 0 ? (
                                     <>
-                                        <div className='z-30 absolute left-80 lg:left-[36rem] items-center flex -bottom-[40rem] w-12 justify-center text-cyan-950'>
-                                            <ChevronLeft className='w-12 h-12 animate-pulse' />
-                                        </div>
                                         {series.crew.map((profile) => (
                                             <Card key={profile.id} className='hover:opacity-75 w-36 bg-accent'>
-                                                <Link href={`/persons/${profile.id}`} className='flex flex-col justify-center items-center relative'>
+                                                <Link href={`/persons/${profile.id}`} className='flex flex-col justify-center items-center '>
                                                     <CardContent>
                                                         {profile.profile_path ? (
                                                             <Image
@@ -265,9 +258,7 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                                                 </Link>
                                             </Card>
                                         ))}
-                                        <div className='z-30 absolute sm:-right-0 lg:right-4 items-center flex -bottom-[40rem] w-12 justify-center text-cyan-950'>
-                                            <ChevronRight className='w-12 h-12 animate-pulse' />
-                                        </div>
+                                        
                                     </>
                                 ) : 'No crew available'}
                             </div>

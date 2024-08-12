@@ -13,30 +13,35 @@ const useEpisodesList = (tmdbId: number, number_of_seasons: number) => {
             setLoading(true);
             try {
                 const allSeasons: SeasonEpisodes[] = [];
+                let firstAvailableSeason: number | null = null;
 
                 // Fetch the "Specials" season first if it exists (season_number = 0)
-                const specialsResponse = await axios.get(`https://api.themoviedb.org/3/tv/${tmdbId}/season/0`, {
-                    params: {
-                        api_key: API_KEY,
-                    },
-                });
+                try {
+                    const specialsResponse = await axios.get(`https://api.themoviedb.org/3/tv/${tmdbId}/season/0`, {
+                        params: {
+                            api_key: API_KEY,
+                        },
+                    });
 
-                if (specialsResponse.data.episodes && specialsResponse.data.episodes.length > 0) {
-                    const specialEpisodes: SeasonEpisodes = {
-                        season_number: 0,
-                        episodes: specialsResponse.data.episodes.map((ep: any) => ({
-                            id: ep.id,
-                            name: ep.name,
-                            overview: ep.overview,
-                            episode_number: ep.episode_number,
-                            season_number: ep.season_number,
-                            air_date: ep.air_date,
-                            still_path: ep.still_path,
-                            vote_average: ep.vote_average,
-                            vote_count: ep.vote_count,
-                        })),
-                    };
-                    allSeasons.push(specialEpisodes);
+                    if (specialsResponse.data.episodes && specialsResponse.data.episodes.length > 0) {
+                        const specialEpisodes: SeasonEpisodes = {
+                            season_number: 0,
+                            episodes: specialsResponse.data.episodes.map((ep: any) => ({
+                                id: ep.id,
+                                name: ep.name,
+                                overview: ep.overview,
+                                episode_number: ep.episode_number,
+                                season_number: ep.season_number,
+                                air_date: ep.air_date,
+                                still_path: ep.still_path,
+                                vote_average: ep.vote_average,
+                                vote_count: ep.vote_count,
+                            })),
+                        };
+                        allSeasons.push(specialEpisodes);
+                    }
+                } catch (err) {
+                    // Season 0 does not exist or failed to fetch
                 }
 
                 // Fetch the remaining seasons
@@ -47,25 +52,37 @@ const useEpisodesList = (tmdbId: number, number_of_seasons: number) => {
                         },
                     });
 
-                    const seasonEpisodes: SeasonEpisodes = {
-                        season_number: season,
-                        episodes: response.data.episodes.map((ep: any) => ({
-                            id: ep.id,
-                            name: ep.name,
-                            overview: ep.overview,
-                            episode_number: ep.episode_number,
-                            season_number: ep.season_number,
-                            air_date: ep.air_date,
-                            still_path: ep.still_path,
-                            vote_average: ep.vote_average,
-                            vote_count: ep.vote_count,
-                        })),
-                    };
+                    if (response.data.episodes && response.data.episodes.length > 0) {
+                        if (firstAvailableSeason === null) {
+                            firstAvailableSeason = season; // Set the first available season
+                        }
 
-                    allSeasons.push(seasonEpisodes);
+                        const seasonEpisodes: SeasonEpisodes = {
+                            season_number: season,
+                            episodes: response.data.episodes.map((ep: any) => ({
+                                id: ep.id,
+                                name: ep.name,
+                                overview: ep.overview,
+                                episode_number: ep.episode_number,
+                                season_number: ep.season_number,
+                                air_date: ep.air_date,
+                                still_path: ep.still_path,
+                                vote_average: ep.vote_average,
+                                vote_count: ep.vote_count,
+                            })),
+                        };
+
+                        allSeasons.push(seasonEpisodes);
+                    }
                 }
 
-                setEpisodes(allSeasons);
+                if (firstAvailableSeason !== null && allSeasons.length === 0) {
+                    // Handle case where no seasons were fetched
+                    setEpisodes([]);
+                } else {
+                    setEpisodes(allSeasons);
+                }
+                
             } catch (err) {
                 setError('Failed to fetch episodes.');
             } finally {
