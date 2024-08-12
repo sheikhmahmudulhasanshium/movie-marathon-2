@@ -104,6 +104,7 @@ const useSeries = (id: string) => {
                     id: response.data.id,
                     name: response.data.name,
                     original_name: response.data.original_name,
+                    tagline:response.data.tagline,
                     original_language: originalLanguage,
                     poster_path: response.data.poster_path,
                     backdrop_path: response.data.backdrop_path,

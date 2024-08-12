@@ -212,7 +212,6 @@ const Details: React.FC<DetailsProps> = ({ movie }) => {
                             <div className='flex overflow-x-auto gap-2  '>
                                 {movie.cast.length > 0 ? (
                                   <> 
-                                    <div className='z-20 absolute  left-80 lg:left-[36rem] items-center flex -bottom-[20rem] w-12  justify-center text-cyan-950'><ChevronLeft className='w-12 h-12 animate-pulse'/></div>
  
                                     {
                                     
@@ -242,7 +241,6 @@ const Details: React.FC<DetailsProps> = ({ movie }) => {
                                         </Card>
                                         
                                     ))}
-                                    <div className='z-20 absolute  sm:-right-0 lg:right-4 items-center flex -bottom-[20rem] w-12  justify-center text-cyan-950'><ChevronRight className='w-12 h-12 animate-pulse'/></div>
 
 
                                 </>
@@ -255,7 +253,6 @@ const Details: React.FC<DetailsProps> = ({ movie }) => {
                             <div className='flex overflow-x-auto gap-2'>
                                 {movie.crew.length > 0 ? (
                                    <> 
-                                   <div className='z-30 absolute  left-80 lg:left-[36rem] items-center flex -bottom-[40rem] w-12  justify-center text-cyan-950'><ChevronLeft className='w-12 h-12 animate-pulse'/></div>
 
                                    {
                                  
@@ -284,7 +281,6 @@ const Details: React.FC<DetailsProps> = ({ movie }) => {
                                             </Card>
                                         
                                     ))}
-                                    <div className='z-30 absolute  sm:-right-0  lg:right-4 items-center flex -bottom-[40rem] w-12  justify-center text-cyan-950'><ChevronRight className='w-12 h-12 animate-pulse'/></div>
 
 
                                 </>

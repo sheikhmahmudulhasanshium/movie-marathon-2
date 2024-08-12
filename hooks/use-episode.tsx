@@ -14,6 +14,7 @@ const useEpisode = (id: string, season_number: string, episode_number: string) =
                 const response = await axios.get<Episode>(`https://api.themoviedb.org/3/tv/${id}/season/${season_number}/episode/${episode_number}`, {
                     params: {
                         api_key: API_KEY,
+                        append_to_response:'external_ids,credits'
                     },
                 });
                 setEpisode(response.data);

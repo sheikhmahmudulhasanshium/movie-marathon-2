@@ -124,6 +124,10 @@ export interface ExternalIds {
   twitter_id?: string;
   tiktok_id?: string;
   youtube_id?: string;
+  wikidata_id?: string;
+  tvdb_id?: string;
+  freebase_id?: string;
+  tvrage_id?: string;
 }
 
 // Define the Keywords interface
@@ -209,6 +213,7 @@ export interface TVShow {
   id: number;
   name: string;
   original_name: string;
+  tagline: string
   original_language: string;
   poster_path: string | null;
   backdrop_path: string | null;
@@ -283,9 +288,16 @@ export interface Episode {
   runtime: number;
   crew: CrewMember[];
   guest_stars: GuestStar[];
- 
-}
+  external_ids: ExternalIds
+  credits: Credits
+  alternative_titles: AlternativeTitles;
 
+}
+export interface Credits{
+  cast:CastMember[],
+  crew:CrewMember[],
+  guest_star:GuestStar[],
+}
 export interface CrewMember {
   department: string;
   job: string;
@@ -312,6 +324,7 @@ export interface GuestStar {
   original_name: string;
   popularity: number;
   profile_path: string | null;
+
 }
 
 export interface SeasonEpisodes {

@@ -1,6 +1,7 @@
 "use client";
 import RootLayout from '@/app/layout';
 import CustomBreadCrumb from '@/components/custom-bread-crumb';
+import Details from '@/components/episode-details';
 import EpisodeSelector from '@/components/episode-selector';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
@@ -64,7 +65,7 @@ const Episode: React.FC = () => {
                             <Searchbar />
                             <EpisodeSelector series={series} default_season={parseInt(season_number)} default_episode={parseInt(episode_number)}/>
                             {/* Ensure the Details component is imported and defined */}
-                            {/*<Details series={series} />*/}
+                            <Details episode={episode} />
                             <Trailers tmdbID={combinedId}  media_type="tv" />
                             <Recommendations tmdbID={series.id} media_type="tv" />
                         </div>

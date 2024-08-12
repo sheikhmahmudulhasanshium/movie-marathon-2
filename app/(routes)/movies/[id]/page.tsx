@@ -11,6 +11,7 @@ import Searchbar from '@/components/search-bar';
 import Recommendations from '../../../../components/recommendations';
 import Loading from '@/components/loading';
 import Trailers from '../../../../components/trailer';
+import VideoPlayer from '../components/video-player';
 
 const Movie: React.FC = () => {
     const params = useParams();
@@ -42,6 +43,9 @@ const Movie: React.FC = () => {
                     {movie && (
                         <div className='justify-center items-center flex flex-col'>
                             <Searchbar />
+                            <VideoPlayer movie={movie}/>
+
+                            
                             <MovieDetails movie={movie} />
                             <Trailers tmdbID={movie.id} media_type="movie"/>
                             <Recommendations tmdbID={movie.id} media_type="movie" />
