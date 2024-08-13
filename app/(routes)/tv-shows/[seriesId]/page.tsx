@@ -12,6 +12,7 @@ import Loading from '@/components/loading';
 import Trailers from '../../../../components/trailer';
 import Details from '@/components/series-details';
 import EpisodeSelector from '../../../../components/episode-selector';
+import VideoPlayer from '../components/video-player';
 
 const TvShow: React.FC = () => {
     const params = useParams();
@@ -44,6 +45,8 @@ const TvShow: React.FC = () => {
                         <div className='justify-center items-center flex flex-col'>
 
                             <Searchbar />
+                            <VideoPlayer series={series}/>
+
                             <EpisodeSelector series={series} default_season={1} default_episode={1}/>
                             <Details series={series} />
                             <Trailers tmdbID={series.id} media_type="tv"/>

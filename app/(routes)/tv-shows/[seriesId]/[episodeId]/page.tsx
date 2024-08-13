@@ -13,6 +13,7 @@ import Trailers from '@/components/trailer';
 import useEpisode from '@/hooks/use-episode';
 import useTvShow from '@/hooks/use-tv-show';
 import { useParams } from 'next/navigation';
+import VideoPlayer from '../../components/video-player';
 
 const Episode: React.FC = () => {
     const params = useParams();
@@ -63,6 +64,8 @@ const Episode: React.FC = () => {
                     {episode && (
                         <div className='justify-center items-center flex flex-col'>
                             <Searchbar />
+                            <VideoPlayer series={series} season_number={parseInt(season_number)} episode_number={parseInt(episode_number)}/>
+
                             <EpisodeSelector series={series} default_season={parseInt(season_number)} default_episode={parseInt(episode_number)}/>
                             {/* Ensure the Details component is imported and defined */}
                             <Details episode={episode} series={series}/>

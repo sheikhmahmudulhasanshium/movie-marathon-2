@@ -54,19 +54,36 @@ const serverList: Server[] = [
 ];
 
 interface ServerSelectorProps {
-    movieId: string;
+    seriesId: string;
+    season_number?: number;
+    episode_number?: number;
     onServerSelect: (url: string) => void;
 }
 
-const ServerSelector: React.FC<ServerSelectorProps> = ({ movieId, onServerSelect }) => {
+const ServerSelector: React.FC<ServerSelectorProps> = ({ seriesId, season_number, episode_number, onServerSelect }) => {
     const [selectedServer, setSelectedServer] = useState<Server | null>(null);
     const [serverSelected, setServerSelected] = useState(false);
 
+    // Function to generate video URL based on server format
+    const generateVideoUrl = (server: Server) => {
+        if (server.episode_format && season_number !== undefined && episode_number !== undefined) {
+            return server.episode_format
+                .replace("{id}", seriesId)
+                .replace("{season_number}", season_number.toString())
+                .replace("{episode_number}", episode_number.toString());
+        }
+        if (server.series_format) {
+            return server.series_format.replace("{id}", seriesId);
+        }
+        return "";
+    };
+
+    // Handle server selection and URL generation
     const handleServerSelect = (server: Server) => {
         setSelectedServer(server);
         setServerSelected(true);
-        if (server.movie_format) {
-            const videoUrl = server.movie_format.replace("{id}", movieId);
+        const videoUrl = generateVideoUrl(server);
+        if (videoUrl) {
             onServerSelect(videoUrl);
         }
     };
@@ -80,24 +97,29 @@ const ServerSelector: React.FC<ServerSelectorProps> = ({ movieId, onServerSelect
                 </div>
             )}
             <div className="flex flex-wrap items-center py-6 justify-center gap-4">
-                {serverList.map((server) => (
-                    <button
-                        key={server.server_name}
-                        className={`flex text-xl border p-3 rounded-xl items-center gap-2 cursor-pointer ${
-                            selectedServer?.server_name === server.server_name
-                                ? "bg-cyan-900 text-white"
-                                : "bg-accent hover:bg-cyan-900 hover:text-white"
-                        }`}
-                        onClick={() => handleServerSelect(server)}
-                        aria-pressed={selectedServer?.server_name === server.server_name}
-                    >
-                        <PlayIcon />
-                        <div className="flex flex-col">
-                            <p className="font-light">Server</p>
-                            <p className="font-bold">{server.server_name}</p>
-                        </div>
-                    </button>
-                ))}
+                {serverList.length === 0 ? (
+                    <p>No servers available</p>
+                ) : (
+                    serverList.map((server) => (
+                        <button
+                            key={server.server_name}
+                            className={`flex text-xl border p-3 rounded-xl items-center gap-2 cursor-pointer ${
+                                selectedServer?.server_name === server.server_name
+                                    ? "bg-cyan-900 text-white"
+                                    : "bg-accent hover:bg-cyan-900 hover:text-white"
+                            }`}
+                            onClick={() => handleServerSelect(server)}
+                            aria-pressed={selectedServer?.server_name === server.server_name}
+                            aria-label={`Select ${server.server_name}`}
+                        >
+                            <PlayIcon />
+                            <div className="flex flex-col">
+                                <p className="font-light">Server</p>
+                                <p className="font-bold">{server.server_name}</p>
+                            </div>
+                        </button>
+                    ))
+                )}
             </div>
             <div className="flex text-center pb-4 justify-center items-center text-base gap-1 text-slate-500">
                 <LucideInfo className="text-sm" />
