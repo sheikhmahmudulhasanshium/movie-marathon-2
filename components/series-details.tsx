@@ -16,12 +16,24 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
     if (!series) {
         return <p>No series details available.</p>;
     }
+
     function onClickTrailerButton(){
         const element = document.getElementById("trailer-button");
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
         }
     }
+
+    // Function to get the first rating available
+    const getRating = () => {
+        if (series.content_ratings && series.content_ratings.results.length > 0) {
+            // Find a rating for the US as an example; adjust as needed
+            const rating = series.content_ratings.results.find(rating => rating.iso_3166_1 === 'US');
+            return rating ? rating.rating : 'Not Available';
+        }
+        return 'Not Available';
+    };
+
     return (
         <div className="flex justify-center my-4 py-8 items-center px-4 shadow-xl bg-accent w-full overflow-hidden">
             <div className='flex flex-col max-w-2xl lg:max-w-4xl w-full px-4'>
@@ -40,14 +52,16 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                             <p>{series.status}</p>
                         </div>
                         
-                        {series.runtime!="Runtime not available"&&<div className='text-xl flex flex-col items-center pt-2 gap-2'>
-                            <p className='font-bold'>Duration:</p>
-                            <p className='flex items-center gap-1.5'><Clock/>{series.runtime}</p>
-                        </div>}
+                        {series.runtime !== "Runtime not available" && (
+                            <div className='text-xl flex flex-col items-center pt-2 gap-2'>
+                                <p className='font-bold'>Duration:</p>
+                                <p className='flex items-center gap-1.5'><Clock/>{series.runtime}</p>
+                            </div>
+                        )}
                         <div className='text-xl flex items-center pt-2 gap-2'>
                             <p className='font-bold'>Rated:</p>
                             <p className='border bg-white p-1 shadow-lg shadow-accent-foreground text-lg rounded-lg text-secondary-foreground bg-opacity-5'>
-                                {series.certification || 'Not Available'}
+                                {getRating()}
                             </p>
                         </div>
                         <div className='flex pt-2 gap-2 text-lg'>
@@ -86,6 +100,19 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                                 </div>
                             </div>
                         )}
+                        {series.networks && (
+                            <div className='pt-2 text-lg w-full'>  
+                                <p className='font-bold'>Networks:</p>
+                                <div>
+                                    {series.networks.map((company, index) => (
+                                        <Link href={`/companies/${company.id}`} key={company.id} className='hover:underline hover:text-blue-600'>
+                                            {company.name}
+                                            {index < series.networks.length - 1 ? ', ' : '.'}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                         {series.production_countries && (
                             <div className='text-lg flex flex-col items-start pt-6 gap-2 flex-wrap'>
                                 <p className='font-bold'>Countries:</p>
@@ -118,7 +145,7 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                             <p className="font-thin">-{series.tagline}</p>
                         </div>
                         <div className='flex'>
-                            <Button variant='outline' className='flex items-center gap-3 text-start text-lg font-bold mb-4' onClick={()=>onClickTrailerButton()}>
+                            <Button variant='outline' className='flex items-center gap-3 text-start text-lg font-bold mb-4' onClick={onClickTrailerButton}>
                                 <VideoIcon/>
                                 <p>Trailer</p>
                             </Button>
@@ -207,7 +234,6 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                             <div className='flex overflow-x-auto gap-2'>
                                 {series.cast.length > 0 ? (
                                     <>
-                                        
                                         {series.cast.map((profile) => (
                                             <Card key={profile.id} className='hover:opacity-75 w-36 bg-accent'>
                                                 <Link href={`/persons/${profile.id}`} className='flex flex-col justify-center items-center '>
@@ -232,7 +258,6 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                                                 </Link>
                                             </Card>
                                         ))}
-                                        
                                     </>
                                 ) : 'No cast available'}
                             </div>
@@ -266,8 +291,7 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                                                     <CardFooter><p className='text-base'>({profile.name})</p></CardFooter>
                                                 </Link>
                                             </Card>
-                                        ))}
-                                        
+                                       ))}
                                     </>
                                 ) : 'No crew available'}
                             </div>

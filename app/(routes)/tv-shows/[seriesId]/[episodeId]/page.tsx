@@ -65,7 +65,7 @@ const Episode: React.FC = () => {
                             <Searchbar />
                             <EpisodeSelector series={series} default_season={parseInt(season_number)} default_episode={parseInt(episode_number)}/>
                             {/* Ensure the Details component is imported and defined */}
-                            <Details episode={episode} />
+                            <Details episode={episode} series={series}/>
                             <Trailers tmdbID={combinedId}  media_type="tv" />
                             <Recommendations tmdbID={series.id} media_type="tv" />
                         </div>

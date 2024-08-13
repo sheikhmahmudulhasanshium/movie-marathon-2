@@ -48,7 +48,7 @@ const SampleCard: React.FC<SampleCardProps> = ({ id, title, posterPath, certific
                             <CalendarIcon className="w-4 h-4" />
                             <p>{releaseDate}</p>
                         </div>
-                        {runtime!='Runtime not available'&&<div className="flex items-center gap-1">
+                        {(runtime!=='Runtime not available'&& runtime!=='Time not available')&&<div className="flex items-center gap-1">
                             <ClockIcon className="w-4 h-4" />
                             <p>{runtime}</p>
                         </div>}

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Movies, MoviesResponse } from '@/components/type';
 
-const useLatest = (media_type:'movie'|'tv') => {
-  const totalCards: number = 30
+const useLatest = (media_type: 'movie' | 'tv') => {
+  const totalCards: number = 30;
   const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
   const BASE_URL = `https://api.themoviedb.org/3/${media_type}/upcoming`;
 
@@ -22,11 +22,7 @@ const useLatest = (media_type:'movie'|'tv') => {
           const response = await axios.get<MoviesResponse>(BASE_URL, {
             params: {
               api_key: API_KEY,
-            },
-            paramsSerializer: params => {
-              // Serialize params for URL (optional, depending on your needs)
-              const queryString = new URLSearchParams(params).toString();
-              return queryString;
+              page: currentPage, // Ensure page parameter is added
             },
           });
 
@@ -38,7 +34,7 @@ const useLatest = (media_type:'movie'|'tv') => {
               fetchedMovies = fetchedMovies.slice(0, totalCards);
               break;
             }
-            
+
             currentPage++;
           } else {
             setError(`API returned status code: ${response.status}`);
@@ -59,7 +55,7 @@ const useLatest = (media_type:'movie'|'tv') => {
     };
 
     fetchMovies();
-  }, [API_KEY, BASE_URL, totalCards]);
+  }, [API_KEY, BASE_URL, totalCards]); // Use stable values in dependency array
 
   return { data, loading, error };
 };

@@ -32,7 +32,7 @@ export interface Persons {
 
 // Define the Movies interface
 export interface Movies {
-  runtime(runtime: any, arg1: string): string;
+  runtime: number; // Changed to number for consistency with minutes
   certification: string;
   adult: boolean;
   backdrop_path: string | null;
@@ -101,6 +101,16 @@ export interface CrewMember {
   job: string;
   profile_path: string | null;
 }
+export interface Network {
+  id: number;
+  name: string;
+  logo_path: string | null;
+  origin_country: string;
+  homepage?: string; // Optional field for the network's website
+  description?: string; // Optional field for a brief description of the network
+  established_year?: number; // Optional field for the year the network was established
+}
+
 
 // Define the ProductionCompany interface
 export interface ProductionCompany {
@@ -148,6 +158,7 @@ export interface Certification {
   order: number;
 }
 
+// Define the CertificationsResponse interface
 export interface CertificationsResponse {
   certifications: {
     [key: string]: Certification[];
@@ -188,7 +199,7 @@ export interface Movie {
   original_language: string;
   overview: string;
   release_date: string;
-  runtime: string | null;
+  runtime: number | null; // Changed to number for consistency with minutes
   poster_path: string | null;
   backdrop_path: string | null;
   genres: Genre[];
@@ -213,7 +224,7 @@ export interface TVShow {
   id: number;
   name: string;
   original_name: string;
-  tagline: string
+  tagline: string;
   original_language: string;
   poster_path: string | null;
   backdrop_path: string | null;
@@ -233,9 +244,10 @@ export interface TVShow {
   number_of_episodes: number;
   number_of_seasons: number;
   homepage: string;
-  certification: string;
+  content_ratings: ContentRatings;
   runtime: string;
   images: Images;
+  networks: Network[];
   alternative_titles: AlternativeTitles;
 }
 
@@ -274,6 +286,7 @@ export interface Image {
   width: number;
 }
 
+// Define the Episode interface with formatted_runtime
 export interface Episode {
   id: number;
   name: string;
@@ -285,31 +298,35 @@ export interface Episode {
   vote_average: number;
   vote_count: number;
   production_code?: string;
-  runtime: number;
+  runtime: number; // Original runtime in minutes
+  formatted_runtime?: string; // Add this field for formatted runtime
   crew: CrewMember[];
   guest_stars: GuestStar[];
-  external_ids: ExternalIds
-  credits: Credits
+  external_ids: ExternalIds;
+  credits: Credits;
   alternative_titles: AlternativeTitles;
+  content_ratings: ContentRatings;
+  keywords?: Keywords;
+  genres?: Genre[];
+  production_companies?: ProductionCompany[];
+  production_countries?: ProductionCountry[];
+}
+// Define the ContentRatings interface
+export interface ContentRatings {
+  results: ContentRating[];
+}
 
+// Define the ContentRating interface
+export interface ContentRating {
+  descriptors: string[]; // Array of descriptors (e.g., "violence", "language")
+  iso_3166_1: string;   // ISO 3166-1 alpha-2 country code (e.g., "US", "AU")
+  rating: string;       // Content rating (e.g., "TV-MA", "R 18+")
 }
-export interface Credits{
-  cast:CastMember[],
-  crew:CrewMember[],
-  guest_star:GuestStar[],
-}
-export interface CrewMember {
-  department: string;
-  job: string;
-  credit_id: string;
-  adult: boolean;
-  gender: number;
-  id: number;
-  known_for_department: string;
-  name: string;
-  original_name: string;
-  popularity: number;
-  profile_path: string | null;
+
+export interface Credits {
+  cast: CastMember[];
+  crew: CrewMember[];
+  guest_stars: GuestStar[];
 }
 
 export interface GuestStar {
@@ -324,7 +341,6 @@ export interface GuestStar {
   original_name: string;
   popularity: number;
   profile_path: string | null;
-
 }
 
 export interface SeasonEpisodes {
