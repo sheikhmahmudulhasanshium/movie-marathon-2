@@ -9,16 +9,10 @@ import useUpcoming from "@/hooks/use-upcoming";
 
 const Body = () => {
     // TV Series Hooks
-    const { airing_today: airingTodaySeries, loading: airingTodaySeriesLoading, error: airingTodaySeriesError } = useAiringToday('tv');
-    const { popular: popularSeries, loading: popularSeriesLoading, error: popularSeriesError } = usePopular('tv');
     const { top_rated: topRatedSeries, loading: topRatedSeriesLoading, error: topRatedSeriesError } = useTopRated('tv');
-    const { on_air: onAirSeries, loading: onAirSeriesLoading, error: onAirSeriesError } = useOnAir('tv');
 
     // Movie Hooks
-    const { now_playing: nowPlayingMovies, loading: nowPlayingMoviesLoading, error: nowPlayingMoviesError } = useNowPlayingMovies('movie');
-    const { popular: popularMovies, loading: popularMoviesLoading, error: popularMoviesError } = usePopular('movie');
     const { top_rated: topRatedMovies, loading: topRatedMoviesLoading, error: topRatedMoviesError } = useTopRated('movie');
-    const { upcoming: upcomingMovies, loading: upcomingMoviesLoading, error: upcomingMoviesError } = useUpcoming('movie');
 
     // Utility function to handle null values
     const handleNullValue = (value: string | null, defaultValue: string = 'N/A'): string => value || defaultValue;
@@ -79,20 +73,14 @@ const Body = () => {
 
     return (
         <div className='flex flex-col mx-4 lg:mx-8 justify-center items-center'>
-            <p className="font-light text-2xl pt-4 mb-8 text-gray-700">Explore Movies, TV Shows, and More</p>
-            <Searchbar />
+                <p className="font-light text-2xl my-8 text-gray-700 text-center">Explore Top-Rated Movies and TV Shows</p>
+                <Searchbar />
             <div className="flex flex-col gap-y-12 w-full">
-                {/* Movie Sections */}
-                {renderMovieSection('Movies Now Playing', nowPlayingMovies || [], nowPlayingMoviesLoading, nowPlayingMoviesError)}
-                {renderMovieSection('Popular Movies', popularMovies || [], popularMoviesLoading, popularMoviesError)}
+                {/* Top-Rated Movies Section */}
                 {renderMovieSection('Top-Rated Movies', topRatedMovies || [], topRatedMoviesLoading, topRatedMoviesError)}
-                {renderMovieSection('Upcoming Movies', upcomingMovies || [], upcomingMoviesLoading, upcomingMoviesError)}
 
-                {/* TV Sections */}
-                {renderSeriesSection('Shows On the Air', onAirSeries || [], onAirSeriesLoading, onAirSeriesError)}
-                {renderSeriesSection('Shows Airing Today', airingTodaySeries || [], airingTodaySeriesLoading, airingTodaySeriesError)}
-                {renderSeriesSection('Popular Shows', popularSeries || [], popularSeriesLoading, popularSeriesError)}
-                {renderSeriesSection('Top-Rated Shows', topRatedSeries || [], topRatedSeriesLoading, topRatedSeriesError)}
+                {/* Top-Rated TV Shows Section */}
+                {renderSeriesSection('Top-Rated TV Shows', topRatedSeries || [], topRatedSeriesLoading, topRatedSeriesError)}
             </div>
         </div>
     );

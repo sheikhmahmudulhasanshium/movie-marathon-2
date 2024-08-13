@@ -11,7 +11,7 @@ const Header = () => {
     { href: '/home', icon: <HomeIcon className="text-cyan-950 dark:text-cyan-800 scale-150" />, label: 'Home' },
     { href: '/movies', icon: <ClapperboardIcon className="text-cyan-950 dark:text-cyan-800 scale-150" />, label: 'Movies' },
     { href: '/tv-shows', icon: <TvMinimalIcon className="text-cyan-950 dark:text-cyan-800 scale-150" />, label: 'TV Shows' },
-    { href: '/top-imdb', icon: <TrophyIcon className="text-cyan-950 dark:text-cyan-800 scale-150" />, label: 'Top IMDB' },
+    { href: '/top-contents', icon: <TrophyIcon className="text-cyan-950 dark:text-cyan-800 scale-150" />, label: 'Top Contents' },
   ];
 
   return (

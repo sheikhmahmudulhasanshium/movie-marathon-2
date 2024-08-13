@@ -12,7 +12,7 @@ const Sidebar = () => {
     { href: '/tv-shows', label: 'TV Shows' },
     { href: '/genres', label: 'Genres' },
     { href: '/country', label: 'Country' },
-    { href: '/top-imdb', label: 'Top IMDB' },
+    { href: '/top-contents', label: 'Top Contents' },
   ];
 
   return (
