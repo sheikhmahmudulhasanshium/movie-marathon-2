@@ -199,7 +199,7 @@ export interface Movie {
   original_language: string;
   overview: string;
   release_date: string;
-  runtime: number | null; // Changed to number for consistency with minutes
+  runtime: number| string | null; // Changed to number for consistency with minutes
   poster_path: string | null;
   backdrop_path: string | null;
   genres: Genre[];
