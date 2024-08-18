@@ -28,7 +28,7 @@ const Page = () => {
                 >
                     <Navbar onOptionSelect={setSelectedOption} />
                     <CustomBreadCrumb params={{ link: "/country/", name: '/Country' }} />
-                    <Body/>
+                    <Body selectedOption={selectedOption} />
                 </Modal>
             </main>
         </RootLayout>
