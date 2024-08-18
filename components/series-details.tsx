@@ -120,7 +120,7 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                                     {series.production_countries.length > 0 && (
                                         <Tooltip>
                                             {series.production_countries.map((country, index) => (
-                                                <div key={index}>
+                                                <Link key={index} href={`/country/${country.iso_3166_1}`}>
                                                     <TooltipTrigger>
                                                         <Image 
                                                             src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${country.iso_3166_1}.svg`} 
@@ -130,7 +130,7 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                                                         />
                                                     </TooltipTrigger>
                                                     <TooltipContent>{country.name}</TooltipContent>
-                                                </div>
+                                                </Link>
                                             ))}
                                         </Tooltip>
                                     )}
@@ -219,7 +219,7 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                                 {series.genres.length > 0
                                     ? series.genres.map((genre, index) => (
                                         <span key={genre.id}>
-                                            <Link href={`/genres/${genre.id}`} className='hover:text-blue-500 hover:underline'>
+                                            <Link href={`/genres/${genre.name.toLowerCase().replace(/[^a-z0-9&]+/g, '-').replace(/(^-|-$)+/g, '')}`} className='hover:text-blue-500 hover:underline'>
                                                 {genre.name}
                                             </Link>
                                             {index < series.genres.length - 1 ? ', ' : '.'}

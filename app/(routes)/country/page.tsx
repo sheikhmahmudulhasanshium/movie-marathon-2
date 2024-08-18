@@ -10,6 +10,7 @@ import { useOrigin } from "@/hooks/use-origin";
 import Loading from "@/components/loading";
 import { useState } from "react";
 import Navbar from "./components/nav-bar";
+import CountryList from "./components/country-list";
 
 const Page = () => {
     const origin = useOrigin();
@@ -29,6 +30,7 @@ const Page = () => {
                     <Navbar onOptionSelect={setSelectedOption} />
                     <CustomBreadCrumb params={{ link: "/country/", name: '/Country' }} />
                     <Body selectedOption={selectedOption} />
+                    <CountryList/>
                 </Modal>
             </main>
         </RootLayout>

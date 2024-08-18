@@ -109,8 +109,9 @@ const Details: React.FC<DetailsProps> = ({ movie }) => {
                                         <Tooltip>{(movie.production_countries.map((country,index)=>(
                                             <>
                                             <TooltipTrigger key={index}>
-
-                                                <Image src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${country.iso_3166_1}.svg`} alt={country.name} height={60} width={40}/> 
+                                                <Link href={`/country/${country.iso_3166_1}`}>
+                                                    <Image src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${country.iso_3166_1}.svg`} alt={country.name} height={60} width={40}/>
+                                                </Link> 
                                             </TooltipTrigger>
                                             <TooltipContent>{country.name}</TooltipContent>
                                             </>
@@ -197,7 +198,7 @@ const Details: React.FC<DetailsProps> = ({ movie }) => {
                                 {movie.genres.length > 0
                                     ? movie.genres.map((genre, index) => (
                                         <span key={genre.id}>
-                                            <Link href={`/genres/${genre.id}`} className='hover:text-blue-500 hover:underline'>
+                                            <Link href={`/genres/${genre.name.toLowerCase().replace(/[^a-z0-9&]+/g, '-').replace(/(^-|-$)+/g, '')}`} className='hover:text-blue-500 hover:underline'>
                                                 {genre.name}
                                             </Link>
                                             {index < movie.genres.length - 1 ? ', ' : '.'}
