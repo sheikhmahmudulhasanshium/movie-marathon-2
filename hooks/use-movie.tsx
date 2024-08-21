@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import useMovieCertifications from './use-certification'; // Adjust path accordingly
+import useCertificationsList from './use-certifications-list'; // Adjust path accordingly
 import useMovieLanguages from './use-language'; // Adjust path accordingly
 import { Movie, Genre, ExternalIds, CastMember, CrewMember, Keywords } from '@/components/type';
 
@@ -8,7 +8,7 @@ const useMovie = (id: string) => {
     const [movie, setMovie] = useState<Movie | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const { certifications, loading: certLoading, error: certError } = useMovieCertifications();
+    const { certifications, loading: certLoading, error: certError } = useCertificationsList();
     const { languages, languageMap, loading: langLoading, error: langError } = useMovieLanguages();
 
     useEffect(() => {

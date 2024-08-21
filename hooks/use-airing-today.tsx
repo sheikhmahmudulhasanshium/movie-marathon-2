@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import useMovieCertifications from './use-certification'; 
+import useMovieCertifications from './use-certifications-list'; 
 import useMovieLanguages from './use-language'; 
 import { formatDate } from '@/lib/format-date'; 
 import { formatTime } from '@/lib/format-time';  

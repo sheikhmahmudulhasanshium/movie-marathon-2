@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import useMovieCertifications from './use-certification';  
+import useCertificationsList from './use-certifications-list';  
 import useMovieLanguages from './use-language';  
 import { formatDate } from '@/lib/format-date';  
 import { formatTime } from '@/lib/format-time';  
@@ -39,7 +39,7 @@ const useUpcoming = (media_type: 'tv' | 'movie'): UseUpcomingResult => {
     const [upcoming, setUpcoming] = useState<Upcoming[] | null>(null); // Processed upcoming state
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const { certifications } = useMovieCertifications();
+    const { certifications } = useCertificationsList();
     const { languageMap } = useMovieLanguages();
 
     useEffect(() => {

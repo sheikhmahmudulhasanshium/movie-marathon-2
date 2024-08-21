@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import useMovieCertifications from './use-certification';  
+import useCertificationsList from './use-certifications-list';  
 import useMovieLanguages from './use-language';  
 import { formatTime } from '@/lib/format-time';
 import { formatDate } from '@/lib/format-date'; // Import formatDate function
@@ -43,7 +43,7 @@ const useOnAir = (media_type: 'tv' | 'movie'): UseOnAirResult => {
     const [on_air, setOnAir] = useState<OnAir[] | null>(null); // Processed on_air state
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const { certifications } = useMovieCertifications();
+    const { certifications } = useCertificationsList();
     const { languageMap } = useMovieLanguages();
 
     useEffect(() => {

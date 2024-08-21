@@ -32,7 +32,7 @@ export interface Persons {
 
 // Define the Movies interface
 export interface Movies {
-  runtime: number; // Changed to number for consistency with minutes
+  runtime: number;
   certification: string;
   adult: boolean;
   backdrop_path: string | null;
@@ -101,16 +101,17 @@ export interface CrewMember {
   job: string;
   profile_path: string | null;
 }
+
+// Define the Network interface
 export interface Network {
   id: number;
   name: string;
   logo_path: string | null;
   origin_country: string;
-  homepage?: string; // Optional field for the network's website
-  description?: string; // Optional field for a brief description of the network
-  established_year?: number; // Optional field for the year the network was established
+  homepage?: string;
+  description?: string;
+  established_year?: number;
 }
-
 
 // Define the ProductionCompany interface
 export interface ProductionCompany {
@@ -167,9 +168,9 @@ export interface CertificationsResponse {
 
 // Define the Language interface
 export interface Language {
-  english_name: string; // English name of the language
-  iso_639_1: string;    // ISO 639-1 code
-  name: string;         // Native name of the language (if available)
+  english_name: string;
+  iso_639_1: string;
+  name: string;
 }
 
 // Define the LanguagesResponse interface
@@ -199,7 +200,7 @@ export interface Movie {
   original_language: string;
   overview: string;
   release_date: string;
-  runtime: number| string | null; // Changed to number for consistency with minutes
+  runtime: number | string | null;
   poster_path: string | null;
   backdrop_path: string | null;
   genres: Genre[];
@@ -275,17 +276,6 @@ export interface Images {
   posters: Image[];
 }
 
-// Define the Image interface
-export interface Image {
-  aspect_ratio: number;
-  file_path: string;
-  height: number;
-  iso_639_1: string | null;
-  vote_average: number;
-  vote_count: number;
-  width: number;
-}
-
 // Define the Episode interface with formatted_runtime
 export interface Episode {
   id: number;
@@ -298,8 +288,8 @@ export interface Episode {
   vote_average: number;
   vote_count: number;
   production_code?: string;
-  runtime: number; // Original runtime in minutes
-  formatted_runtime?: string; // Add this field for formatted runtime
+  runtime: number;
+  formatted_runtime?: string;
   crew: CrewMember[];
   guest_stars: GuestStar[];
   external_ids: ExternalIds;
@@ -311,6 +301,7 @@ export interface Episode {
   production_companies?: ProductionCompany[];
   production_countries?: ProductionCountry[];
 }
+
 // Define the ContentRatings interface
 export interface ContentRatings {
   results: ContentRating[];
@@ -318,17 +309,19 @@ export interface ContentRatings {
 
 // Define the ContentRating interface
 export interface ContentRating {
-  descriptors: string[]; // Array of descriptors (e.g., "violence", "language")
-  iso_3166_1: string;   // ISO 3166-1 alpha-2 country code (e.g., "US", "AU")
-  rating: string;       // Content rating (e.g., "TV-MA", "R 18+")
+  descriptors: string[];
+  iso_3166_1: string;
+  rating: string;
 }
 
+// Define the Credits interface
 export interface Credits {
   cast: CastMember[];
   crew: CrewMember[];
   guest_stars: GuestStar[];
 }
 
+// Define the GuestStar interface
 export interface GuestStar {
   character: string;
   credit_id: string;
@@ -343,14 +336,54 @@ export interface GuestStar {
   profile_path: string | null;
 }
 
+// Define the SeasonEpisodes interface
 export interface SeasonEpisodes {
   season_number: number;
   episodes: Episode[];
 }
 
+// Define the Country interface
 export interface Country {
   iso_3166_1: string;
   english_name: string;
   native_name: string;
-  
+}
+
+export interface AlternativeName {
+  name: string;
+  type: string;
+}
+
+export interface Image {
+  aspect_ratio: number;
+  file_path: string;
+  height: number;
+  id: string;
+  file_type: string;
+  vote_average: number;
+  vote_count: number;
+  width: number;
+}
+
+export interface CompanyData {
+  description: string;
+  headquarters: string;
+  homepage: string;
+  id: number;
+  logo_path: string;
+  name: string;
+  origin_country: string;
+  parent_company: string | null;
+  alternative_names: {
+      results: AlternativeName[];
+  };
+  images: {
+      logos: Image[];
+  };
+}
+// Define the structure of the company response
+export interface CompanyResponse {
+  company: CompanyData;
+  movies: Movie[];
+  series: TVShow[];
 }

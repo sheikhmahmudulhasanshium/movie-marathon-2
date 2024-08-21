@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import useMovieCertifications from './use-certification';  
+import useCertificationsList from './use-certifications-list';  
 import useMovieLanguages from './use-language';  
 import { formatTime } from '@/lib/format-time';
 import { formatDate } from '@/lib/format-date'; // Import formatDate function
@@ -43,7 +43,7 @@ const usePopular = (media_type: 'movie' | 'tv'): UsePopularResult => {
     const [popular, setPopular] = useState<Popular[] | null>(null); // Processed popular state
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const { certifications } = useMovieCertifications();
+    const { certifications } = useCertificationsList();
     const { languages, languageMap } = useMovieLanguages();
 
     useEffect(() => {

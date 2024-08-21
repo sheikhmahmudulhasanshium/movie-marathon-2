@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import useMovieCertifications from './use-certification';  
+import useCertificationsList from './use-certifications-list';  
 import useMovieLanguages from './use-language';  
 import {
   TVShow, Genre, ExternalIds, CastMember, CrewMember, Keywords, ProductionCountry, Season, Images, AlternativeTitles, ContentRatings, Network
@@ -12,7 +12,7 @@ const useSeries = (id: string) => {
   const [series, setSeries] = useState<TVShow | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { certifications, loading: certLoading, error: certError } = useMovieCertifications();
+  const { certifications, loading: certLoading, error: certError } = useCertificationsList();
   const { languages, languageMap, loading: langLoading, error: langError } = useMovieLanguages();
 
   useEffect(() => {

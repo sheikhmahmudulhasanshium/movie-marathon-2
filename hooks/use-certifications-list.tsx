@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Certification, CertificationsResponse } from '@/components/type';
 
-const useMovieCertifications = () => {
+const useCertificationsList = () => {
     const [certifications, setCertifications] = useState<Record<string, Certification[]> | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -41,4 +41,4 @@ const useMovieCertifications = () => {
     return { certifications, error, loading };
 };
 
-export default useMovieCertifications;
+export default useCertificationsList;

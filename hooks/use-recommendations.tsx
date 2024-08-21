@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import useMovieCertifications from './use-certification';  
+import useCertificationsList from './use-certifications-list';  
 import useMovieLanguages from './use-language';  
 import { formatTime } from '@/lib/format-time';
 import { formatDate } from '@/lib/format-date'; // Import formatDate function
@@ -41,7 +41,7 @@ const useRecommendations = (id: string, media_type: 'movie' | 'tv'): UseRecommen
     const [recommendations, setRecommendations] = useState<Recommendation[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const { certifications } = useMovieCertifications();
+    const { certifications } = useCertificationsList();
     const { languages, languageMap } = useMovieLanguages();
 
     useEffect(() => {
