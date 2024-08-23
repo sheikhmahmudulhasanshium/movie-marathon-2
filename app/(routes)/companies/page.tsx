@@ -1,9 +1,37 @@
+"use client";
+
+import RootLayout from "@/app/layout";
+import CustomBreadCrumb from "@/components/custom-bread-crumb";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
+import Modal from "@/components/modals/basic-page-modal";
+import { useOrigin } from "@/hooks/use-origin";
+import Loading from "@/components/loading";
+import Navbar from "./components/nav-bar";
+import { useState } from "react";
+import Body from "./components/body";
+
 const Companies = () => {
-    return ( 
-        <div>
-            Companies
-        </div>
-     );
+    const origin = useOrigin();
+    const [selectedOption, setSelectedOption] = useState<string>("All");
+
+    if (!origin) {
+        return <Loading />;
+    }
+
+    return (
+        <RootLayout params={{ title: "Explore Companies", description: "This is the better version of previous App" }}>
+            <main className="">
+                <Modal
+                    header={<Header />}
+                    footer={<Footer />}
+                >
+                    <CustomBreadCrumb params={{ link: "/companies/", name: '/Company' }} />
+                    <Body/>
+                </Modal>
+            </main>
+        </RootLayout>
+    );
 }
- 
+
 export default Companies;

@@ -1,12 +1,12 @@
 import React from 'react';
-import { Building, Building2, Globe2, List, MapPin } from 'lucide-react';
+import { Building, Building2, Globe2, List, MapPin, NotepadTextDashed } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CompanyData } from '@/components/type';
 
 const Description: React.FC<{ company: CompanyData }> = ({ company }) => {
     return (
-        <div className="w-full bg-gray-100 p-6 rounded-lg shadow-md">
+        <div className="w-full bg-primary-foreground p-6 rounded-lg shadow-md">
             <div className="grid grid-cols-2 gap-6">
                 {/* Left Column */}
                 <div className="space-y-6">
@@ -26,8 +26,10 @@ const Description: React.FC<{ company: CompanyData }> = ({ company }) => {
                         </ul>
                     </div>
                     {company.description && (
-                        <div className="flex items-center">
-                            <p className="text-xl font-semibold mr-3">Description:</p>
+                        <div className="flex flex-col text-justify">
+                            <div className='flex items-center mb-3 gap-2'>
+                                <NotepadTextDashed  className="text-blue-600" />
+                                <p className="text-2xl  font-semibold ">Description:</p></div>
                             <p>{company.description}</p>
                         </div>
                     )}

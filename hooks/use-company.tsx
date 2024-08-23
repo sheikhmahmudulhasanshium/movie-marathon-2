@@ -3,7 +3,7 @@ import axios from 'axios';
 import { CompanyResponse, TVShow, Certification } from '@/components/type';
 import useCertificationsList from './use-certifications-list'; // Adjust path if necessary
 
-const useCompany = (companyId: number) => {
+const useCompany = (companyId: number, moviePage: number, seriesPage: number) => {
     const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY as string;
     const [companyData, setCompanyData] = useState<CompanyResponse | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -31,13 +31,18 @@ const useCompany = (companyId: number) => {
                     axios.get(`https://api.themoviedb.org/3/discover/movie`, {
                         params: {
                             api_key: API_KEY,
-                            with_companies: companyId
+                            with_companies: companyId,
+                            page: moviePage,
+                            sort_by:`primary_release_date.desc`
                         }
                     }),
                     axios.get(`https://api.themoviedb.org/3/discover/tv`, {
                         params: {
                             api_key: API_KEY,
-                            with_companies: companyId
+                            with_companies: companyId,
+                            page: seriesPage,
+                            sort_by:`first_air_date.desc`
+
                         }
                     })
                 ]);
@@ -125,7 +130,7 @@ const useCompany = (companyId: number) => {
         };
 
         fetchCompanyData();
-    }, [companyId, API_KEY, certifications]);
+    }, [companyId, API_KEY, certifications, moviePage, seriesPage]);
 
     // Return loading state, error, and company data including certifications
     return { companyData, loading: loading || certificationsLoading, error: error || certificationsError };
