@@ -7,10 +7,10 @@ import { useOrigin } from "@/hooks/use-origin";
 import { LoaderPinwheelIcon } from "lucide-react";
 import Body from "./components/body";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
+import usePersons from "@/hooks/use-person";
 
 const Persons = () => {
     const origin = useOrigin();
-
   if (!origin) {
     return (
       <div className='bg-white flex justify-center items-center min-h-screen w-full'>

@@ -28,7 +28,7 @@ const config = {
         "sample-poster": "url('../public/sample-poster.jpg')",
         "imdb": "url('../public/imdb.svg')",
         "imdb-dark": "url('../public/imdb-dark.svg')",
-        
+        "tiktok-logo": "url('../public/tiktok.svg')",
       },
       colors: {
         border: "hsl(var(--border))",

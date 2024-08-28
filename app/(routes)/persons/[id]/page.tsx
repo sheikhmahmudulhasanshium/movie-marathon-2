@@ -1,41 +1,56 @@
-"use client"
+"use client";
+import { useParams } from 'next/navigation';
 import RootLayout from "@/app/layout";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Modal from "@/components/modals/basic-page-modal";
-import { useOrigin } from "@/hooks/use-origin";
-import { LoaderPinwheelIcon } from "lucide-react";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
-import Body from "../components/body";
-import { useSearchParams } from "next/navigation";
-const Person = () => {
-  const params=useSearchParams()
-  const tmdbID=params.get('id')
-  
-    const origin = useOrigin();
+import Searchbar from '@/components/search-bar';
+import Loading from '@/components/loading';
+import usePerson from '@/hooks/use-person';
+import PersonDetails from '@/components/person-details';
+import Recommendations from './components/recommendations';
+import CareerTimeLine from './components/timeline';
 
-  if (!origin) {
+const Person: React.FC = () => {
+    const params = useParams();
+    const id = Array.isArray(params.id) ? params.id[0] : params.id; // Ensure id is a string
+
+    // Fetch movie personData
+    const { personData,loading, error } = usePerson(id||'');
+
+    if (!id) {
+        return <p>No movie ID provided.</p>; // Handle missing ID case
+    }
+
+    if (loading) {
+        return <Loading />;
+    }
+
+    if (error) {
+        return <p>Error: {error}</p>;
+    }
+
     return (
-      <div className='bg-white flex justify-center items-center min-h-screen w-full'>
-        <LoaderPinwheelIcon className='animate-spin size-56 text-slate-800' size={48} />
-      </div>
+        <RootLayout params={{ title: personData ? `${personData.name} | Person` : "Title | Person", description: "There will be individual person" }}>
+            <main className="flex justify-center items-start">
+                <Modal
+                    header={<Header />}
+                    footer={<Footer />}
+                >
+                    <CustomBreadCrumb params={{ link: `/persons/${id}/`,name:`/Person/${personData?.name}` }} />
+                    {personData && (
+                        <div className='justify-center items-center flex flex-col'>
+                            <Searchbar />
+                            <PersonDetails personData={personData}/>
+                            <CareerTimeLine/>
+                            <Recommendations/>
+                        </div>
+                    )}
+                </Modal>
+            </main>
+        </RootLayout>
     );
-  }
-
-    return ( 
-    <RootLayout params={{ title: "Persons", description: "Individual Person" }}>
-      
-      <main className="">
-        <Modal
-          header={<Header />}
-          footer={<Footer/>}
-        >
-          <CustomBreadCrumb params={{link:`/persons/${tmdbID}`,name:`/Person/Person-Name`}}/>
-          <Body/>
-        </Modal>
-      </main>
-    </RootLayout>
-     );
 }
- 
+
 export default Person;

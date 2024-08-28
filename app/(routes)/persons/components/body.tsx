@@ -1,12 +1,18 @@
 import Searchbar from "@/components/search-bar";
+import CelebList from "./celebrity-list";
 
 const Body = () => {
     return ( 
-        <div className='flex  flex-col m-4  justify-between items-center '>
-            <Searchbar/>
-            <div>Movies</div>
-            <div>TV Shows</div>
-            <div>Popular</div>
+        <div className="flex flex-col items-center w-full my-4 px-4" id='all'>
+            <div className="my-8 text-center">
+                <p className="text-2xl font-light">
+                    Explore The Career of Popular Celebrities
+                </p>
+            </div>
+
+            <Searchbar />
+            <CelebList/>
+            
         </div>
 
      );

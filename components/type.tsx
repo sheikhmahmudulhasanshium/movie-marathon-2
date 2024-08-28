@@ -387,3 +387,29 @@ export interface CompanyResponse {
   movies: Movie[];
   series: TVShow[];
 }
+export interface PersonDetailsResponse {
+  id: number;
+  name: string;
+  biography: string;
+  birthday: string;
+  deathday?: string;
+  place_of_birth: string;
+  profile_path?: string;
+  original_name?: string;
+  gender: number;
+  known_for_department: string;
+  also_known_as: string[];
+  credits: {
+    cast: any[];
+    crew: any[];
+  };
+  external_ids: {
+    imdb_id?: string;
+    facebook_id?: string;
+    instagram_id?: string;
+    twitter_id?: string;
+    tiktok_id?: string;
+    youtube_id?: string;
+  };
+  known_for: KnownForMovies[]
+}

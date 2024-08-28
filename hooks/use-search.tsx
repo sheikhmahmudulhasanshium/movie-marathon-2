@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import useMovies from './use-movies';
 import useTVShows from './use-tv-shows';
-import usePersons from './use-persons';
+import usePersons from './use-person';
 import { CombinedSearchResult } from '@/components/type';
 
 // Utility function to decode URL-encoded strings

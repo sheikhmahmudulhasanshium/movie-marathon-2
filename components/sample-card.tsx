@@ -44,10 +44,10 @@ const SampleCard: React.FC<SampleCardProps> = ({ id, title, posterPath, certific
                 </CardDescription>
                 <CardFooter className="flex flex-col items-center text-xs text-gray-300 bg-gray-800 py-2">
                     <div className="flex gap-3">
-                        <div className="flex items-center gap-1">
+                        {(releaseDate!=='')&&<div className="flex items-center gap-1">
                             <CalendarIcon className="w-4 h-4" />
                             <p>{releaseDate}</p>
-                        </div>
+                        </div>}
                         {(runtime!=='Runtime not available'&& runtime!=='Time not available')&&<div className="flex items-center gap-1">
                             <ClockIcon className="w-4 h-4" />
                             <p>{runtime}</p>
