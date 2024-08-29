@@ -43,7 +43,7 @@ const Person: React.FC = () => {
                         <div className='justify-center items-center flex flex-col'>
                             <Searchbar />
                             <PersonDetails personData={personData}/>
-                            <CareerTimeLine/>
+                            <CareerTimeLine work={personData.combined_credits}/>
                             <Recommendations/>
                         </div>
                     )}

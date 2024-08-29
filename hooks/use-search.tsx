@@ -15,9 +15,9 @@ const useSearch = (searchKey: string) => {
   // Decode the searchKey
   const formattedSearchKey = decodeSearchKey(searchKey);
 
-  const { data: moviesData, loading: moviesLoading, error: moviesError } = useMovies(formattedSearchKey);
-  const { data: tvData, loading: tvLoading, error: tvError } = useTVShows(formattedSearchKey);
-  const { data: personsData, loading: personsLoading, error: personsError } = usePersons(formattedSearchKey);
+  const { data: moviesData = [], loading: moviesLoading, error: moviesError } = useMovies(formattedSearchKey);
+  const { data: tvData = [], loading: tvLoading, error: tvError } = useTVShows(formattedSearchKey);
+  const { personData: personsData = null, loading: personsLoading, error: personsError } = usePersons(formattedSearchKey);
 
   const isLoading = moviesLoading || tvLoading || personsLoading;
   const error = moviesError || tvError || personsError;
@@ -32,7 +32,7 @@ const useSearch = (searchKey: string) => {
       const combinedResults: CombinedSearchResult[] = [
         ...moviesData,
         ...tvData,
-        ...personsData
+        ...(Array.isArray(personsData) ? personsData : []) // Ensure personsData is an array
       ];
 
       setCombinedData(combinedResults);

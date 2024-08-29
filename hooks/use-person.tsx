@@ -21,7 +21,7 @@ const usePerson = (personId: number | string) => {
           const personResponse = await axios.get<PersonDetailsResponse>(`${BASE_URL}/${personId}`, {
             params: {
               api_key: API_KEY,
-              append_to_response: 'credits,external_ids',
+              append_to_response: 'combined_credits,external_ids',
             },
           });
 
@@ -44,9 +44,9 @@ const usePerson = (personId: number | string) => {
           // Update state with fetched data
           setPersonData({
             ...personData,
-            credits: {
-              cast: personData.credits.cast || [],
-              crew: personData.credits.crew || []
+            combined_credits: {
+              cast: personData.combined_credits.cast || [],
+              crew: personData.combined_credits.crew || []
             },
             known_for: knownForData
           });

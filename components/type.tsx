@@ -399,8 +399,8 @@ export interface PersonDetailsResponse {
   gender: number;
   known_for_department: string;
   also_known_as: string[];
-  credits: {
-    cast: any[];
+  combined_credits: {
+    cast: Movie[]|TVShow[];
     crew: any[];
   };
   external_ids: {
