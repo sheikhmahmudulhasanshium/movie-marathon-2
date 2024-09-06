@@ -6,19 +6,22 @@ const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3/person';
 const SEARCH_URL = 'https://api.themoviedb.org/3/search/person';
 
-const usePerson = (personId: number | string) => {
+const usePerson = (personId: string) => {
   const [personData, setPersonData] = useState<PersonDetailsResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (personId) {
+    // Extract numeric ID from personId string (e.g., "500-tom-cruise" -> 500)
+    const numericPersonId = personId.split('-')[0];
+
+    if (numericPersonId) {
       const fetchPersonData = async () => {
         try {
           setLoading(true);
 
           // Fetch basic person details
-          const personResponse = await axios.get<PersonDetailsResponse>(`${BASE_URL}/${personId}`, {
+          const personResponse = await axios.get<PersonDetailsResponse>(`${BASE_URL}/${numericPersonId}`, {
             params: {
               api_key: API_KEY,
               append_to_response: 'combined_credits,external_ids',
@@ -32,11 +35,12 @@ const usePerson = (personId: number | string) => {
             params: {
               api_key: API_KEY,
               query: personData.name,
+              
             },
           });
 
           // Find the matching person result by ID
-          const matchedPerson = searchResponse.data.results.find(result => result.id === Number(personId));
+          const matchedPerson = searchResponse.data.results.find(result => result.id === Number(numericPersonId));
 
           // Safely extract known_for data
           const knownForData: KnownForMovies[] = matchedPerson?.known_for || [];
@@ -46,9 +50,9 @@ const usePerson = (personId: number | string) => {
             ...personData,
             combined_credits: {
               cast: personData.combined_credits.cast || [],
-              crew: personData.combined_credits.crew || []
+              crew: personData.combined_credits.crew || [],
             },
-            known_for: knownForData
+            known_for: knownForData,
           });
 
         } catch (err) {

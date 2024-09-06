@@ -40,7 +40,7 @@ const PersonDetails: React.FC<DetailsProps> = ({ personData }) => {
                     <div className='w-4/12 flex flex-col justify-start items-start'>
                         {personData.profile_path ? (
                             <Image
-                                src={`https://media.themoviedb.org/t/p/w500/${personData.profile_path}`}
+                                src={`https://image.tmdb.org/t/p/w500${personData.profile_path}`}
                                 alt={personData.name}
                                 width={200}
                                 height={300}
@@ -165,26 +165,24 @@ const PersonDetails: React.FC<DetailsProps> = ({ personData }) => {
                             )}
                         </div>
                         <div className='flex flex-col flex-wrap items-start gap-2 text-lg'>
-                            {personData.known_for.length > 0 && (
-                                <>
-                                    <p className='font-bold'>Known For:</p>
+                                {personData.known_for.length>0&&<>
+                                    <p className='font-bold pb-4'>Known For:</p>
                                     <div className='flex w-full flex-wrap gap-2 justify-between'>
                                         {personData.known_for.map((work) => (
-                                            <div key={work.id} className='w-5/12'>
+                                            <div key={work.id} className='w-6/12'>
                                                 <SampleCard 
                                                     id={work.id} 
-                                                    title={work.title} 
+                                                    title={work.title||work.name} 
                                                     posterPath={work.backdrop_path || work.poster_path || ''} 
                                                     certification={"Not Rated"} 
-                                                    releaseDate={formatDate("")} 
+                                                    releaseDate={formatDate(work.release_date||work.first_air_date)} 
                                                     runtime={formatTime(0)} 
                                                     media_type={work.media_type} 
                                                 />
                                             </div>
                                         ))}
                                     </div>
-                                </>
-                            )}
+                                </>}
                         </div>
                     </div>
                 </div>

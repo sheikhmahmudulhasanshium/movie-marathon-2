@@ -13,7 +13,7 @@ const PersonCard: React.FC<PersonCardProps> = ({ person }) => {
             <div className="bg-white shadow-md rounded-lg overflow-hidden w-60 m-4 cursor-pointer">
                 {person.profile_path ? (
                     <Image
-                        src={`https://media.themoviedb.org/t/p/w500/${person.profile_path}`}
+                        src={`https://image.tmdb.org/t/p/w500${person.profile_path}`}
                         alt={person.name}
                         width={240}
                         height={360}

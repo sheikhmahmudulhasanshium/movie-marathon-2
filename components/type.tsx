@@ -1,5 +1,7 @@
 // Define interfaces for nested objects
 export interface KnownForMovies {
+  name: string;
+  first_air_date: string;
   backdrop_path: string | null;
   id: number;
   title: string;
