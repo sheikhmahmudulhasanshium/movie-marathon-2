@@ -10,7 +10,8 @@ import Loading from '@/components/loading';
 import usePerson from '@/hooks/use-person';
 import PersonDetails from '@/components/person-details';
 import Recommendations from './components/recommendations';
-import CareerTimeLine from './components/timeline';
+import CareerTimeLine from './components/career';
+import TimeLine from './components/timeline';
 
 const Person: React.FC = () => {
     const params = useParams();
@@ -43,7 +44,8 @@ const Person: React.FC = () => {
                         <div className='justify-center items-center flex flex-col'>
                             <Searchbar />
                             <PersonDetails personData={personData}/>
-                            <CareerTimeLine work={personData.combined_credits}/>
+                            {/*<CareerTimeLine work={personData.combined_credits}/>*/}
+                            <TimeLine work={personData.combined_credits}/>
                             <Recommendations/>
                         </div>
                     )}

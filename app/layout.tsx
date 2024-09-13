@@ -17,7 +17,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children, params }: RootLayoutProps) {
   return (
-    <html lang="en" className={fontSans.variable}>
+    <html lang="en" className={fontSans.variable} suppressContentEditableWarning>
       <head>
         <title>{params.title}</title>
         <meta name="description" content={params.description} />

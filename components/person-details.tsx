@@ -164,25 +164,29 @@ const PersonDetails: React.FC<DetailsProps> = ({ personData }) => {
                                 </div>
                             )}
                         </div>
-                        <div className='flex flex-col flex-wrap items-start gap-2 text-lg'>
-                                {personData.known_for.length>0&&<>
+
+                        {/* Known For Section */}
+                        <div className='flex flex-col items-start gap-2 text-lg w-full'>
+                            {personData.known_for.length > 0 && (
+                                <>
                                     <p className='font-bold pb-4'>Known For:</p>
-                                    <div className='flex w-full flex-wrap gap-2 justify-between'>
+                                    <div className='flex gap-2 overflow-x-auto overflow-y-hidden whitespace-nowrap w-full'>
                                         {personData.known_for.map((work) => (
-                                            <div key={work.id} className='w-6/12'>
+                                            <div key={work.id} className='inline-block'>
                                                 <SampleCard 
                                                     id={work.id} 
-                                                    title={work.title||work.name} 
+                                                    title={work.title || work.name} 
                                                     posterPath={work.backdrop_path || work.poster_path || ''} 
                                                     certification={"Not Rated"} 
-                                                    releaseDate={formatDate(work.release_date||work.first_air_date)} 
+                                                    releaseDate={formatDate(work.release_date || work.first_air_date)} 
                                                     runtime={formatTime(0)} 
                                                     media_type={work.media_type} 
                                                 />
                                             </div>
                                         ))}
                                     </div>
-                                </>}
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
