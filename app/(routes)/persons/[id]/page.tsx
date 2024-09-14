@@ -10,15 +10,15 @@ import Loading from '@/components/loading';
 import usePerson from '@/hooks/use-person';
 import PersonDetails from '@/components/person-details';
 import Recommendations from './components/recommendations';
-import CareerTimeLine from './components/career';
-import TimeLine from './components/timeline';
+import { useState } from 'react';
+import CareerViewSelector from './components/career';
 
 const Person: React.FC = () => {
     const params = useParams();
     const id = Array.isArray(params.id) ? params.id[0] : params.id; // Ensure id is a string
 
-    // Fetch movie personData
-    const { personData,loading, error } = usePerson(id||'');
+    // Fetch person data
+    const { personData, loading, error } = usePerson(id || '');
 
     if (!id) {
         return <p>No movie ID provided.</p>; // Handle missing ID case
@@ -39,14 +39,13 @@ const Person: React.FC = () => {
                     header={<Header />}
                     footer={<Footer />}
                 >
-                    <CustomBreadCrumb params={{ link: `/persons/${id}/`,name:`/Person/${personData?.name}` }} />
+                    <CustomBreadCrumb params={{ link: `/persons/${id}/`, name: `/Person/${personData?.name}` }} />
                     {personData && (
                         <div className='justify-center items-center flex flex-col'>
                             <Searchbar />
-                            <PersonDetails personData={personData}/>
-                            {/*<CareerTimeLine work={personData.combined_credits}/>*/}
-                            <TimeLine work={personData.combined_credits}/>
-                            <Recommendations/>
+                            <PersonDetails personData={personData} />
+                            <CareerViewSelector personData={personData}/>
+                            <Recommendations />
                         </div>
                     )}
                 </Modal>

@@ -43,8 +43,8 @@ const SampleCard: React.FC<SampleCardProps> = ({ id, title, posterPath, certific
                         style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w500${posterPath})` }}
                     />
                     :
-                    <div className='h-52 w-full rounded-t-lg justify-center items-center flex flex-col'>
-                        <ImageOff className='h-52 w-52'/>
+                    <div className='h-52  rounded-t-lg justify-center items-center flex flex-col px-4 w-full'>
+                        <ImageOff className='w-full h-full'/>
                         <p>No Image Available</p>                    
                     </div>
                 }
