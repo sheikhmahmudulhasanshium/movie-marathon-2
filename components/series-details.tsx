@@ -72,7 +72,7 @@ const Details: React.FC<DetailsProps> = ({ series }) => {
                                 <p className='font-bold'>Keywords:</p>
                                 <p className='text-sm flex flex-wrap gap-1 w-full'>
                                     {series.keywords.keywords.map((keyword) => (
-                                        <Link key={keyword.id} href={`/keyword/${keyword.id}`} className='hover:opacity-35'>
+                                        <Link key={keyword.id} href={`/keyword/${keyword.id}-${keyword.name.toLowerCase().replace(/[^a-z0-9&]+/g, '-').replace(/(^-|-$)+/g, '')}`} className='hover:opacity-35'>
                                             <p className='p-1 rounded-lg bg-white w-max text-secondary-foreground dark:text-primary-foreground'>
                                                 {keyword.name}
                                             </p>
