@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import RootLayout from "@/app/layout";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
 import Footer from "@/components/footer";
@@ -18,7 +19,7 @@ const Keyword = () => {
     const id = isNaN(Number(paramsId)) ? paramsId : Number(paramsId);
 
     const { data, loading, error } = useKeyword(id);
-    const { keyword, movies, series } = data;
+    const { keyword } = data;
 
     if (loading) {
         return <Loading />;
@@ -28,20 +29,20 @@ const Keyword = () => {
         return <div>{error}</div>;
     }
 
-    if (!loading && !error && keyword.length > 0) {
+    if (keyword) {
         return (
-            <RootLayout params={{ title: `${keyword[0]?.name}`, description: "This is the better version of the previous App" }}>
-                <main className="">
+            <RootLayout params={{ title: `Keyword: ${keyword.name}`, description: "Explore movies and TV shows based on the selected keyword." }}>
+                <main>
                     <Modal header={<Header />} footer={<Footer />}>
-                        <CustomBreadCrumb params={{ link: `/keyword/${paramsId}`, name: `/Keyword/${keyword[0].name}` }} />
-                        <Body data={data}/>
+                        <CustomBreadCrumb params={{ link: `/keyword/${paramsId}`, name: `/Keyword/${keyword.name}` }} />
+                        <Body id={keyword.id} />
                     </Modal>
                 </main>
             </RootLayout>
         );
     }
 
-    return null;  // Return null if no data and no error
+    return null;
 }
 
 export default Keyword;
