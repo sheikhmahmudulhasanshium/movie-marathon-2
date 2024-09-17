@@ -220,7 +220,6 @@ export interface Movie {
   alternative_titles: AlternativeTitles;
   external_ids?: ExternalIds;
   formatted_release_date: string;
-  total_pages:number;
 }
 
 // Define the TVShow interface
@@ -253,7 +252,6 @@ export interface TVShow {
   images: Images;
   networks: Network[];
   alternative_titles: AlternativeTitles;
-  total_pages:number;
 
 }
 

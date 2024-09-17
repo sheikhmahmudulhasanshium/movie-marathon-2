@@ -12,6 +12,7 @@ interface Server {
     default_subtitle?: string;
 }
 
+// List of servers with their formats
 const serverList: Server[] = [
     {
         server_name: "vidsrc.net",
@@ -51,23 +52,39 @@ const serverList: Server[] = [
         season_format: "https://www.2embed.skin/embedtvfull/{id}",
         episode_format: "https://www.2embed.skin/embedtv/{id}&s={season_number}&e={episode_number}",
     },
+    {
+        server_name: "vidsrc.to",
+        base_url: "https://vidsrc.to",
+        movie_format: "https://vidsrc.to/embed/movie/{id}",
+        series_format: "https://vidsrc.to/embed/tv/{id}",
+        season_format: "https://vidsrc.to/embed/tv/{id}/{season_number}",
+        episode_format: "https://vidsrc.in/embed/tv/id/{season_number}/{episode_number}",
+        default_subtitle: "en"
+    }
 ];
 
+// Props for the ServerSelector component
 interface ServerSelectorProps {
     movieId: string;
     onServerSelect: (url: string) => void;
 }
 
+// ServerSelector component
 const ServerSelector: React.FC<ServerSelectorProps> = ({ movieId, onServerSelect }) => {
     const [selectedServer, setSelectedServer] = useState<Server | null>(null);
     const [serverSelected, setServerSelected] = useState(false);
 
+    // Handle server selection
     const handleServerSelect = (server: Server) => {
         setSelectedServer(server);
         setServerSelected(true);
-        if (server.movie_format) {
+
+        if (server.movie_format && movieId) {
             const videoUrl = server.movie_format.replace("{id}", movieId);
+            // Pass the URL to the parent component without opening a new tab
             onServerSelect(videoUrl);
+        } else {
+            console.error("Movie ID or server format missing.");
         }
     };
 

@@ -54,7 +54,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ movie }) => {
                         frameBorder="0"
                         allow="autoplay; encrypted-media"
                         allowFullScreen
-                    />
+                        picture-in-picture
+                        //sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts"  // No allow-popups here
+/>
+
                 </div>
             )}
             <ServerSelector movieId={movieId} onServerSelect={onServerSelect} />
