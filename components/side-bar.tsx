@@ -19,24 +19,24 @@ const Sidebar = () => {
   ];
 
   return (
-    <DropdownMenu >
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="w-16 h-16 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-28 lg:h-28 border-0">
           <Menu className="h-[2.2rem] w-[2.2rem] dark:text-cyan-900 text-cyan-900 scale-150" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="px-4 mt-4  bg-background">
+      <DropdownMenuContent align="start" className="px-4 mt-4 bg-background">
         <p className="text-2xl font-bold p-4">Menu</p>
         <Separator />
         {menuItems.map((item, index) => (
           <DropdownMenuItem key={index} asChild>
             <Link href={item.href}>
-              <p className="text-xl">{item.label}</p>
+              <a className="text-xl">{item.label}</a> 
             </Link>
           </DropdownMenuItem>
         ))}
         <Separator />
-        <div  className="my-4">
+        <div className="my-4">
           <div className="flex w-full justify-center">
             <ModeToggle />
           </div>

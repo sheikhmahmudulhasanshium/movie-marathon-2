@@ -1,5 +1,5 @@
 import { ClapperboardIcon, HomeIcon, TrophyIcon, TvMinimalIcon, User2 } from "lucide-react";
-import Sidebar from "./side-bar";
+import Sidebar from "./side-bar";  // Ensure Sidebar does not render a button
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
@@ -32,10 +32,9 @@ const Header = () => {
           </Tooltip>
         ))}
         
-        <Button size="icon" variant="ghost" className="w-16 h-16 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-28 lg:h-28 scale-100">
-              <Sidebar /> 
-        </Button>
-          
+        <div className="w-16 h-16 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-28 lg:h-28 scale-100">
+          <Sidebar />  
+        </div>
       </TooltipProvider>
     </header>
   );
