@@ -1,27 +1,43 @@
 "use client";
-import RootLayout from "@/app/layout";
-import CustomBreadCrumb from "@/components/custom-bread-crumb";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
-import Modal from "@/components/modals/basic-page-modal";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from 'react';
 import SearchResults from "./components/body";
+import Searchbar from "@/components/modals/search-bar-advanced";
+import RootLayout from '@/app/layout';
+import Modal from '@/components/modals/basic-page-modal';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
+import CustomBreadCrumb from '@/components/custom-bread-crumb';
+
+const variantOptions = ["All", "Keyword", "Movie", "Series", "Person", "Country", "Genre", "Company"] as const;
+type VariantType = typeof variantOptions[number];
 
 const Search = () => {
-    const searchParams = useSearchParams();
-    const variant = searchParams.get("v") || "All";  // Default value
-    const searchKey = searchParams.get("q") || "";   // Default value
+    const [variant, setVariant] = useState<VariantType>("All");
+    const [searchKey, setSearchKey] = useState<string>("");
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const variantParam = searchParams.get("v") as VariantType;
+        const searchKeyParam = searchParams.get("q") || "";
+
+        if (variantOptions.includes(variantParam)) {
+            setVariant(variantParam);
+        }
+        setSearchKey(searchKeyParam);
+    }, []);
 
     return ( 
-        <RootLayout params={{ title: "Search here", description: "This is the better version of previous App" }}>
+        <RootLayout params={{ title: "Search Here", description: "This is the better version of previous App" }}>
             <main className="">
                 <Modal
                     header={<Header />}
                     footer={<Footer />}
                 >
-                    <CustomBreadCrumb params={{ link: "/search/", name: "/Search/" }} />
-                    <div className="flex-col flex">
-                        <SearchResults variant={variant} searchKey={searchKey} />
+                    <div className="flex w-full justify-center">
+                        <div className='flex flex-col justify-center items-center w-10/12 gap-2'>
+                            <Searchbar Variant={variant} />
+                            <SearchResults Variant={variant} SearchKey={searchKey} setVariant={setVariant} />
+                        </div>
                     </div>
                 </Modal>
             </main>

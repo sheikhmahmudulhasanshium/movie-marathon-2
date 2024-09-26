@@ -31,7 +31,7 @@ const Sidebar = () => {
         {menuItems.map((item, index) => (
           <DropdownMenuItem key={index} asChild>
             <Link href={item.href}>
-              <a className="text-xl">{item.label}</a> 
+              <p className="text-xl">{item.label}</p> 
             </Link>
           </DropdownMenuItem>
         ))}

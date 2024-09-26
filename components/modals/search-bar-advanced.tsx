@@ -19,6 +19,7 @@ const SearchResults = ({ Variant, data, loading, error = '', activeIndex, search
         if (item.logo_path) return `https://image.tmdb.org/t/p/w500${item.logo_path}`;
         if (item.profile_path) return `https://image.tmdb.org/t/p/w500${item.profile_path}`;
         if (item.backdrop_path || item.poster_path) return `https://image.tmdb.org/t/p/w500${item.backdrop_path || item.poster_path}`;
+        if (item.iso_3166_1) return `http://purecatamphetamine.github.io/country-flag-icons/3x2/${item.iso_3166_1}.svg`
         return SamplePoster;
     };
 
