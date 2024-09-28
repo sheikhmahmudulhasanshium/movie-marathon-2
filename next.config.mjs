@@ -15,6 +15,15 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'img.youtube.com',
             },
+
+            {
+                protocol: 'https',
+                hostname: 'mainfacts.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'flagcdn.com',
+            },
         ],
     },
 };

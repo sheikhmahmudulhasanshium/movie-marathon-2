@@ -35,7 +35,7 @@ const CountryList = () => {
     return (
         <div className="mx-12 ">
             <div id="explore-country" className="flex flex-col justify-between  p-4">
-                <p className="text-2xl font-bold my-8 flex justify-start">Explore Country</p>
+                <p className="text-2xl font-bold my-8 flex justify-start">Explore Other Country</p>
                 <div className="flex flex-wrap justify-start items-center gap-4 ">
                     <TooltipProvider>
                         {visibleCountries.map((country) => (

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
     const [activeOption, setActiveOption] = useState<string | null>(null);
-    const optionList = ["Movies",  "TV Shows", "Explore Country",];
+    const optionList = [ "Details" , "Movies",  "TV Shows"  , "Explore Country",];
     
     const clickHandler = (option: string) => {
         const element = document.getElementById(option.toLowerCase().replace(' ', '-'));

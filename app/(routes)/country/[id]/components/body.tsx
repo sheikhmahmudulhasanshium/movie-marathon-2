@@ -3,16 +3,17 @@ import Loading from "@/components/loading";
 import Searchbar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
 } from "@/components/ui/pagination";
 import useCountry from "@/hooks/use-country";
 import SampleCard from '@/components/sample-card';
+import CountryDetails from './country-details';
 
 interface Movie {
     id: number;
@@ -45,7 +46,7 @@ const Body: React.FC<BodyProps> = ({ country_data }) => {
     const [moviePage, setMoviePage] = useState<number>(1);
     const [tvPage, setTvPage] = useState<number>(1);
     const { movies, tvShows, loading, error } = useCountry(country_data?.id, moviePage, tvPage);
-    
+
     const handleMoviePageChange = (page: number) => setMoviePage(page);
     const handleTvPageChange = (page: number) => setTvPage(page);
 
@@ -57,20 +58,16 @@ const Body: React.FC<BodyProps> = ({ country_data }) => {
         return <div className="text-red-500 text-center">Error: {error}</div>;
     }
 
-    const totalMoviePages = 5; // Replace with actual total pages from API
-    const totalTvPages = 5; // Replace with actual total pages from API
-
     return (
         <div className="flex flex-col items-center w-full my-4 px-4" id='all'>
-            {/* Title Section */}
             <header className="my-8 text-center">
                 <p className="text-2xl font-light">
                     Explore Movies and TV Shows from &quot;{country_data?.english_name}&quot;
                 </p>
             </header>
 
-            {/* Search Bar */}
             <Searchbar />
+            {country_data && <CountryDetails id={country_data.id} />}
 
             {/* Movies Section */}
             <section className="w-10/12" id='movies'>
@@ -103,7 +100,7 @@ const Body: React.FC<BodyProps> = ({ country_data }) => {
                                 className={moviePage === 1 ? 'disabled' : ''}
                             />
                         </PaginationItem>
-                        {[...Array(totalMoviePages)].map((_, index) => (
+                        {[...Array(5)].map((_, index) => (
                             <PaginationItem key={index}>
                                 <PaginationLink
                                     href="#"
@@ -120,10 +117,10 @@ const Body: React.FC<BodyProps> = ({ country_data }) => {
                         </PaginationItem>
                         <PaginationItem>
                             <PaginationNext
-                                onClick={() => handleMoviePageChange(moviePage < totalMoviePages ? moviePage + 1 : totalMoviePages)}
+                                onClick={() => handleMoviePageChange(moviePage < 5 ? moviePage + 1 : 5)}
                                 href="#"
                                 aria-label="Next movies page"
-                                className={moviePage === totalMoviePages ? 'disabled' : ''}
+                                className={moviePage === 5 ? 'disabled' : ''}
                             />
                         </PaginationItem>
                     </PaginationContent>
@@ -161,7 +158,7 @@ const Body: React.FC<BodyProps> = ({ country_data }) => {
                                 className={tvPage === 1 ? 'disabled' : ''}
                             />
                         </PaginationItem>
-                        {[...Array(totalTvPages)].map((_, index) => (
+                        {[...Array(5)].map((_, index) => (
                             <PaginationItem key={index}>
                                 <PaginationLink
                                     href="#"
@@ -178,10 +175,10 @@ const Body: React.FC<BodyProps> = ({ country_data }) => {
                         </PaginationItem>
                         <PaginationItem>
                             <PaginationNext
-                                onClick={() => handleTvPageChange(tvPage < totalTvPages ? tvPage + 1 : totalTvPages)}
+                                onClick={() => handleTvPageChange(tvPage < 5 ? tvPage + 1 : 5)}
                                 href="#"
                                 aria-label="Next TV shows page"
-                                className={tvPage === totalTvPages ? 'disabled' : ''}
+                                className={tvPage === 5 ? 'disabled' : ''}
                             />
                         </PaginationItem>
                     </PaginationContent>

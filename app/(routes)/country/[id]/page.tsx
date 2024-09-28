@@ -56,7 +56,6 @@ const Country = () => {
                             id: countryData.iso_3166_1,
                             native_name: countryData.native_name,
                             english_name: countryData.english_name,
-                            // Assuming no additional fields are required
                         }}
                     />
                     <CountryList />
