@@ -1,10 +1,9 @@
-import Searchbar from "@/components/search-bar";
-import useLatestMovies from "@/hooks/use-latest";
 import useNowPlayingMovies from "@/hooks/use-now-playing";
 import SampleCard from "@/components/sample-card";
 import useUpcoming from "@/hooks/use-upcoming";
 import useTopRated from "@/hooks/use-top-rated";
 import usePopular from "@/hooks/use-popular";
+import Searchbar from "@/components/modals/search-bar-advanced";
 
 const Body = () => {
     const { now_playing: nowPlayingMovies, loading: nowPlayingMoviesLoading, error: nowPlayingMoviesError } = useNowPlayingMovies('movie');
@@ -42,7 +41,7 @@ const Body = () => {
 
     return (
         <div className='flex flex-col mx-4 lg:mx-8 justify-center items-center'>
-            <Searchbar />
+            <Searchbar Variant={"Movie"} />
             <div className="flex flex-col gap-y-12 w-full">
                 {renderMovieSection('Now Playing', nowPlayingMovies || [], nowPlayingMoviesLoading, nowPlayingMoviesError)}
                 {renderMovieSection('Popular', popularMovies || [], popularMoviesLoading, popularMoviesError)}

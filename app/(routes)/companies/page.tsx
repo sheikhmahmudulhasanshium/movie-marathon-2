@@ -7,13 +7,10 @@ import Header from "@/components/header";
 import Modal from "@/components/modals/basic-page-modal";
 import { useOrigin } from "@/hooks/use-origin";
 import Loading from "@/components/loading";
-import Navbar from "./components/nav-bar";
-import { useState } from "react";
 import Body from "./components/body";
 
 const Companies = () => {
     const origin = useOrigin();
-    const [selectedOption, setSelectedOption] = useState<string>("All");
 
     if (!origin) {
         return <Loading />;

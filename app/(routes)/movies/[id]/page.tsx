@@ -7,11 +7,11 @@ import Header from "@/components/header";
 import Modal from "@/components/modals/basic-page-modal";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
 import MovieDetails from '../../../../components/movie-details';
-import Searchbar from '@/components/search-bar';
 import Recommendations from '../../../../components/recommendations';
 import Loading from '@/components/loading';
 import Trailers from '../../../../components/trailer';
 import VideoPlayer from '../components/video-player';
+import Searchbar from '@/components/modals/search-bar-advanced';
 
 const Movie: React.FC = () => {
     const params = useParams();
@@ -42,7 +42,7 @@ const Movie: React.FC = () => {
                     <CustomBreadCrumb params={{ link: `/movies/${id}/`,name:`/Movie/${movie?.title}` }} />
                     {movie && (
                         <div className='justify-center items-center flex flex-col'>
-                            <Searchbar />
+                            <Searchbar Variant={'Movie'} />
                             <VideoPlayer movie={movie}/>
 
                             

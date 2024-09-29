@@ -1,9 +1,9 @@
-import Searchbar from "@/components/search-bar";
 import SampleCard from "@/components/sample-card";
 import useTopRated from "@/hooks/use-top-rated";
 import usePopular from "@/hooks/use-popular";
 import useAiringToday from "@/hooks/use-airing-today";
 import useOnAir from "@/hooks/use-on-air";
+import Searchbar from "@/components/modals/search-bar-advanced";
 
 const Body = () => {
     const { airing_today: airingTodaySeries, loading: airingTodaySeriesLoading, error: airingTodaySeriesError } = useAiringToday('tv');
@@ -41,7 +41,7 @@ const Body = () => {
 
     return (
         <div className='flex flex-col mx-4 lg:mx-8 justify-center items-center'>
-            <Searchbar />
+            <Searchbar Variant={"Series"} />
             <div className="flex flex-col gap-y-12 w-full">
                 {renderSeriesSection('On the Air', onAirSeries || [], onAirSeriesLoading, onAirSeriesError)}
                 {renderSeriesSection('Airing Today', airingTodaySeries || [], airingTodaySeriesLoading, airingTodaySeriesError)}

@@ -1,4 +1,4 @@
-import Searchbar from "@/components/search-bar";
+import Searchbar from "@/components/modals/search-bar-advanced";
 import CelebList from "./celebrity-list";
 
 const Body = () => {
@@ -10,7 +10,7 @@ const Body = () => {
                 </p>
             </div>
 
-            <Searchbar />
+            <Searchbar Variant={"Person"} />
             <CelebList/>
             
         </div>

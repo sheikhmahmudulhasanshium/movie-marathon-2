@@ -1,11 +1,11 @@
 import React from 'react';
-import Searchbar from "@/components/search-bar";
 import GenreMenu from "./genre-list";
 import useGenres from "@/hooks/use-genres";
 import Loading from "@/components/loading";
 import SampleCard from '@/components/sample-card'; // Ensure this import path is correct
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Searchbar from '@/components/modals/search-bar-advanced';
 type Genre = {
     id: number;
     name: string;
@@ -64,7 +64,7 @@ const Body: React.FC<BodyProps> = ({ selectedOption }) => {
     return (
         <div className="flex flex-col justify-center items-center py-4 px-6 bg-primary-foreground min-h-screen my-4">
             <p className="my-8 text-3xl font-semibold text-center text-gray-800">Explore Movies, TV Shows, and More</p>
-            <Searchbar />
+            <Searchbar Variant={'Genre'} />
             <div className="flex flex-col w-full max-w-6xl">
                 {filteredData.length > 0 ? (
                     filteredData.map(({ genre, combined }: UseGenresReturnType) => (

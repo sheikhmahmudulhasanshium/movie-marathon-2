@@ -5,13 +5,13 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Modal from "@/components/modals/basic-page-modal";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
-import Searchbar from '@/components/search-bar';
 import Loading from '@/components/loading';
 import usePerson from '@/hooks/use-person';
 import PersonDetails from '@/components/person-details';
 import Recommendations from './components/recommendations';
 import { useState } from 'react';
 import CareerViewSelector from './components/career';
+import Searchbar from '@/components/modals/search-bar-advanced';
 
 const Person: React.FC = () => {
     const params = useParams();
@@ -42,7 +42,7 @@ const Person: React.FC = () => {
                     <CustomBreadCrumb params={{ link: `/persons/${id}/`, name: `/Person/${personData?.name}` }} />
                     {personData && (
                         <div className='justify-center items-center flex flex-col'>
-                            <Searchbar />
+                            <Searchbar Variant={'Person'} />
                             <PersonDetails personData={personData} />
                             <CareerViewSelector personData={personData}/>
                             <Recommendations />

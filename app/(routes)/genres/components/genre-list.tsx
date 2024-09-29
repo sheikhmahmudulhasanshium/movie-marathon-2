@@ -4,7 +4,7 @@ import useGenreList from "@/hooks/use-genre-list";
 import Link from "next/link";
 
 const Genres = () => {
-    const {combinedGenres,movieGenres,tvGenres,loading,error}=useGenreList()
+    const {combinedGenres,loading,error}=useGenreList()
     if(loading){
         return <Loading/>
     }

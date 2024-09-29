@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import Loading from "@/components/loading";
-import Searchbar from "@/components/search-bar";
-import { Button } from "@/components/ui/button";
 import {
     Pagination,
     PaginationContent,
@@ -14,6 +12,7 @@ import {
 import useCountry from "@/hooks/use-country";
 import SampleCard from '@/components/sample-card';
 import CountryDetails from './country-details';
+import Searchbar from '@/components/modals/search-bar-advanced';
 
 interface Movie {
     id: number;
@@ -66,7 +65,7 @@ const Body: React.FC<BodyProps> = ({ country_data }) => {
                 </p>
             </header>
 
-            <Searchbar />
+            <Searchbar Variant={'Country'} />
             {country_data && <CountryDetails id={country_data.id} />}
 
             {/* Movies Section */}

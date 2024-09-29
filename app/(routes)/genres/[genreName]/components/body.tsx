@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Loading from "@/components/loading";
-import Searchbar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import useGenre from "@/hooks/use-genre";
 import { PlusIcon } from "lucide-react";
 import SampleCard from '@/components/sample-card';
+import Searchbar from '@/components/modals/search-bar-advanced';
 
 interface CombinedGenre {
     id: string | number;
@@ -34,7 +34,7 @@ const Body: React.FC<BodyProps> = ({ genre_data }) => {
             </header>
 
             {/* Search Bar */}
-            <Searchbar />
+            <Searchbar Variant={'Genre'} />
 
             {/* Movies Section */}
             <section className="w-10/12" id='movies'>

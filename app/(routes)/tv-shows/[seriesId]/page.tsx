@@ -6,13 +6,13 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Modal from "@/components/modals/basic-page-modal";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
-import Searchbar from '@/components/search-bar';
 import Recommendations from '../../../../components/recommendations';
 import Loading from '@/components/loading';
 import Trailers from '../../../../components/trailer';
 import Details from '@/components/series-details';
 import EpisodeSelector from '../../../../components/episode-selector';
 import VideoPlayer from '../components/video-player';
+import Searchbar from '@/components/modals/search-bar-advanced';
 
 const TvShow: React.FC = () => {
     const params = useParams();
@@ -44,7 +44,7 @@ const TvShow: React.FC = () => {
                     {series && (
                         <div className='justify-center items-center flex flex-col'>
 
-                            <Searchbar />
+                            <Searchbar Variant={'Series'} />
                             <VideoPlayer series={series}/>
 
                             <EpisodeSelector series={series} default_season={1} default_episode={1}/>

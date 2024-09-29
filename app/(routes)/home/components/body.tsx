@@ -1,4 +1,3 @@
-import Searchbar from "@/components/search-bar";
 import SampleCard from "@/components/sample-card";
 import useTopRated from "@/hooks/use-top-rated";
 import usePopular from "@/hooks/use-popular";
@@ -6,6 +5,7 @@ import useAiringToday from "@/hooks/use-airing-today";
 import useOnAir from "@/hooks/use-on-air";
 import useNowPlayingMovies from "@/hooks/use-now-playing";
 import useUpcoming from "@/hooks/use-upcoming";
+import Searchbar from "@/components/modals/search-bar-advanced";
 
 const Body = () => {
     // TV Series Hooks
@@ -80,7 +80,7 @@ const Body = () => {
     return (
         <div className='flex flex-col mx-4 lg:mx-8 justify-center items-center'>
             <p className="font-light text-2xl pt-4 mb-8 text-gray-700">Explore Movies, TV Shows, and More</p>
-            <Searchbar />
+            <Searchbar Variant={"All"} />
             <div className="flex flex-col gap-y-12 w-full">
                 {/* Movie Sections */}
                 {renderMovieSection('Movies Now Playing', nowPlayingMovies || [], nowPlayingMoviesLoading, nowPlayingMoviesError)}

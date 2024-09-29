@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import SampleCard from "@/components/sample-card";
-import Searchbar from "@/components/search-bar";
 import useKeyword from "@/hooks/use-keyword";
 import {
     Pagination,
@@ -11,6 +10,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination"; // Adjust based on your actual import
+import Searchbar from '@/components/modals/search-bar-advanced';
 
 interface BodyProps {
     id: number;
@@ -77,7 +77,7 @@ const Body: React.FC<BodyProps> = ({ id }) => {
             </header>
 
             {/* Search Bar */}
-            <Searchbar />
+            <Searchbar Variant={'Keyword'} />
 
             {/* Movies Section */}
             <div className="w-full max-w-screen-lg mx-auto">
