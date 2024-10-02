@@ -24,7 +24,7 @@ const SearchResults = ({ Variant, data, loading, error = '', activeIndex, search
     };
 
     const handleSeeMore = () => {
-        const seeMorePath = `/search?q=${encodeURIComponent(searchKey)}&v=${Variant.toLowerCase()}`; // Adjust as needed
+        const seeMorePath = `/search?q=${encodeURIComponent(searchKey)}&v=${Variant.toLowerCase()}`; 
         window.location.href = seeMorePath;
     };
 
@@ -32,13 +32,13 @@ const SearchResults = ({ Variant, data, loading, error = '', activeIndex, search
         <div className="flex flex-col space-y-2">
             {data.length > 0 ? (
                 data.map((item: any, index: number) => {
-                    const linkPath = item.source === 'Company' ? `/companies/${item.id}` :
-                                     item.source === 'Movie' ? `/movies/${item.id}` :
-                                     item.source === 'Series' ? `/tv-shows/${item.id}` :
-                                     item.source === 'Person' ? `/persons/${item.id}` :
-                                     item.source === 'Country' ? `/countries/${item.iso_3166_1}` :
-                                     item.source === 'Genre' ? `/genres/${item.id}` :
-                                     item.source === 'Keyword' ? `/keywords/${item.id}` :
+                    const linkPath = item.source === 'Company' ? `/companies/${item.id}-${item.name}` :
+                                     item.source === 'Movie' ? `/movies/${item.id}-${item.title}` :
+                                     item.source === 'Series' ? `/tv-shows/${item.id}-${item.name}` :
+                                     item.source === 'Person' ? `/persons/${item.id}-${item.name}` :
+                                     item.source === 'Country' ? `/countries/${item.iso_3166_1}-${item.name}` :
+                                     item.source === 'Genre' ? `/genres/${item.id}-${item.name}` :
+                                     item.source === 'Keyword' ? `/keywords/${item.id}-${item.name}` :
                                      '';
 
                     const displayName = item.displayName;
@@ -82,13 +82,13 @@ const Searchbar = ({ Variant }: SearchbarProps) => {
             setActiveIndex((prev) => (prev > 0 ? prev - 1 : prev));
         } else if (e.key === 'Enter' && activeIndex >= 0) {
             const selectedItem = data[activeIndex];
-            const linkPath = selectedItem.source === 'Company' ? `/companies/${selectedItem.id}` :
-                             selectedItem.source === 'Movie' ? `/movies/${selectedItem.id}` :
-                             selectedItem.source === 'Series' ? `/tv-shows/${selectedItem.id}` :
-                             selectedItem.source === 'Person' ? `/persons/${selectedItem.id}` :
-                             selectedItem.source === 'Country' ? `/countries/${selectedItem.iso_3166_1}` :
-                             selectedItem.source === 'Genre' ? `/genres/${selectedItem.id}` :
-                             selectedItem.source === 'Keyword' ? `/keywords/${selectedItem.id}` :
+            const linkPath = selectedItem.source === 'Company' ? `/companies/${selectedItem.id}-${selectedItem.name}` :
+                             selectedItem.source === 'Movie' ? `/movies/${selectedItem.id}-${selectedItem.title}` :
+                             selectedItem.source === 'Series' ? `/tv-shows/${selectedItem.id}-${selectedItem.name}` :
+                             selectedItem.source === 'Person' ? `/persons/${selectedItem.id}-${selectedItem.name}` :
+                             selectedItem.source === 'Country' ? `/countries/${selectedItem.iso_3166_1}-${selectedItem.name}` :
+                             selectedItem.source === 'Genre' ? `/genres/${selectedItem.id}-${selectedItem.name}` :
+                             selectedItem.source === 'Keyword' ? `/keywords/${selectedItem.id}-${selectedItem.name}` :
                              '';
             if (linkPath) {
                 window.location.href = linkPath; 
