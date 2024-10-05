@@ -1,104 +1,294 @@
-import { useState, useEffect } from 'react';
-import { ArrowBigRight, SearchIcon } from 'lucide-react';
+import { useState } from 'react';
+import { TextSearch, TriangleAlert, ArrowBigRight, Ellipsis, Search } from 'lucide-react';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import Link from 'next/link';
-import Image from 'next/image';
-import SamplePoster from '@/public/Designer.png';
 import useSearch from '@/hooks/use-search-2';
+import { CompanyData, Country, Genre, Keyword, Movie, PersonDetailsResponse, TVShow } from '../type';
+import Link from 'next/link';
+import FormatLink from '@/lib/format-link';
+import Image from 'next/image';
+import NoImage from '../../public/Designer.png';
 import { Button } from '../ui/button';
 
 interface SearchbarProps {
     Variant: "Keyword" | "Movie" | "Series" | "Person" | "Country" | "Genre" | "Company" | "All";
 }
 
-const SearchResults = ({ Variant, data, loading, error = '', activeIndex, searchKey }: { Variant: string, data: any, loading: boolean, error?: string, activeIndex: number, searchKey: string }) => {
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
-    const getImageUrl = (item: any) => {
-        if (item.logo_path) return `https://image.tmdb.org/t/p/w500${item.logo_path}`;
-        if (item.profile_path) return `https://image.tmdb.org/t/p/w500${item.profile_path}`;
-        if (item.backdrop_path || item.poster_path) return `https://image.tmdb.org/t/p/w500${item.backdrop_path || item.poster_path}`;
-        if (item.iso_3166_1) return `http://purecatamphetamine.github.io/country-flag-icons/3x2/${item.iso_3166_1}.svg`
-        return SamplePoster;
-    };
-
-    const handleSeeMore = () => {
-        const seeMorePath = `/search?q=${encodeURIComponent(searchKey)}&v=${Variant.toLowerCase()}`; 
-        window.location.href = seeMorePath;
-    };
-
+const SeeMoreButton = ({ Variant, searchKey }: { Variant: "Keyword" | "Movie" | "Series" | "Person" | "Country" | "Genre" | "Company" | "All", searchKey: string }) => {
     return (
-        <div className="flex flex-col space-y-2">
-            {data.length > 0 ? (
-                data.map((item: any, index: number) => {
-                    const linkPath = item.source === 'Company' ? `/companies/${item.id}-${item.name}` :
-                                     item.source === 'Movie' ? `/movies/${item.id}-${item.title}` :
-                                     item.source === 'Series' ? `/tv-shows/${item.id}-${item.name}` :
-                                     item.source === 'Person' ? `/persons/${item.id}-${item.name}` :
-                                     item.source === 'Country' ? `/countries/${item.iso_3166_1}-${item.name}` :
-                                     item.source === 'Genre' ? `/genres/${item.id}-${item.name}` :
-                                     item.source === 'Keyword' ? `/keywords/${item.id}-${item.name}` :
-                                     '';
-
-                    const displayName = item.displayName;
-                    const imageUrl = getImageUrl(item);
-                    const isActive = index === activeIndex;
-
-                    return (
-                        <Link href={linkPath} key={item.id} className={`flex p-2 hover:bg-gray-100 rounded-lg transition hover:border justify-between items-center ${isActive ? 'bg-gray-200' : ''}`}>
-                            <div className='items-center flex'>
-                                <Image src={imageUrl} alt={displayName} height={50} width={50} className="rounded" />
-                                <div className="ml-3">
-                                    <p className='text-base'>{displayName}</p>
-                                    {item.source && <p className='text-sm font-light text-gray-600'>from {item.source}</p>}
-                                </div>
-                            </div>
-                            <ArrowBigRight className='flex items-center '/>
-                        </Link>
-                    );
-                })
-            ) : (
-                <div>No results found</div>
-            )}
-            {data.length > 0 && (
-                <Button variant="ghost" onClick={handleSeeMore} className="mt-8 p-2 bg-cyan-500 text-white rounded-lg">
-                    See More
-                </Button>
-            )}
-        </div>
+        <Button variant="link">
+            <Link href={`/search?v=${Variant}&q=${searchKey}`}>
+                See More
+            </Link>
+        </Button>
     );
+};
+
+
+const SearchResults = ({ data, loading, error = '', Variant, searchKey = '' }: { data: any, loading: boolean, error?: string, Variant: string, searchKey: string }) => {
+    if (data.length > 0 && searchKey.length > 0 && loading) {
+        return (
+            <div className='w-full py-2 bg-white flex gap-2 items-center px-4 text-lg'>
+                <p>Please Wait</p>
+                <Ellipsis className='animate-ping' />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className='w-full py-2 bg-white flex gap-2 items-center px-4 text-lg'>
+                <TriangleAlert className='text-red-500' />
+                <p>{error}</p>
+            </div>
+        );
+    }
+
+    if (searchKey.length > 0 && data.length === 0) {
+        return (
+            <div className='w-full py-2 bg-white flex gap-2 items-center px-4 text-lg'>
+                <TriangleAlert className='text-red-500' />
+                <p>No Result Found.</p>
+            </div>
+        );
+    }
+
+    switch (Variant) {
+        case "All":
+            return (
+                (searchKey.length > 0) ? (
+                    <div className='w-full py-2 bg-white flex flex-col px-4 text-lg z-50 max-h-[40vh] overflow-y-auto rounded-lg gap-1'>
+                        {data.map((item: any) => {
+                            const name = item.name || item.title || item.english_name;
+                            if (!name) {
+                                console.error(`Item with ID ${item.id} has no name or title.`);
+                                return null; 
+                            }
+                            return (
+                                <Link href={FormatLink(item.id, name, item.source)} key={item.id} className='flex w-full px-1 gap-2 items-center hover:border justify-between'>
+                                    <div className='flex gap-2 items-center w-8/12 justify-start'>
+                                        {item.logo_path || item.profile_path || item.backdrop_path || item.poster_path
+                                            ? <Image src={`https://media.themoviedb.org/t/p/w185${item.logo_path || item.profile_path || item.backdrop_path || item.poster_path}`} alt={name} height={20} width={30} />
+                                            : item.iso_3166_1 ? <Image src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${item.iso_3166_1}.svg`} alt={item.english_name} height={20} width={30} />
+                                            : <Image src={NoImage} alt={''} height={30} width={30} quality={100} />}
+                                        <p>{name}</p>
+                                    </div>
+                                    <div className='flex gap-2 items-center w-4/12 justify-end'>
+                                        <p className='pl-4 text-sm'> from {item.source}</p>
+                                        <ArrowBigRight className='text-end' />
+                                    </div>
+                                </Link>
+                            );
+                        })} 
+                        <SeeMoreButton Variant={Variant} searchKey={searchKey}/>
+
+                    </div>
+                ) : ''
+            );
+
+        case "Company":
+            return (
+                (searchKey.length > 0) ? (
+                    <div className='w-full py-2 bg-white flex flex-col px-4 text-lg z-50 max-h-[40vh] overflow-y-auto rounded-lg gap-1'>
+                        {data.map((company: CompanyData) => {
+                            const name = company.name;
+                            if (!name) {
+                                console.error(`Company with ID ${company.id} has no name.`);
+                                return null;  
+                            }
+                            return (
+                                <Link href={FormatLink(company.id, name, Variant)} key={company.id} className='flex w-full px-1 gap-2 items-center hover:border justify-between'>
+                                    <div className='flex gap-2 items-center w-8/12 justify-start'>
+                                        {company.logo_path
+                                            ? <Image src={`https://media.themoviedb.org/t/p/w185${company.logo_path}`} alt={name} height={20} width={30} />
+                                            : <Image src={NoImage} alt={''} height={30} width={30} quality={100} />}
+                                        <p>{name}</p>
+                                    </div>
+                                    <div className='flex gap-2 items-center w-4/12 justify-end'>
+                                        <p className='pl-4 text-sm'> from {Variant}</p>
+                                        <ArrowBigRight className='text-end' />
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                ) : ''
+            );
+
+        case "Movie":
+            return (
+                (searchKey.length > 0) ? (
+                    <div className='w-full py-2 bg-white flex flex-col px-4 text-lg z-50 max-h-[40vh] overflow-y-auto rounded-lg gap-1'>
+                        {data.map((movie: Movie) => {
+                            const name = movie.title;
+                            if (!name) {
+                                console.error(`Movie with ID ${movie.id} has no title.`);
+                                return null; 
+                            }
+                            return (
+                                <Link href={FormatLink(movie.id, name, Variant)} key={movie.id} className='flex w-full px-1 gap-2 items-center hover:border justify-between'>
+                                    <div className='flex gap-2 items-center w-8/12 justify-start'>
+                                        {movie.poster_path || movie.backdrop_path
+                                            ? <Image src={`https://media.themoviedb.org/t/p/w185${movie.poster_path || movie.backdrop_path}`} alt={name} height={20} width={30} />
+                                            : <Image src={NoImage} alt={''} height={30} width={30} quality={100} />}
+                                        <p>{name}</p>
+                                    </div>
+                                    <div className='flex gap-2 items-center w-4/12 justify-end'>
+                                        <p className='pl-4 text-sm'> from {Variant}</p>
+                                        <ArrowBigRight className='text-end' />
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                ) : ''
+            );
+
+        case "Series":
+            return (
+                (searchKey.length > 0) ? (
+                    <div className='w-full py-2 bg-white flex flex-col px-4 text-lg z-50 max-h-[40vh] overflow-y-auto rounded-lg gap-1'>
+                        {data.map((series: TVShow) => {
+                            const name = series.name;
+                            if (!name) {
+                                console.error(`Series with ID ${series.id} has no name.`);
+                                return null; 
+                            }
+                            return (
+                                <Link href={FormatLink(series.id, name, Variant)} key={series.id} className='flex w-full px-1 gap-2 items-center hover:border justify-between'>
+                                    <div className='flex gap-2 items-center w-8/12 justify-start'>
+                                        {series.poster_path || series.backdrop_path
+                                            ? <Image src={`https://media.themoviedb.org/t/p/w185${series.poster_path || series.backdrop_path}`} alt={name} height={20} width={30} />
+                                            : <Image src={NoImage} alt={''} height={30} width={30} quality={100} />}
+                                        <p>{name}</p>
+                                    </div>
+                                    <div className='flex gap-2 items-center w-4/12 justify-end'>
+                                        <p className='pl-4 text-sm'> from {Variant}</p>
+                                        <ArrowBigRight className='text-end' />
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                ) : ''
+            );
+
+        case "Person":
+            return (
+                (searchKey.length > 0) ? (
+                    <div className='w-full py-2 bg-white flex flex-col px-4 text-lg z-50 max-h-[40vh] overflow-y-auto rounded-lg gap-1'>
+                        {data.map((person: PersonDetailsResponse) => {
+                            const name = person.name;
+                            if (!name) {
+                                console.error(`Person with ID ${person.id} has no name.`);
+                                return null;  
+                            }
+                            return (
+                                <Link href={FormatLink(person.id, name, Variant)} key={person.id} className='flex w-full px-1 gap-2 items-center hover:border justify-between'>
+                                    <div className='flex gap-2 items-center w-8/12 justify-start'>
+                                        {person.profile_path
+                                            ? <Image src={`https://media.themoviedb.org/t/p/w185${person.profile_path}`} alt={name} height={20} width={30} />
+                                            : <Image src={NoImage} alt={''} height={30} width={30} quality={100} />}
+                                        <p>{name}</p>
+                                    </div>
+                                    <div className='flex gap-2 items-center w-4/12 justify-end'>
+                                        <p className='pl-4 text-sm'> from {Variant}</p>
+                                        <ArrowBigRight className='text-end' />
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                ) : ''
+            );
+
+        case "Genre":
+            return (
+                (searchKey.length > 0) ? (
+                    <div className='w-full py-2 bg-white flex flex-col px-4 text-lg z-50 max-h-[40vh] overflow-y-auto rounded-lg gap-1'>
+                        {data.map((genre: Genre) => {
+                            const name = genre.name;
+                            if (!name) {
+                                console.error(`Genre with ID ${genre.id} has no name.`);
+                                return null; 
+                            }
+                            return (
+                                <Link href={FormatLink(genre.id, name, Variant)} key={genre.id} className='flex w-full px-1 gap-2 items-center hover:border justify-between'>
+                                    <div className='flex gap-2 items-center w-8/12 justify-start'>
+                                        <p>{name}</p>
+                                    </div>
+                                    <div className='flex gap-2 items-center w-4/12 justify-end'>
+                                        <p className='pl-4 text-sm'> from {Variant}</p>
+                                        <ArrowBigRight className='text-end' />
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                ) : ''
+            );
+
+        case "Keyword":
+            return (
+                (searchKey.length > 0) ? (
+                    <div className='w-full py-2 bg-white flex flex-col px-4 text-lg z-50 max-h-[40vh] overflow-y-auto rounded-lg gap-1'>
+                        {data.map((keyword: Keyword) => {
+                            const name = keyword.name;
+                            if (!name) {
+                                console.error(`Keyword with ID ${keyword.id} has no name.`);
+                                return null; 
+                            }
+                            return (
+                                <Link href={FormatLink(keyword.id, name, Variant)} key={keyword.id} className='flex w-full px-1 gap-2 items-center hover:border justify-between'>
+                                    <div className='flex gap-2 items-center w-8/12 justify-start'>
+                                        <TextSearch />
+                                        <p>{name}</p>
+                                    </div>
+                                    <div className='flex gap-2 items-center w-4/12 justify-end'>
+                                        <p className='pl-4 text-sm'> from {Variant}</p>
+                                        <ArrowBigRight className='text-end' />
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                ) : ''
+            );
+
+        case "Country":
+            return (
+                (searchKey.length > 0) ? (
+                    <div className='w-full py-2 bg-white flex flex-col px-4 text-lg z-50 max-h-[40vh] overflow-y-auto rounded-lg gap-1'>
+                        {data.map((country: Country) => {
+                            const name = country.english_name;
+                            if (!name) {
+                                console.error(`Country with ID ${country.iso_3166_1} has no name.`);
+                                return null; 
+                            }
+                            return (
+                                <Link href={FormatLink(country.iso_3166_1, name, Variant)} key={country.iso_3166_1} className='flex w-full px-1 gap-2 items-center hover:border justify-between'>
+                                    <div className='flex gap-2 items-center w-8/12 justify-start'>
+                                        <Image src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${country.iso_3166_1}.svg`} alt={country.english_name} height={20} width={30} />
+                                        <p>{name}</p>
+                                    </div>
+                                    <div className='flex gap-2 items-center w-4/12 justify-end'>
+                                        <p className='pl-4 text-sm'> from {Variant}</p>
+                                        <ArrowBigRight className='text-end' />
+                                    </div>
+                                </Link>
+                            );
+                        })}
+                    </div>
+                ) : ''
+            );
+
+        default:
+            return null; 
+    }
 };
 
 const Searchbar = ({ Variant }: SearchbarProps) => {
     const [searchKey, setSearchKey] = useState<string>("");
     const { data, loading, error } = useSearch(searchKey, Variant);
-    const [activeIndex, setActiveIndex] = useState<number>(-1);
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'ArrowDown') {
-            setActiveIndex((prev) => (prev < data.length - 1 ? prev + 1 : prev));
-        } else if (e.key === 'ArrowUp') {
-            setActiveIndex((prev) => (prev > 0 ? prev - 1 : prev));
-        } else if (e.key === 'Enter' && activeIndex >= 0) {
-            const selectedItem = data[activeIndex];
-            const linkPath = selectedItem.source === 'Company' ? `/companies/${selectedItem.id}-${selectedItem.name}` :
-                             selectedItem.source === 'Movie' ? `/movies/${selectedItem.id}-${selectedItem.title}` :
-                             selectedItem.source === 'Series' ? `/tv-shows/${selectedItem.id}-${selectedItem.name}` :
-                             selectedItem.source === 'Person' ? `/persons/${selectedItem.id}-${selectedItem.name}` :
-                             selectedItem.source === 'Country' ? `/countries/${selectedItem.iso_3166_1}-${selectedItem.name}` :
-                             selectedItem.source === 'Genre' ? `/genres/${selectedItem.id}-${selectedItem.name}` :
-                             selectedItem.source === 'Keyword' ? `/keywords/${selectedItem.id}-${selectedItem.name}` :
-                             '';
-            if (linkPath) {
-                window.location.href = linkPath; 
-            }
-        }
-    };
-
-    useEffect(() => {
-        setActiveIndex(-1);
-    }, [searchKey]);
 
     return (
         <div className="text-2xl flex flex-col items-center justify-center relative">
@@ -107,9 +297,9 @@ const Searchbar = ({ Variant }: SearchbarProps) => {
                     type="text"
                     value={searchKey}
                     onChange={(e) => setSearchKey(e.target.value)}
-                    onKeyDown={handleKeyDown}
                     placeholder={`Search ${Variant}...`}
                     className="border-0 hover:border-0 py-4 pl-4 col-span-10 rounded-l-xl"
+                    aria-label={`Search ${Variant}`}
                 />
                 <button
                     type="button"
@@ -119,16 +309,11 @@ const Searchbar = ({ Variant }: SearchbarProps) => {
                     {searchKey.length > 0 ? (
                         <Cross2Icon className="text-3xl scale-150" onClick={() => setSearchKey("")} />
                     ) : (
-                        <SearchIcon className="text-3xl scale-150" />
+                        <Search className="text-3xl scale-150" />
                     )}
                 </button>
             </div>
-
-            {searchKey.length > 2 && (
-                <div className='z-50 absolute top-full left-0 w-full max-h-60 overflow-y-auto bg-white shadow-lg rounded-md text-cyan-950 py-4'>
-                    <SearchResults Variant={Variant} data={data} loading={loading} error={error} activeIndex={activeIndex} searchKey={searchKey} />
-                </div>
-            )}
+            <SearchResults data={data} loading={loading} error={error} Variant={Variant} searchKey={searchKey} />
         </div>
     );
 };

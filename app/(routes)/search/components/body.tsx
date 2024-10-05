@@ -4,15 +4,15 @@ import { useState, useEffect } from "react";
 import Navbar from "./navbar";
 import SampleCard from "@/components/sample-card";
 import { CompanyData, Country, Genre, Keyword, Movies, PersonDetailsResponse, TVShows } from "@/components/type";
-import { formatTime } from "@/lib/format-time";
 import { formatDate } from "@/lib/format-date";
 import ProfileCard from "../../persons/components/profile-card";
 import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
+import NoImage from '../../../../public/Designer.png'
+
 const variantOptions = ["All", "Keyword", "Movie", "Series", "Person", "Country", "Genre", "Company"] as const;
 type VariantType = typeof variantOptions[number];
-import NoImage from '../../../../public/Designer.png'
 interface SearchResultsProps {
     SearchKey: string; 
     Variant: VariantType;   

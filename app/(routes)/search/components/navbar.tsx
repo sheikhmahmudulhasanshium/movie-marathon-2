@@ -18,7 +18,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ activeOption, onSelect }) => {
     return ( 
-        <div className="pt-6 pb-4 max-w-2xl flex items-start">
+        <div className="pt-6 pb-4 max-w-2xl flex items-start lg:max-w-6xl lg:justify-center lg:items-center">
             <div className="flex gap-4 justify-start items-center overflow-x-auto whitespace-nowrap">
                 {optionList.map((option, index) => (
                     <Button 
