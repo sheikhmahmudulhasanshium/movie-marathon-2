@@ -20,7 +20,7 @@ const Footer = () => {
                     <Link href="/privacy-policy">Privacy Policy</Link>
                 </div>
                 <div className="hover:underline hover:opacity-85">
-                    <Link href="/sitemap/sitemap.xml">Sitemap</Link>
+                    <Link href="/sitemap.xml">Sitemap</Link>
                 </div>
                 <div className="hover:underline hover:opacity-85">
                     <Link href="/contact">Contact</Link>
