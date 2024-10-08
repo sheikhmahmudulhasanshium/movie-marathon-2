@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://movie-marathon-2.vercel.app/sitemap/sitemap.xml
