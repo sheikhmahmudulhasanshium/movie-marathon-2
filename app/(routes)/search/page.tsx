@@ -6,6 +6,7 @@ import RootLayout from '@/app/layout';
 import Modal from '@/components/modals/basic-page-modal';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import TTS from './text-to-speech/tts-button';
 
 const variantOptions = ["All", "Keyword", "Movie", "Series", "Person", "Country", "Genre", "Company"] as const;
 type VariantType = typeof variantOptions[number];
@@ -35,6 +36,7 @@ const Search = () => {
                     <div className="flex w-full justify-center">
                         <div className='flex flex-col justify-center items-center w-10/12 gap-2'>
                             <Searchbar Variant={variant} />
+                            <TTS/>
                             <SearchResults Variant={variant} SearchKey={searchKey} setVariant={setVariant} />
                         </div>
                     </div>
