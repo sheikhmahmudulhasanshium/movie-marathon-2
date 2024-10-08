@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import Link from "next/link";
@@ -37,8 +37,13 @@ const Sidebar = () => {
         ))}
         <Separator />
         <div className="my-4">
-          <div className="flex w-full justify-center">
+          <div className="flex w-full justify-center gap-4">
             <ModeToggle />
+            <Link href={`/search`}>
+              <Button variant="ghost" size='icon' className="border" >
+                <Search className="text-cyan-950 scale-120"/>
+              </Button>
+            </Link>
           </div>
         </div>
       </DropdownMenuContent>

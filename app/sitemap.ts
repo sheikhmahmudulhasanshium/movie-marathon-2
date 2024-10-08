@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl=process.env.NEXT_PUBLIC_BASE_URL
+    const baseUrl=process.env.NEXT_PUBLIC_BASE_URL||`https://movie-marathon-2.vercel.app`
+
     return [
     {
       url: `${baseUrl}/home`,
@@ -19,13 +20,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${baseUrl}/movies`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.5,
+      priority: 1,
     },
     {
         url: `${baseUrl}/tv-shows`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
-        priority: 0.5,
+        priority: 1,
       },
       {
         url: `${baseUrl}/genres`,
@@ -38,11 +39,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.5,
-      },{
+      },
+      {
         url: `${baseUrl}/top-contents`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.5,
+      },
+      {
+        url: `${baseUrl}/companies`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.5,
+      },
+      {
+        url: `${baseUrl}/country`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.5,
+      },
+      {
+        url: `${baseUrl}/search`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
       },
   ]
 }
