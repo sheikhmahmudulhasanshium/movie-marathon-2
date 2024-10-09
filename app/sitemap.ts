@@ -1,12 +1,8 @@
 import { MetadataRoute } from 'next';
 
+const baseUrl: string = "https://movie-marathon-2.vercel.app/";
+
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://movie-marathon-2.vercel.app/';
-
-    if (!process.env.NEXT_PUBLIC_BASE_URL) {
-        console.warn('NEXT_PUBLIC_BASE_URL is not defined. Using default URL:', baseUrl);
-    }
-
     return [
         {
             url: `${baseUrl}home`,
