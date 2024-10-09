@@ -1,67 +1,66 @@
 import { MetadataRoute } from 'next';
 
-const baseUrl: string = "https://movie-marathon-2.vercel.app/";
 
 export default function sitemap(): MetadataRoute.Sitemap {
     return [
         {
-            url: `${baseUrl}home`,
+            url: `https://movie-marathon-2.vercel.app/home`,
             lastModified: new Date(),
-            changeFrequency: 'yearly',
+            changeFrequency: 'hourly',
             priority: 1,
         },
         {
-            url: `${baseUrl}`,
+            url: `https://movie-marathon-2.vercel.app/`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'hourly',
             priority: 0.8,
         },
         {
-            url: `${baseUrl}movies`,
+            url: `https://movie-marathon-2.vercel.app/movies`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'hourly',
             priority: 1,
         },
         {
-            url: `${baseUrl}tv-shows`,
+            url: `https://movie-marathon-2.vercel.app/tv-shows`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'hourly',
             priority: 1,
         },
         {
-            url: `${baseUrl}genres`,
+            url: `https://movie-marathon-2.vercel.app/genres`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'hourly',
             priority: 0.5,
         },
         {
-            url: `${baseUrl}persons`,
+            url: `https://movie-marathon-2.vercel.app/persons`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'hourly',
             priority: 0.5,
         },
         {
-            url: `${baseUrl}top-contents`,
+            url: `https://movie-marathon-2.vercel.app/top-contents`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'hourly',
             priority: 0.5,
         },
         {
-            url: `${baseUrl}companies`,
+            url: `https://movie-marathon-2.vercel.app/companies`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'hourly',
             priority: 0.5,
         },
         {
-            url: `${baseUrl}country`,
+            url: `https://movie-marathon-2.vercel.app/country`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'hourly',
             priority: 0.5,
         },
         {
-            url: `${baseUrl}search`,
+            url: `https://movie-marathon-2.vercel.app/search`,
             lastModified: new Date(),
-            changeFrequency: 'weekly',
+            changeFrequency: 'hourly',
             priority: 0.8,
         },
     ];
