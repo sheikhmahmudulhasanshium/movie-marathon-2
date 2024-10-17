@@ -6,7 +6,7 @@ import RootLayout from '@/app/layout';
 import Modal from '@/components/modals/basic-page-modal';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
-import TTS from './text-to-speech/tts-button';
+import TTS from './chat-bot/body';
 
 const variantOptions = ["All", "Keyword", "Movie", "Series", "Person", "Country", "Genre", "Company"] as const;
 type VariantType = typeof variantOptions[number];

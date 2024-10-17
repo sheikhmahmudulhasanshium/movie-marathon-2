@@ -1,4 +1,4 @@
-const TTS = () => {
+const ChatBox = () => {
     return ( 
         <div>
             
@@ -6,4 +6,4 @@ const TTS = () => {
      );
 }
  
-export default TTS;
+export default ChatBox;
