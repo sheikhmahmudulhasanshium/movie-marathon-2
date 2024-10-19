@@ -1,6 +1,7 @@
 import { Inter as FontSans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
       <head>
         <title>{params.title}</title>
         <meta name="description" content={params.description} />
+        <GoogleAnalytics gaId="G-JX5SX4K85H" />
       </head>
+        
       <body className="flex bg-primary-foreground dark:bg-primary-foreground">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
