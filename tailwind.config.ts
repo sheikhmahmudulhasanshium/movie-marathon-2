@@ -29,6 +29,8 @@ const config = {
         "imdb": "url('../public/imdb.svg')",
         "imdb-dark": "url('../public/imdb-dark.svg')",
         "tiktok-logo": "url('../public/tiktok.svg')",
+        "404": "url('../public/Designer.jpeg')",
+
       },
       colors: {
         border: "hsl(var(--border))",
