@@ -12,6 +12,17 @@ interface Server {
     default_subtitle?: string;
 }
 
+interface Server {
+    server_name: string;
+    base_url: string;
+    movie_format?: string;
+    series_format?: string;
+    season_format?: string;
+    episode_format?: string;
+    default_subtitle?: string;
+}
+
+// List of servers with their formats
 const serverList: Server[] = [
     {
         server_name: "vidsrc.net",
@@ -51,7 +62,17 @@ const serverList: Server[] = [
         season_format: "https://www.2embed.skin/embedtvfull/{id}",
         episode_format: "https://www.2embed.skin/embedtv/{id}&s={season_number}&e={episode_number}",
     },
+    {
+        server_name: "vidsrc.to",
+        base_url: "https://vidsrc.to",
+        movie_format: "https://vidsrc.to/embed/movie/{id}",
+        series_format: "https://vidsrc.to/embed/tv/{id}",
+        season_format: "https://vidsrc.to/embed/tv/{id}/{season_number}",
+        episode_format: "https://vidsrc.in/embed/tv/id/{season_number}/{episode_number}",
+        default_subtitle: "en"
+    }
 ];
+
 
 interface ServerSelectorProps {
     seriesId: string;

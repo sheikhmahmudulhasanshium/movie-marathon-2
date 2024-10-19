@@ -20,7 +20,7 @@ const Page = () => {
     }
 
     return (
-        <RootLayout params={{ title: "Explore Genres", description: "This is the better version of previous App" }}>
+        <RootLayout params={{ title: "Explore Genres", description: "Explore Genres from here" }}>
             <main className="">
                 <Modal
                     header={<Header />}

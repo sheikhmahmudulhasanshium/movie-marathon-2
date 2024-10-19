@@ -19,7 +19,7 @@ const TVShows = () => {
   }
 
     return ( 
-    <RootLayout params={{ title: "TV Shows", description: "This is the better version of previous App" }}>
+    <RootLayout params={{ title: "TV Shows", description: "Explore Tv shows from here" }}>
       
       <main className="">
         <Modal

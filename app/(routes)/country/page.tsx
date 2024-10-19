@@ -21,7 +21,7 @@ const Page = () => {
     }
 
     return (
-        <RootLayout params={{ title: "Explore Country", description: "This is the better version of previous App" }}>
+        <RootLayout params={{ title: "Explore Country", description: "Explore Coutries from here" }}>
             <main className="">
                 <Modal
                     header={<Header />}

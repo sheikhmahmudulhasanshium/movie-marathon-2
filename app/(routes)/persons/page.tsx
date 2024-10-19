@@ -19,7 +19,7 @@ const Persons = () => {
   }
 
     return ( 
-    <RootLayout params={{ title: "Explore Popular Celebrities", description: "This is the better version of previous App" }}>
+    <RootLayout params={{ title: "Explore Popular Celebrities", description: "Explore Celebreties from here" }}>
       
       <main className="">
         <Modal

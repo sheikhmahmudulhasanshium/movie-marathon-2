@@ -20,7 +20,7 @@ const TopContent = () => {
   }
 
     return ( 
-    <RootLayout params={{ title: "Best of the Bests", description: "This is the better version of previous App" }}>
+    <RootLayout params={{ title: "Best of the Bests", description: "Explore Top Rated contents from here" }}>
       
       <main className="">
         <Modal

@@ -22,8 +22,7 @@ const HomePage = () => {
 
     return ( 
     <RootLayout params={{ title: "Welcome To Movie Marathon", 
-    description: 'Movie Marathon is the ultimate app for movie enthusiasts who love to binge-watch their favorite films and TV shows. Whether you&apos;re planning a cozy night in or an epic weekend of non-stop entertainment, Movie Marathon helps you organize and enhance your viewing experience. With a vast library of movies and TV series across various genres, personalized recommendations, and seamless streaming options, you can easily discover new favorites and revisit classics.'
-  }}>
+      description: "Discover Movie Marathon, the ultimate app for movie enthusiasts and binge-watchers! Whether you&apos;re planning a cozy night in or an epic weekend of non-stop entertainment, Movie Marathon helps you organize and elevate your viewing experience. Enjoy a vast library of movies and TV shows across all genres, personalized recommendations tailored to your taste, and seamless streaming options. With Movie Marathon, you can easily find new favorites and revisit classic films, making every movie night unforgettable!"    }}>
       
       <main className="">
         <Modal

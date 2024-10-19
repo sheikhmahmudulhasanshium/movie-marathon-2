@@ -60,7 +60,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ series, season_number, episod
                         frameBorder="0"
                         allow="autoplay; encrypted-media"
                         allowFullScreen
-                    />
+                        picture-in-picture
+                        //sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts"  // No allow-popups here
+/>
                 </div>
             )}
             <ServerSelector

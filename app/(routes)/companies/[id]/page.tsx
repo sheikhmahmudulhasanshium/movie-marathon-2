@@ -48,7 +48,7 @@ const Company = () => {
     }
 
     return (
-        <RootLayout params={{ title: `${companyData.company.name} | Company`, description: "This is the better version of previous App" }}>
+        <RootLayout params={{ title: `${companyData.company.name} | Company`, description: "Explore Companies from here" }}>
             <main className="">
                 <Modal
                     header={<Header />}

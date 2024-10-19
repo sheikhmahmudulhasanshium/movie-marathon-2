@@ -34,7 +34,7 @@ const TvShow: React.FC = () => {
     }
 
     return (
-        <RootLayout params={{ title: series ? `${series.name} | Tv Show` : "Title | Movie", description: "There will be individual movie" }}>
+        <RootLayout params={{ title: series ? `${series.name} | Tv Show` : "Title | Movie", description: "There will be individual show" }}>
             <main className="flex justify-center items-start">
                 <Modal
                     header={<Header />}

@@ -6,7 +6,7 @@ import Body from "./body";
 
 const PP = () => {
     return ( 
-        <RootLayout params={{ title: "Terms & Conditions", description: "This is the better version of previous App" }}>
+        <RootLayout params={{ title: "Terms & Conditions", description: "Read carefully" }}>
             <main>
                 <Modal
                     header={<Header />}

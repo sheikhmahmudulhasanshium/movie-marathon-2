@@ -29,7 +29,7 @@ const Genre = () => {
     if(!loading&&!error)
 
     return ( 
-        <RootLayout params={{ title: formattedGenre?`${formattedGenre.name}`:`${genreName.toLocaleUpperCase()} | Genre`, description: "This is the better version of previous App" }}>
+        <RootLayout params={{ title: formattedGenre?`${formattedGenre.name}`:`${genreName.toLocaleUpperCase()} | Genre`, description: "Explore Genres from here" }}>
             <main className="">
                 <Modal
                     header={<Header />}

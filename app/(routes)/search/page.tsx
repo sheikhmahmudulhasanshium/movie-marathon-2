@@ -27,7 +27,7 @@ const Search = () => {
     }, []);
 
     return ( 
-        <RootLayout params={{ title: "Search Here", description: "This is the better version of previous App" }}>
+        <RootLayout params={{ title: "Search Here", description: "Explore different Movies, Tv Shows, Genres, Casts, Companies, Keywords, Coutries from here" }}>
             <main className="">
                 <Modal
                     header={<Header />}

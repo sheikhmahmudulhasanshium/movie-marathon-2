@@ -42,7 +42,7 @@ const Country = () => {
     }
 
     return (
-        <RootLayout params={{ title: countryData.native_name === countryData.english_name ? `${countryData.english_name} (${countryData.native_name}) | Country` : `${countryData.english_name} | Country`, description: "This is the better version of previous App" }}>
+        <RootLayout params={{ title: countryData.native_name === countryData.english_name ? `${countryData.english_name} (${countryData.native_name}) | Country` : `${countryData.english_name} | Country`, description: "Explore Coutries from here" }}>
             <main className="">
                 <Modal
                     header={<Header />}

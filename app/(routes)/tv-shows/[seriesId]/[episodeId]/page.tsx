@@ -8,12 +8,12 @@ import Header from '@/components/header';
 import Loading from '@/components/loading';
 import Modal from '@/components/modals/basic-page-modal';
 import Recommendations from '@/components/recommendations';
-import Searchbar from '@/components/search-bar';
 import Trailers from '@/components/trailer';
 import useEpisode from '@/hooks/use-episode';
 import useTvShow from '@/hooks/use-tv-show';
 import { useParams } from 'next/navigation';
 import VideoPlayer from '../../components/video-player';
+import Searchbar from '@/components/modals/search-bar-advanced';
 
 const Episode: React.FC = () => {
     const params = useParams();
@@ -54,7 +54,7 @@ const Episode: React.FC = () => {
     }
 
     return (
-        <RootLayout params={{ title: episode ? `${episode.name} | ${series.name} S-${season_number}-E-${episode_number} | Tv Show` : "Title | Movie", description: "There will be individual movie" }}>
+        <RootLayout params={{ title: episode ? `${episode.name} | ${series.name} S-${season_number}-E-${episode_number} | Tv Show` : "Title | Movie", description: "There will be individual episode" }}>
             <main className="flex justify-center items-start">
                 <Modal
                     header={<Header />}
@@ -63,7 +63,7 @@ const Episode: React.FC = () => {
                     <CustomBreadCrumb params={{ link: `/tv-shows/${formatText(`${series.id} ${series.name}`)}/${formatText(`${seriesId} ${season_number} ${episode_number}`)}`, name: `/TV/${series.name}/${episode?.name} (Season-${episode?.season_number} Episode-${episode?.episode_number})` }} />
                     {episode && (
                         <div className='justify-center items-center flex flex-col'>
-                            <Searchbar />
+                            <Searchbar Variant='Series'/>
                             <VideoPlayer series={series} season_number={parseInt(season_number)} episode_number={parseInt(episode_number)}/>
 
                             <EpisodeSelector series={series} default_season={parseInt(season_number)} default_episode={parseInt(episode_number)}/>
