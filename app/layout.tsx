@@ -20,6 +20,8 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
   return (
     <html lang="en" className={fontSans.variable} suppressContentEditableWarning>
       <head>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any"/>
+
         <title>{params.title}</title>
         <meta name="description" content={params.description} />
         <GoogleAnalytics gaId="G-JX5SX4K85H" />
