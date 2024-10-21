@@ -6,6 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import Link from "next/link";
 import { ModeToggle } from "./mode-toggle";
 import { Separator } from "./ui/separator";
+import SocialShareButton from "./share-button";
 
 const Sidebar = () => {
   const menuItems = [
@@ -44,6 +45,7 @@ const Sidebar = () => {
                 <Search className="text-cyan-950 scale-120"/>
               </Button>
             </Link>
+            <SocialShareButton/>
           </div>
         </div>
       </DropdownMenuContent>
