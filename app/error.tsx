@@ -1,58 +1,61 @@
-'use client'
-import { FC } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { GetServerSideProps } from 'next'; 
-import { ArrowBigLeft, HomeIcon } from 'lucide-react';
+"use client"
+import { useRouter } from "next/navigation";
+import RootLayout from "./layout";
+import Modal from "@/components/modals/basic-page-modal";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import { Button } from "@/components/ui/button";
+import { ArrowBigLeft, BugIcon, HomeIcon } from "lucide-react";
 
-interface ErrorPageProps {
-  statusCode: number;
-}
-
-const ErrorPage: FC<ErrorPageProps> = ({ statusCode }) => {
+const ErrorPage = () => {
   const router = useRouter();
 
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center bg-gray-50">
-      <h1 className="text-4xl font-bold text-red-600">
-        {statusCode ? `${statusCode} - Oops!` : 'An unexpected error occurred!'}
-      </h1>
-      <p className="mt-4 text-lg text-gray-700">
-        {statusCode === 500
-          ? 'Sorry, something went wrong on our end.'
-          : 'An unexpected error has occurred.'}
-      </p>
-      <div className='flex justify-center w-full gap-6 mt-8'>
-                                <Button
-                                    variant='outline'
-                                    size='lg'
-                                    onClick={() => router.back()}
-                                    className="flex flex-col justify-center items-center p-4 rounded-lg transition duration-300 hover:bg-red-200"
-                                >
-                                    <ArrowBigLeft className='w-8 h-8 mb-1' />
-                                    <span className="text-lg">Go Back</span>
-                                </Button>
-                                <Button
-                                    variant='outline'
-                                    size='lg'
-                                    onClick={() => router.push('/home')}
-                                    className="flex flex-col justify-center items-center p-4 rounded-lg transition duration-300 hover:bg-red-200"
-                                >
-                                    <HomeIcon className='w-8 h-8 mb-1' />
-                                    <span className="text-lg">Go Home</span>
-                                </Button>
-                            </div>
-    </div>
-  );
-};
+    <RootLayout params={{ title: "!!!Warning!!!", 
+        description: 'Please contact the developer. Explain the problem for debugging'    }}>
+        
+        <main className="">
+          <Modal
+            header={<Header />}
+            footer={<Footer/>}
+          >
+      
+                <div className="flex flex-col items-center justify-center w-full bg-gradient-to-tl from-red-200 to-white dark:from-cyan-900 dark:to-accent-foreground mt-8">
+                    <div className="text-center flex flex-col py-4 justify-center">
+                        <div className="flex items-center   bg-opacity-50 dark:bg-opacity-100 justify-center h-80 w-full mt-8 px-4">
+                          <BugIcon className="animate-bounce w-20 h-20"/>
+                        </div> 
+                        <h2 className="mt-4 text-2xl text-gray-600">Oops! Something Went Wrong</h2>
+                        <p className="mt-2 text-gray-500 dark:text-slate-300">
+                            The page you are looking for has some unresolved issue.
+                        </p>
+                        <div className='flex justify-center w-full gap-6 mt-8'>
+                            <Button
+                                variant='outline'
+                                size='lg'
+                                onClick={() => router.back()}
+                                className="flex flex-col justify-center items-center p-4 rounded-lg transition duration-300 hover:bg-red-200"
+                            >
+                                <ArrowBigLeft className='w-8 h-8 mb-1' />
+                                <span className="text-lg">Go Back</span>
+                            </Button>
+                            <Button
+                                variant='outline'
+                                size='lg'
+                                onClick={() => router.push('/home')}
+                                className="flex flex-col justify-center items-center p-4 rounded-lg transition duration-300 hover:bg-red-200"
+                            >
+                                <HomeIcon className='w-8 h-8 mb-1' />
+                                <span className="text-lg">Go Home</span>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+    </Modal>
+    </main>
 
-// Define server-side props to handle error status codes
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  const statusCode = res?.statusCode || 500; // Default to 500 if not provided
-  return {
-    props: { statusCode },
-  };
+    </RootLayout>
+);
 };
-
+ 
 export default ErrorPage;

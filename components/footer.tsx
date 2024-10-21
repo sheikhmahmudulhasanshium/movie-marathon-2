@@ -23,7 +23,7 @@ const Footer = () => {
                     <Link href="/sitemap.xml">Sitemap</Link>
                 </div>
                 <div className="hover:underline hover:opacity-85">
-                    <Link href="/contact">Contact</Link>
+                    <Link href="mailto:officials.shium@gmail.com">Contact</Link>
                 </div>
             </nav>
 
