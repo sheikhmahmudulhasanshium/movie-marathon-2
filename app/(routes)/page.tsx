@@ -8,7 +8,6 @@ import { LoaderPinwheelIcon } from "lucide-react";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
 import FullSite from "@/components/full-site";
 import SlideShow from "./components/slide-show";
-
 const HomePage = () => {
   const origin = useOrigin();
 
@@ -22,12 +21,15 @@ const HomePage = () => {
 
     return ( 
     <RootLayout params={{ title: "Welcome To Movie Marathon", 
-      description: "Discover Movie Marathon, the ultimate app for movie enthusiasts! Organize your binge-watching with personalized recommendations and enjoy seamless streaming of your favorite movies and shows."}}>
+      description: "Discover Movie Marathon, the ultimate app for movie enthusiasts! Organize your binge-watching with personalized recommendations and enjoy seamless streaming of your favorite movies and shows.",
+      image: '../public/logo.png'
+      }}>
       
       <main className="">
         <Modal
           header={<Header />}
           footer={<Footer/>}
+
         >
           <CustomBreadCrumb params={{link:"/",name:"/Welcome"}}/>
           <div className="flex-col flex ">

@@ -42,6 +42,16 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
         <meta name="twitter:description" content={params.description} />
         {params.image && <meta name="twitter:image" content={params.image} />}
 
+        {/**Facebok Card Meta Tags*/}
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={params.title} />
+        <meta name="og:description" content={params.description} />
+        {params.image && <meta name="og:image" content={params.image} />}
+
+
+
+
         <GoogleAnalytics gaId="G-JX5SX4K85H" /> 
       </head>
         
