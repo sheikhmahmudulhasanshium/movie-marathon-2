@@ -8,17 +8,17 @@ import { LoaderPinwheelIcon } from "lucide-react";
 import CustomBreadCrumb from "@/components/custom-bread-crumb";
 import FullSite from "@/components/full-site";
 import SlideShow from "./components/slide-show";
+import Loading from "@/components/loading";
 const HomePage = () => {
+
   const origin = useOrigin();
 
   if (!origin) {
     return (
-      <div className='bg-white flex justify-center items-center min-h-screen w-full'>
-        <LoaderPinwheelIcon className='animate-spin size-56 text-slate-800' size={48} />
-      </div>
+      <Loading/>
     );
   }
-
+  
     return ( 
     <RootLayout params={{ title: "Welcome To Movie Marathon", 
       description: "Discover Movie Marathon, the ultimate app for movie enthusiasts! Organize your binge-watching with personalized recommendations and enjoy seamless streaming of your favorite movies and shows.",
