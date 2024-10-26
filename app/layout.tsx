@@ -5,6 +5,7 @@ import "./globals.css";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import useNetworkStatus from "@/hooks/use-network";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,10 +25,12 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
   const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://movie-marathon-2.vercel.app';
   const { isOnline } = useNetworkStatus();
   const router = useRouter();
-
-  if (!isOnline) {
-    return <div>You are currently offline. Please check your internet connection.</div>;
-  }
+  useEffect(()=>{
+    if (!isOnline) {
+      router.push('/offline')
+    }
+  },[isOnline, router])
+  
 
   return (
     <html lang="en" className={fontSans.variable} suppressContentEditableWarning>
@@ -56,9 +59,9 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
         {isOnline && <GoogleAnalytics gaId="G-JX5SX4K85H" />} 
       </head>
       <body className="flex bg-primary-foreground dark:bg-primary-foreground">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+                <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                    {children}
+                </ThemeProvider>
       </body>
     </html>
   );
