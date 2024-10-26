@@ -3,11 +3,11 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/header';
-import RootLayout from './layout';
 import Modal from '@/components/modals/basic-page-modal';
 import CustomBreadCrumb from '@/components/custom-bread-crumb';
 import Footer from '@/components/footer';
 import { LucideWifiOff } from 'lucide-react';
+import RootLayout from '@/app/layout';
 
 const Offline: React.FC = () => {
     const router = useRouter();
